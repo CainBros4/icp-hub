@@ -105,6 +105,7 @@
       <a href="icp-hub.html">ICP Playbooks</a>
       <a href="look-and-feel.html">Look &amp; Feel</a>
       <a href="strategy.html">Strategy</a>
+      <a href="assets.html">Assets</a>
       <span class="kl-nav-divider"></span>
       <a href="https://homedirect-hq.example" class="kl-nav-external" title="HomeDirect HQ — planning &amp; launch ops">HomeDirect HQ</a>
       <a href="https://www.perplexity.ai/computer/a/homedirectai-marketing-hub-EZWU81Z.T6KISFvXLyhTnA" class="kl-nav-external" title="Marketing HQ — creative &amp; campaign ops">Marketing HQ</a>
@@ -401,7 +402,43 @@
       </a>
     </div>
 
-    <div style="height: 3rem;"></div>
+    <div class="kl-divider"></div>
+
+    <!-- Brand endpoints for AI tooling -->
+    <div class="kl-sec-head">
+      <div class="kl-eyebrow">For Developers &amp; AI Tooling</div>
+      <h2>Brand-as-an-API.</h2>
+      <p>Every fact on these pages also lives in <code style="font-family: var(--font-body); background: var(--cream-sunken); padding: 1px 6px; border-radius: 4px; font-size: 0.88em;">brand-data.js</code> — the single source of truth. Derived endpoints let Marketing HQ's Copy Generator, Video Generator, and any downstream AI tool inject current brand context into every prompt.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <a href="/brand.json" class="kl-card kl-card--accent" style="min-height: 0;">
+        <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--lime-dark); letter-spacing: 0.04em; margin-bottom: 8px;">GET · application/json</div>
+        <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand.json</code></h3>
+        <p>Structured brand spec — philosophy, values, archetypes, voice, visual identity, guardrails. Consume from any backend or API.</p>
+      </a>
+      <a href="/brand.md" class="kl-card kl-card--accent" style="min-height: 0;">
+        <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--lime-dark); letter-spacing: 0.04em; margin-bottom: 8px;">GET · text/markdown</div>
+        <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand.md</code></h3>
+        <p>Human-readable Markdown version of the full spec. Paste into docs, wikis, or briefs.</p>
+      </a>
+      <a href="/brand/prompt-pack" class="kl-card kl-card--teal" style="min-height: 0;">
+        <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--teal); letter-spacing: 0.04em; margin-bottom: 8px;">GET · text/plain · LLM-ready</div>
+        <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand/prompt-pack</code></h3>
+        <p>Compact, prompt-injectable brand context. Include this in every AI call — Marketing HQ Copy Generator, Video Generator, Brief Generator — so outputs stay on-brand.</p>
+      </a>
+      <a href="/assets/api/manifest.json" class="kl-card kl-card--gold" style="min-height: 0;">
+        <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 8px;">GET · application/json</div>
+        <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/assets/api/manifest.json</code></h3>
+        <p>Visual asset manifest — every uploaded reference image with metadata and absolute URLs. Feed it to image generators for style consistency.</p>
+      </a>
+    </div>
+
+    <div style="padding: 1rem 1.25rem; background: var(--cream-sunken); border-left: 3px solid var(--lime); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-body); font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
+      <strong style="color: var(--ink); font-weight: 700;">Update flow:</strong> edit <code style="background: var(--cream-card); padding: 1px 6px; border-radius: 4px;">brand-data.js</code> → all four endpoints auto-derive → downstream AI tools get the new context on the next call. No sync, no duplication. Asset uploads go through <a href="assets.html" style="color: var(--lime-dark); font-weight: 700;">Assets</a>.
+    </div>
+
+    <div style="height: 1.5rem;"></div>
   </div>
 
   <!-- FOOTER -->

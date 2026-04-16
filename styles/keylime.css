@@ -1,52 +1,49 @@
 /* ==========================================================================
    Key Lime — Shared Design System
-   Canonical tokens from brand-guide/visual-identity.md
-   ==========================================================================
-
-   Do NOT override these values in page-specific CSS. Extend them.
-   If something is missing, add it here so every page gets it.
+   Canonical tokens pulled from brand-data.js (the single source of truth).
+   Do NOT override these values in page CSS. Extend them.
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
-  /* ── Brand ── */
-  --lime: #A8C856;          /* primary brand green, warm key-lime */
-  --lime-dark: #94B849;
+  /* ── Brand · Key Lime green ── */
+  --lime: #A8C856;           /* Key Lime — accent, CTAs, brand mark */
+  --lime-dark: #8BAF3E;      /* Key Lime Dark — hover, text-on-cream */
   --lime-light: #BFD774;
   --lime-dim: rgba(168,200,86,0.12);
   --lime-glow: rgba(168,200,86,0.25);
 
   /* ── Base surfaces ── */
-  --cream: #FFF8ED;         /* primary background (warm, never pure white) */
+  --cream: #FFF8ED;          /* Cream — primary warm background */
   --cream-2: #FFFCF4;
-  --cream-card: #FFFFFF;    /* elevated cards */
-  --cream-sunken: #F6EFDF;  /* sunken / alternating strips */
+  --cream-card: #FFFFFF;     /* White — elevated card surfaces */
+  --cream-sunken: #F6EFDF;   /* sunken / alternating strips */
 
-  /* ── Ink ── */
-  --ink: #2D3436;           /* headings, wordmark */
-  --ink-2: #3C4146;
-  --ink-soft: #55595D;
-  --text: #2D3436;
+  /* ── Ink · Graham Crust palette ── */
+  --ink: #3E2C1C;            /* Graham Crust — nav, headings, dark text */
+  --ink-2: #55402F;          /* Crust Mid — table headers, depth */
+  --ink-soft: #6A5340;
+  --text: #3E2C1C;
   --text-secondary: #5A5E62;
   --text-muted: #8A8E92;
 
   /* ── Accents ── */
-  --gold: #E8A317;          /* savings amber — dollar figures ONLY */
+  --gold: #E8A317;           /* Savings Gold — dollar figures ONLY */
   --gold-light: #F5B731;
   --gold-dim: rgba(232,163,23,0.12);
-  --terracotta: #D98E5A;    /* warm secondary accent */
-  --terracotta-dim: rgba(217,142,90,0.12);
-  --teal: #5BB5A2;          /* AI / tech features */
+  --teal: #5BB5A2;           /* Concierge Teal — AI features, concierge */
   --teal-dim: rgba(91,181,162,0.12);
+  --terracotta: #D98E5A;     /* warm secondary accent */
+  --terracotta-dim: rgba(217,142,90,0.12);
 
   /* ── State ── */
-  --error: #C7604B;         /* warm red, never pure red */
+  --error: #C7604B;          /* warm red, never pure red */
   --error-dim: rgba(199,96,75,0.1);
 
-  /* ── Borders / dividers ── */
-  --border: rgba(45,52,54,0.10);
-  --border-strong: rgba(45,52,54,0.18);
+  /* ── Borders / dividers ── (derived from ink) */
+  --border: rgba(62,44,28,0.10);
+  --border-strong: rgba(62,44,28,0.18);
   --border-lime: rgba(168,200,86,0.25);
 
   /* ── Shadows (warm, never cool) ── */

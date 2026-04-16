@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — Visual Asset Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --crust: #3E2C1C; --crust-2: #4A3425; --crust-3: #55402F;
+      --cream: #FFF8ED; --cream-2: #FDF2E0; --cream-3: #F5E6CE;
+      --green: #A8C856; --green-dim: rgba(168,200,86,0.12); --green-glow: rgba(168,200,86,0.3); --green-dark: #8BAF3E;
+      --teal: #5BB5A2; --gold: #E8A317;
+      --text-primary: #2C1810; --text-secondary: #7A6654; --text-muted: #A08E7A;
+      --border: rgba(62,44,28,0.12); --border-hover: rgba(62,44,28,0.25);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: #FFFFFF; color: var(--text-primary); font-family: 'Manrope', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; background: rgba(62,44,28,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; }
+    .nav-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green-glow); }
+    .nav-tabs { display: flex; gap: 0; }
+    .nav-tab { padding: 18px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,248,237,0.5); text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .nav-tab:hover { color: var(--cream); }
+    .nav-tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+    /* ── HEADER ── */
+    .page-header { text-align: center; padding: 56px 2rem 36px; background: var(--cream); border-bottom: 1px solid var(--border); }
+    .page-header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; color: var(--crust); margin-bottom: 8px; }
+    .page-header p { font-family: 'DM Sans'; font-size: 0.95rem; color: var(--text-secondary); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── CATEGORY TABS ── */
+    .cat-bar { position: sticky; top: 60px; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .cat-tabs { max-width: 1100px; margin: 0 auto; display: flex; gap: 0; padding: 0 2rem; overflow-x: auto; }
+    .cat-tab { padding: 14px 22px; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: none; background: none; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .cat-tab:hover { color: var(--crust); }
+    .cat-tab.active { color: var(--green-dark); border-bottom-color: var(--green); }
+    .cat-count { display: inline-block; margin-left: 6px; background: var(--green-dim); color: var(--green-dark); font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 8px; }
+
+    /* ── DROP ZONE ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 2rem 80px; }
+    .drop-zone {
+      border: 2px dashed var(--border-hover); border-radius: 20px; padding: 48px 32px; text-align: center;
+      background: var(--cream); cursor: pointer; transition: all 0.25s; margin-bottom: 32px; position: relative;
+    }
+    .drop-zone:hover, .drop-zone.dragover { border-color: var(--green); background: rgba(168,200,86,0.06); }
+    .drop-zone.dragover { box-shadow: 0 0 0 4px var(--green-dim); }
+    .drop-zone .icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .drop-zone h3 { font-size: 1rem; font-weight: 700; color: var(--crust); margin-bottom: 6px; }
+    .drop-zone p { font-family: 'DM Sans'; font-size: 0.82rem; color: var(--text-muted); }
+    .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+    /* Upload progress */
+    .upload-progress { margin-bottom: 24px; }
+    .upload-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--cream); border-radius: 12px; margin-bottom: 8px; font-size: 0.82rem; }
+    .upload-item .name { flex: 1; font-weight: 600; color: var(--crust); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upload-item .bar { width: 100px; height: 4px; background: var(--cream-3); border-radius: 2px; overflow: hidden; }
+    .upload-item .bar-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.3s; }
+    .upload-item .status { font-size: 0.72rem; font-weight: 600; color: var(--green-dark); }
+
+    /* ── ASSET GRID ── */
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .asset-card {
+      background: var(--cream); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      transition: all 0.25s; cursor: pointer; box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .asset-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(62,44,28,0.1); }
+    .asset-thumb { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: var(--cream-2); }
+    .asset-meta { padding: 14px 16px; }
+    .asset-title { font-size: 0.85rem; font-weight: 700; color: var(--crust); margin-bottom: 6px; line-height: 1.3; }
+    .asset-cat { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--green-dim); color: var(--green-dark); margin-bottom: 6px; }
+    .asset-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .asset-tag { font-size: 0.58rem; font-weight: 600; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); color: var(--text-muted); background: white; }
+
+    /* ── DETAIL MODAL ── */
+    .modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(44,24,16,0.6); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 2rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(44,24,16,0.25); }
+    .modal-img { width: 100%; max-height: 400px; object-fit: contain; background: var(--cream); border-radius: 20px 20px 0 0; }
+    .modal-body { padding: 28px 32px; }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: rgba(62,44,28,0.8); color: white; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .field-group { margin-bottom: 18px; }
+    .field-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .field-input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Manrope', sans-serif; font-size: 0.88rem; color: var(--text-primary); background: var(--cream); transition: border-color 0.2s; }
+    .field-input:focus { outline: none; border-color: var(--green); }
+    textarea.field-input { min-height: 80px; resize: vertical; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; line-height: 1.6; }
+    select.field-input { cursor: pointer; }
+    .tag-select { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag-option { font-size: 0.72rem; font-weight: 600; padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; color: var(--text-secondary); background: white; user-select: none; }
+    .tag-option.selected { background: var(--green-dim); border-color: var(--green); color: var(--green-dark); }
+    .tag-option:hover { border-color: var(--border-hover); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .btn { padding: 10px 20px; border-radius: 10px; font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; border: 1px solid var(--border); transition: all 0.2s; }
+    .btn-primary { background: var(--green); color: white; border-color: var(--green); }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-danger { background: white; color: #c0392b; border-color: #c0392b; }
+    .btn-danger:hover { background: #c0392b; color: white; }
+    .btn-ghost { background: white; color: var(--text-secondary); }
+    .btn-ghost:hover { background: var(--cream); }
+
+    .empty-state { text-align: center; padding: 64px 2rem; }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 1rem; font-weight: 700; color: var(--crust); margin-bottom: 8px; }
+    .empty-state p { font-family: 'DM Sans'; font-size: 0.88rem; color: var(--text-muted); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 2.5rem; display: flex; align-items: center; justify-content: space-between; background: var(--cream); }
+    footer p { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    footer a { font-size: 0.78rem; font-weight: 600; color: var(--green-dark); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .container { padding: 20px 1rem 60px; }
+      .asset-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .drop-zone { padding: 32px 20px; }
+      .modal { margin: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo"><span class="nav-dot"></span> Key Lime</a>
+  <div class="nav-tabs">
+    <a href="/?tab=brand" class="nav-tab">Brand</a>
+    <a href="/?tab=buyer" class="nav-tab">Audiences</a>
+    <a href="/assets" class="nav-tab active">Assets</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>Key Lime Visual Library</h1>
+  <p>Reference images, logos, and creative assets — browsable by humans, consumable by machines via <code>/assets/api/manifest.json</code></p>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="cat-bar">
+  <div class="cat-tabs" id="catTabs">
+    <button class="cat-tab active" data-cat="all">All <span class="cat-count" id="count-all">0</span></button>
+    <button class="cat-tab" data-cat="logos">Logos <span class="cat-count" id="count-logos">0</span></button>
+    <button class="cat-tab" data-cat="references">References <span class="cat-count" id="count-references">0</span></button>
+    <button class="cat-tab" data-cat="photography">Photography <span class="cat-count" id="count-photography">0</span></button>
+    <button class="cat-tab" data-cat="illustration">Illustrations <span class="cat-count" id="count-illustration">0</span></button>
+    <button class="cat-tab" data-cat="ad-creative">Ad Creative <span class="cat-count" id="count-ad-creative">0</span></button>
+    <button class="cat-tab" data-cat="screenshot">Screenshots <span class="cat-count" id="count-screenshot">0</span></button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- DROP ZONE -->
+  <div class="drop-zone" id="dropZone">
+    <input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif" />
+    <div class="icon">⬆</div>
+    <h3>Drop images here, or click to browse</h3>
+    <p>JPG, PNG, WebP, SVG up to 10MB each · Multiple files OK</p>
+  </div>
+
+  <!-- UPLOAD PROGRESS -->
+  <div class="upload-progress" id="uploadProgress"></div>
+
+  <!-- ASSET GRID -->
+  <div class="asset-grid" id="assetGrid"></div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="icon">🖼️</div>
+    <h3>No assets yet</h3>
+    <p>Drag and drop images above to start building the visual library.</p>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" id="modalClose">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="" />
+    <div class="modal-body">
+      <div class="field-group">
+        <div class="field-label">Title</div>
+        <input class="field-input" id="modalTitle" type="text" placeholder="Descriptive title for this asset" />
+      </div>
+      <div class="field-group">
+        <div class="field-label">Category</div>
+        <select class="field-input" id="modalCategory">
+          <option value="references">References</option>
+          <option value="photography">Photography</option>
+          <option value="illustration">Illustration</option>
+          <option value="ad-creative">Ad Creative</option>
+          <option value="logos">Logos</option>
+          <option value="screenshot">Screenshot</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Exemplifies</div>
+        <div class="tag-select" id="modalExemplifies"></div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Caption — "Why this is on-brand"</div>
+        <textarea class="field-input" id="modalCaption" placeholder="Explain why this asset exemplifies Key Lime's brand identity..."></textarea>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Do Not Caption — "Why this would be off-brand if changed"</div>
+        <textarea class="field-input" id="modalDoNot" placeholder="What would make this off-brand? (optional)"></textarea>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Tags (comma separated)</div>
+        <input class="field-input" id="modalTags" type="text" placeholder="warm-light, chaperone, tampa-bay" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="modalSave">Save Changes</button>
+        <button class="btn btn-danger" id="modalDelete">Delete</button>
+        <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Key Lime · Visual Asset Library · Machine-readable at <code>/assets/api/manifest.json</code></p>
+  <a href="/">← Back to Hub</a>
+</footer>
+
+<script>
+const EXEMPLIFIES_OPTIONS = [
+  'color-palette', 'composition', 'archetype-hero', 'archetype-sage', 'archetype-rebel',
+  'subject-matter', 'typography-usage', 'negative-space', 'lighting', 'warmth',
+  'premium-feel', 'key-lime-accent', 'graham-crust-tone', 'cream-background'
+];
+
+let assets = [];
+let currentFilter = 'all';
+let editingId = null;
+
+// ── INIT ──
+async function init() {
+  await loadAssets();
+  setupDropZone();
+  setupCategoryTabs();
+  setupModal();
+  renderExemplifies();
+}
+
+async function loadAssets() {
+  try {
+    const res = await fetch('/assets/api/list');
+    const data = await res.json();
+    assets = data.assets || [];
+    renderGrid();
+    updateCounts();
+  } catch (err) { console.error('Failed to load assets:', err); }
+}
+
+function renderGrid() {
+  const grid = document.getElementById('assetGrid');
+  const empty = document.getElementById('emptyState');
+  const filtered = currentFilter === 'all' ? assets : assets.filter(a => a.category === currentFilter);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map(a => `
+    <div class="asset-card" data-id="${a.id}" onclick="openDetail('${a.id}')">
+      <img class="asset-thumb" src="${a.url}" alt="${a.title}" loading="lazy" onerror="this.style.display='none'" />
+      <div class="asset-meta">
+        <div class="asset-cat">${a.category}</div>
+        <div class="asset-title">${esc(a.title)}</div>
+        <div class="asset-tags">
+          ${(a.exemplifies || []).slice(0, 3).map(t => `<span class="asset-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateCounts() {
+  document.getElementById('count-all').textContent = assets.length;
+  const cats = ['logos', 'references', 'photography', 'illustration', 'ad-creative', 'screenshot'];
+  cats.forEach(c => {
+    const el = document.getElementById('count-' + c);
+    if (el) el.textContent = assets.filter(a => a.category === c).length;
+  });
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+// ── DROP ZONE ──
+function setupDropZone() {
+  const zone = document.getElementById('dropZone');
+  const input = document.getElementById('fileInput');
+
+  ['dragenter', 'dragover'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.add('dragover'); }));
+  ['dragleave', 'drop'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.remove('dragover'); }));
+
+  zone.addEventListener('drop', ev => {
+    const files = ev.dataTransfer.files;
+    if (files.length) uploadFiles(files);
+  });
+
+  input.addEventListener('change', ev => {
+    if (ev.target.files.length) uploadFiles(ev.target.files);
+    ev.target.value = '';
+  });
+}
+
+async function uploadFiles(fileList) {
+  const progress = document.getElementById('uploadProgress');
+  const items = [];
+
+  for (const file of fileList) {
+    if (file.size > 10 * 1024 * 1024) continue; // Skip > 10MB
+    const id = 'up_' + Math.random().toString(36).slice(2, 8);
+    const el = document.createElement('div');
+    el.className = 'upload-item';
+    el.id = id;
+    el.innerHTML = `<span class="name">${esc(file.name)}</span><div class="bar"><div class="bar-fill" style="width:0%"></div></div><span class="status">Uploading…</span>`;
+    progress.appendChild(el);
+    items.push({ file, id });
+  }
+
+  for (const { file, id } of items) {
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      const res = await fetch('/assets/api/upload', { method: 'POST', body: form });
+      const data = await res.json();
+      const el = document.getElementById(id);
+      if (el) {
+        el.querySelector('.bar-fill').style.width = '100%';
+        el.querySelector('.status').textContent = '✓ Done';
+      }
+      setTimeout(() => { const el = document.getElementById(id); if (el) el.remove(); }, 2000);
+    } catch (err) {
+      const el = document.getElementById(id);
+      if (el) el.querySelector('.status').textContent = '✗ Failed';
+    }
+  }
+
+  await loadAssets();
+}
+
+// ── CATEGORY TABS ──
+function setupCategoryTabs() {
+  document.getElementById('catTabs').addEventListener('click', ev => {
+    const tab = ev.target.closest('.cat-tab');
+    if (!tab) return;
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.cat;
+    renderGrid();
+  });
+}
+
+// ── MODAL ──
+function renderExemplifies() {
+  const container = document.getElementById('modalExemplifies');
+  container.innerHTML = EXEMPLIFIES_OPTIONS.map(o =>
+    `<span class="tag-option" data-tag="${o}">${o}</span>`
+  ).join('');
+  container.addEventListener('click', ev => {
+    const opt = ev.target.closest('.tag-option');
+    if (opt) opt.classList.toggle('selected');
+  });
+}
+
+function setupModal() {
+  document.getElementById('modalClose').onclick = closeModal;
+  document.getElementById('modalCancel').onclick = closeModal;
+  document.getElementById('modalOverlay').addEventListener('click', ev => {
+    if (ev.target === ev.currentTarget) closeModal();
+  });
+  document.getElementById('modalSave').onclick = saveAsset;
+  document.getElementById('modalDelete').onclick = deleteAsset;
+}
+
+function openDetail(id) {
+  const asset = assets.find(a => a.id === id);
+  if (!asset) return;
+  editingId = id;
+
+  document.getElementById('modalImg').src = asset.url;
+  document.getElementById('modalTitle').value = asset.title || '';
+  document.getElementById('modalCategory').value = asset.category || 'references';
+  document.getElementById('modalCaption').value = asset.caption || '';
+  document.getElementById('modalDoNot').value = asset.do_not_caption || '';
+  document.getElementById('modalTags').value = (asset.tags || []).join(', ');
+
+  // Set exemplifies
+  document.querySelectorAll('#modalExemplifies .tag-option').forEach(opt => {
+    opt.classList.toggle('selected', (asset.exemplifies || []).includes(opt.dataset.tag));
+  });
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  editingId = null;
+}
+
+async function saveAsset() {
+  if (!editingId) return;
+  const exemplifies = Array.from(document.querySelectorAll('#modalExemplifies .tag-option.selected')).map(o => o.dataset.tag);
+  const tagsRaw = document.getElementById('modalTags').value;
+  const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+  const updates = {
+    title: document.getElementById('modalTitle').value,
+    category: document.getElementById('modalCategory').value,
+    exemplifies,
+    caption: document.getElementById('modalCaption').value,
+    do_not_caption: document.getElementById('modalDoNot').value,
+    tags,
+  };
+
+  try {
+    await fetch('/assets/api/' + editingId, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+    closeModal();
+    await loadAssets();
+  } catch (err) { alert('Failed to save: ' + err.message); }
+}
+
+async function deleteAsset() {
+  if (!editingId) return;
+  if (!confirm('Delete this asset permanently?')) return;
+  try {
+    await fetch('/assets/api/' + editingId, { method: 'DELETE' });
+    closeModal();
+    await loadAssets();
+  } catch (err) { alert('Failed to delete: ' + err.message); }
+}
+
+init();
+</script>
+</body>
+</html>
