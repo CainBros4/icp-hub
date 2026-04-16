@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — ICP Playbooks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* ── KEY LIME PIE PALETTE ── */
+      /* Crust (warm brown base) */
+      --crust: #3E2C1C;
+      --crust-2: #4A3425;
+      --crust-3: #55402F;
+      /* Cream (warm accent tones) */
+      --cream: #FFF8ED;
+      --cream-2: #FDF2E0;
+      --cream-3: #F5E6CE;
+      /* Filling (the green accent) */
+      --green: #A8C856;
+      --green-dim: rgba(168,200,86,0.12);
+      --green-glow: rgba(168,200,86,0.3);
+      --green-dark: #8BAF3E;
+      /* Supporting colors */
+      --teal: #5BB5A2;
+      --teal-dim: rgba(91,181,162,0.1);
+      --gold: #E8A317;
+      --gold-dim: rgba(232,163,23,0.1);
+      /* Text & UI */
+      --text-primary: #2C1810;
+      --text-secondary: #7A6654;
+      --text-muted: #A08E7A;
+      --border: rgba(62,44,28,0.12);
+      --border-hover: rgba(62,44,28,0.25);
+      /* Aliases for easy swap */
+      --midnight: var(--crust);
+      --midnight-2: var(--crust-2);
+      --midnight-3: var(--crust-3);
+      --card: var(--cream);
+      --card-2: var(--cream-2);
+      --offwhite: #FFFFFF;
+      --gray: var(--text-secondary);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      font-family: 'Manrope', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 60px;
+      background: rgba(62,44,28,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em;
+      color: var(--cream); text-decoration: none;
+    }
+    .nav-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green-glow); }
+    .nav-back { font-size: 0.78rem; font-weight: 600; color: var(--cream-3); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .nav-back:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center; padding: 72px 2rem 48px; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(168,200,86,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green-dark); border: 1px solid rgba(168,200,86,0.3);
+      background: rgba(168,200,86,0.1); padding: 5px 16px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px; color: var(--crust); }
+    .hero h1 em { font-style: normal; color: var(--green-dark); }
+    .hero p { font-family: 'DM Sans'; font-size: 1rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── AUDIENCE TABS ── */
+    .tab-bar-wrap {
+      position: sticky; top: 60px; z-index: 150;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-bar {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; gap: 0; padding: 0 2rem;
+    }
+    .tab-btn {
+      padding: 16px 28px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; border: none; background: none; cursor: pointer;
+      color: var(--text-muted); border-bottom: 2px solid transparent;
+      transition: all 0.2s; position: relative; top: 1px;
+    }
+    .tab-btn:hover { color: var(--crust); }
+    .tab-btn.active-buyer { color: var(--green-dark); border-bottom-color: var(--green); }
+    .tab-btn.active-seller { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-btn.active-concierge { color: var(--teal); border-bottom-color: var(--teal); }
+    .tab-btn.active-brand { color: var(--crust); border-bottom-color: var(--crust); }
+
+    /* ── PANELS ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 48px 2rem 80px; }
+
+    /* ── PANEL HERO ── */
+    .panel-hero {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 32px; align-items: start;
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px; margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.06);
+    }
+    .panel-hero-eyebrow {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .panel-hero h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 14px; color: var(--crust); }
+    .panel-hero p { font-family: 'DM Sans'; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 600px; margin-bottom: 20px; }
+    .panel-hero-quote {
+      border-left: 3px solid; padding-left: 16px; margin-top: 4px;
+      font-family: 'DM Sans'; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; font-style: italic;
+    }
+    .panel-stats { display: flex; flex-direction: column; gap: 16px; min-width: 200px; }
+    .stat-box {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 22px; text-align: center;
+    }
+    .stat-box .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-box .lbl { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.04em; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 20px; padding-left: 2px;
+    }
+
+    /* ── SEGMENT GRID ── */
+    .segment-grid {
+      display: grid; gap: 16px; margin-bottom: 48px;
+    }
+    .segment-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .segment-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .seg-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+      transition: all 0.25s; display: flex; flex-direction: column; gap: 10px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .seg-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(62,44,28,0.08); }
+
+    .seg-tier {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 8px; display: inline-block; width: fit-content;
+    }
+    .seg-name { font-size: 0.98rem; font-weight: 700; line-height: 1.3; color: var(--crust); }
+    .seg-demo {
+      font-family: 'DM Sans'; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .seg-quote {
+      font-family: 'DM Sans'; font-size: 0.78rem; color: var(--text-secondary);
+      font-style: italic; line-height: 1.6;
+      border-left: 2px solid; padding-left: 10px; margin-top: 4px;
+    }
+    .seg-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .seg-tag {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--cream); color: var(--text-secondary);
+    }
+    .seg-position {
+      font-family: 'DM Sans'; font-size: 0.8rem; line-height: 1.5;
+      padding: 10px 12px; border-radius: 10px; margin-top: 4px;
+    }
+
+    /* ── JOURNEY ── */
+    .journey-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; margin-bottom: 48px;
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      background: var(--cream);
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .journey-act {
+      padding: 32px; position: relative;
+    }
+    .journey-act:not(:last-child) { border-right: 1px solid var(--border); }
+    .act-num {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .act-label { font-size: 1rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .act-hook {
+      font-family: 'DM Sans'; font-size: 0.8rem; color: var(--text-secondary);
+      font-style: italic; margin-bottom: 16px; line-height: 1.6;
+    }
+    .act-moments { display: flex; flex-direction: column; gap: 10px; }
+    .moment {
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .moment-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px;
+    }
+    .moment-text { font-family: 'DM Sans'; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); }
+    .moment-emotion { font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
+    .act-voice {
+      font-family: 'DM Sans'; font-size: 0.78rem; line-height: 1.6;
+      border-left: 2px solid; padding-left: 12px;
+      margin-top: 16px; color: var(--text-secondary); font-style: italic;
+    }
+
+    /* ── MESSAGING ── */
+    .messaging-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px;
+    }
+    .msg-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .msg-card h4 {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .headline-list { display: flex; flex-direction: column; gap: 16px; }
+    .headline-item {
+      border-left: 2px solid; padding-left: 14px;
+    }
+    .headline-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;
+    }
+    .headline-text {
+      font-size: 0.9rem; font-weight: 700; line-height: 1.4; font-family: 'Manrope'; color: var(--crust);
+    }
+    .headline-note {
+      font-family: 'DM Sans'; font-size: 0.72rem; color: var(--text-secondary); margin-top: 3px; line-height: 1.5;
+    }
+    .word-table { width: 100%; border-collapse: collapse; }
+    .word-table tr { border-bottom: 1px solid var(--border); }
+    .word-table tr:last-child { border-bottom: none; }
+    .word-table td { padding: 8px 0; font-size: 0.8rem; vertical-align: top; }
+    .word-table td:first-child { font-weight: 600; width: 45%; padding-right: 12px; }
+    .word-table td:last-child { font-family: 'DM Sans'; color: var(--text-secondary); font-size: 0.77rem; line-height: 1.5; }
+    .word-use { color: var(--green-dark); }
+    .word-avoid { color: #C0392B; text-decoration: line-through; }
+
+    /* ── CHANNELS ── */
+    .channel-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px;
+    }
+    .channel-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 8px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .channel-name { font-size: 0.9rem; font-weight: 700; color: var(--crust); }
+    .channel-segment { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+    .channel-priority {
+      display: inline-block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 8px; width: fit-content;
+    }
+    .p1 { background: rgba(168,200,86,0.12); color: var(--green-dark); border: 1px solid rgba(168,200,86,0.25); }
+    .p2 { background: rgba(232,163,23,0.1); color: var(--gold); border: 1px solid rgba(232,163,23,0.2); }
+    .p3 { background: rgba(122,102,84,0.1); color: var(--text-muted); border: 1px solid var(--border); }
+    .channel-note { font-family: 'DM Sans'; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── AD CONCEPTS ── */
+    .ad-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px;
+    }
+    .ad-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .ad-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+    .ad-name { font-size: 1rem; font-weight: 700; color: var(--crust); }
+    .ad-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ad-tag {
+      font-size: 0.65rem; font-weight: 600; padding: 3px 9px; border-radius: 8px;
+      background: var(--cream); border: 1px solid var(--border); color: var(--text-secondary);
+    }
+    .ad-headline {
+      font-size: 0.95rem; font-weight: 700; line-height: 1.4;
+      padding: 14px 16px; border-radius: 10px; border-left: 3px solid;
+    }
+    .ad-body { font-family: 'DM Sans'; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+    .ad-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 700; margin-top: 4px;
+    }
+
+    /* ── SAVINGS TABLE ── */
+    .savings-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; margin-bottom: 48px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .savings-table thead tr { background: var(--cream); }
+    .savings-table th {
+      padding: 14px 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted); text-align: left;
+    }
+    .savings-table td {
+      padding: 12px 20px; font-size: 0.85rem; border-top: 1px solid var(--border);
+      font-family: 'DM Sans';
+    }
+    .savings-table td.price { font-weight: 700; font-family: 'Manrope'; color: var(--crust); }
+    .savings-table td.traditional { color: #C0392B; }
+    .savings-table td.homedirect { color: var(--green-dark); font-weight: 700; font-family: 'Manrope'; }
+    .savings-table td.savings { color: var(--gold); font-weight: 800; font-family: 'Manrope'; }
+
+    /* ── OBJECTIONS ── */
+    .obj-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 48px; }
+    .obj-item {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .obj-q { font-size: 0.88rem; font-weight: 700; margin-bottom: 10px; color: var(--crust); }
+    .obj-a { font-family: 'DM Sans'; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ── CTA TABLE ── */
+    .cta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+    .cta-stage {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .cta-stage-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .cta-items { display: flex; flex-direction: column; gap: 10px; }
+    .cta-item { }
+    .cta-context { font-size: 0.7rem; color: var(--text-muted); font-family: 'DM Sans'; margin-bottom: 3px; }
+    .cta-text { font-size: 0.82rem; font-weight: 600; color: var(--crust); }
+
+    /* ── BRAND REFERENCE PANEL ── */
+    .brand-section {
+      margin-bottom: 48px;
+    }
+    .brand-section-title {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--crust);
+      margin-bottom: 24px; padding-left: 2px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .brand-section-title::before {
+      content: ''; width: 4px; height: 16px; border-radius: 2px;
+    }
+    .brand-section-title.green::before { background: var(--green); }
+    .brand-section-title.brown::before { background: var(--crust); }
+    .brand-section-title.cream-title::before { background: var(--gold); }
+
+    /* Color swatches */
+    .color-palette {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;
+    }
+    .color-swatch {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .swatch-color {
+      height: 80px; display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: 8px 12px;
+    }
+    .swatch-hex {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(255,255,255,0.85); color: #333;
+    }
+    .swatch-info {
+      padding: 14px 16px;
+    }
+    .swatch-name { font-size: 0.85rem; font-weight: 700; color: var(--crust); margin-bottom: 3px; }
+    .swatch-role { font-family: 'DM Sans'; font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Type specimens */
+    .type-specimens {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .type-specimen {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px;
+      box-shadow: 0 1px 3px rgba(62,44,28,0.04);
+    }
+    .type-meta {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .type-tag {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 8px;
+    }
+    .type-tag.primary { background: rgba(168,200,86,0.12); color: var(--green-dark); border: 1px solid rgba(168,200,86,0.25); }
+    .type-tag.secondary { background: var(--cream); color: var(--text-secondary); border: 1px solid var(--border); }
+    .type-font-name { font-size: 0.82rem; font-weight: 600; color: var(--crust); }
+    .type-preview {
+      border-top: 1px solid var(--border); padding-top: 16px;
+    }
+    .type-preview-row {
+      display: flex; align-items: baseline; gap: 20px; margin-bottom: 10px;
+    }
+    .type-weight-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); min-width: 100px;
+    }
+    .type-sample { color: var(--crust); }
+
+    /* Iconography drop zone */
+    .icon-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px;
+    }
+    .icon-slot {
+      aspect-ratio: 1;
+      background: var(--cream);
+      border: 2px dashed rgba(62,44,28,0.15);
+      border-radius: 14px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .icon-slot:hover {
+      border-color: var(--green);
+      background: rgba(168,200,86,0.04);
+    }
+    .icon-slot.has-icon {
+      border-style: solid;
+      border-color: var(--border);
+      padding: 16px;
+    }
+    .icon-slot.has-icon img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+    }
+    .icon-placeholder {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-placeholder svg {
+      width: 16px; height: 16px; stroke: var(--text-muted); fill: none;
+      stroke-width: 2; stroke-linecap: round;
+    }
+    .icon-slot-label {
+      font-size: 0.65rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .icon-slot input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    }
+
+    .brand-note {
+      margin-top: 12px; padding: 16px 20px;
+      background: var(--cream); border-radius: 12px;
+      font-family: 'DM Sans'; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6;
+      border-left: 3px solid var(--green);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .segment-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .segment-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .journey-grid { grid-template-columns: 1fr; }
+      .journey-act:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
+      .messaging-grid { grid-template-columns: 1fr; }
+      .ad-grid { grid-template-columns: 1fr; }
+      .cta-grid { grid-template-columns: 1fr; }
+      .channel-grid { grid-template-columns: repeat(2, 1fr); }
+      .panel-hero { grid-template-columns: 1fr; }
+      .panel-stats { flex-direction: row; flex-wrap: wrap; }
+      nav { padding: 0 1.25rem; }
+      .container { padding: 32px 1.25rem 60px; }
+      .color-palette { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .segment-grid.cols-3, .segment-grid.cols-4 { grid-template-columns: 1fr; }
+      .channel-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: 14px 10px; font-size: 0.68rem; }
+      .color-palette { grid-template-columns: 1fr; }
+      .icon-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-dot"></div>
+    Key Lime — ICP Playbooks
+  </a>
+  <a class="nav-back" href="hub.html">← Back to Hub</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Three Audiences · One Brand · April 2026</div>
+  <h1>Same mission.<br /><em>Three different stories.</em></h1>
+  <p>The brand psychology, color system, and archetypes don't change. The hero, the pain, the channels, and the message shift entirely based on who you're talking to.</p>
+</section>
+
+<!-- TAB BAR -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active-buyer" onclick="switchTab('buyer', this)" id="tab-buyer">Buyers</button>
+    <button class="tab-btn" onclick="switchTab('seller', this)" id="tab-seller">Sellers</button>
+    <button class="tab-btn" onclick="switchTab('concierge', this)" id="tab-concierge">Concierges</button>
+    <button class="tab-btn" onclick="switchTab('brand', this)" id="tab-brand">Brand</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- BUYER PANEL -->
+<!-- ════════════════════════════════════════ -->
+<div id="panel-buyer" class="panel active">
+  <div class="container">
+
+    <!-- Panel Hero -->
+    <div class="panel-hero">
+      <div>
+        <div class="panel-hero-eyebrow" style="color:var(--green)">Audience 01 · Buyers</div>
+        <h2>Search, tour, and close.<br />No agent required.</h2>
+        <p>Tampa Bay buyers are informed, motivated, and ready — and they're still being forced to pay $10,000+ to someone who earns more if they spend more. Key Lime separates access, intelligence, and documentation from the agent fee that bundles all three.</p>
+        <blockquote class="panel-hero-quote" style="border-color:var(--green)">
+          "You've done the research. You know the neighborhoods. You have the down payment. And somehow, you still can't see a house without signing a contract with a stranger who earns more if you spend more. That's not a feature of the system. That's the system working as designed."
+        </blockquote>
+      </div>
+      <div class="panel-stats">
+        <div class="stat-box">
+          <div class="val" style="color:var(--gold)">$8,350</div>
+          <div class="lbl">Avg. buyer savings<br />on a $500K home</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--green)">$20</div>
+          <div class="lbl">On-demand chaperone<br />showing</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--teal)">3</div>
+          <div class="lbl">Buyer segments</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segments -->
+    <div class="section-title" style="color:var(--green)">Buyer Segments</div>
+    <div class="segment-grid cols-3">
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(168,200,86,0.1);color:var(--green);border:1px solid rgba(168,200,86,0.2)">Tier 1 · Priority</span>
+        <div class="seg-name">Out-of-State Digital Relocator</div>
+        <div class="seg-demo">Age 28–48 · HHI $110–220K · Target $450–750K<br />NYC, NJ, Bay Area, LA, Chicago → Tampa Bay</div>
+        <blockquote class="seg-quote" style="border-color:var(--green)">
+          "I've been Zillow-surfing Tampa for three months from Brooklyn. I know Seminole Heights from South Tampa. I just need to see the inside without booking a flight every time an agent reschedules."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Remote-first</span>
+          <span class="seg-tag">Meta geo NY/NJ/CA</span>
+          <span class="seg-tag">LinkedIn</span>
+          <span class="seg-tag">Reddit r/floridamoving</span>
+        </div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">
+          "Key Lime is the buying platform for people who already know what they want and won't pay thousands for someone to unlock the door."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(168,200,86,0.1);color:var(--green);border:1px solid rgba(168,200,86,0.2)">Tier 1 · Priority</span>
+        <div class="seg-name">Move-Up Millennial Buyer</div>
+        <div class="seg-demo">Age 32–42 · HHI $90–160K · Target $450–650K<br />Tampa Bay; owns starter home $280–380K</div>
+        <blockquote class="seg-quote" style="border-color:var(--green)">
+          "I bought my first place in 2019. I know what agents do and don't do. I'm not paying 3% again for someone to forward my offers and tell me the market is hot."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Meta local</span>
+          <span class="seg-tag">Reddit r/realestate</span>
+          <span class="seg-tag">BiggerPockets</span>
+          <span class="seg-tag">Email</span>
+        </div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">
+          "Key Lime is for buyers who've done the homework and shouldn't pay $10,000 for someone to carry the clipboard."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2</span>
+        <div class="seg-name">First-Time Tampa Bay Buyer</div>
+        <div class="seg-demo">Age 26–36 · HHI $70–110K · Target $325–480K<br />Renting in Tampa; Ybor, Hyde Park, St. Pete</div>
+        <blockquote class="seg-quote" style="border-color:var(--gray)">
+          "Every time I start the process, it feels like there's a step I'm missing — and I need someone to explain it, but that someone charges thousands of dollars."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">TikTok</span>
+          <span class="seg-tag">Instagram</span>
+          <span class="seg-tag">Facebook Groups</span>
+          <span class="seg-tag">r/FirstTimeHomeBuyer</span>
+        </div>
+        <div class="seg-position" style="background:rgba(107,122,141,0.07);color:var(--gray)">
+          "Key Lime is the knowledgeable friend you always wanted — shows you the math, handles the paperwork, never sends you a $10,000 invoice."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Journey -->
+    <div class="section-title" style="color:var(--green)">Buyer Hero Journey Arc</div>
+    <div class="journey-grid">
+      <div class="journey-act">
+        <div class="act-num">Act 1</div>
+        <div class="act-label" style="color:var(--gray)">The Broken System</div>
+        <div class="act-hook">"I know what I want. Why can't I just book a tour?"</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Researching neighborhoods at midnight — can't see any without signing a contract</div><div class="moment-emotion" style="color:var(--gray)">Excited → Frustrated</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Learns buyer-agency agreement means owing $10K regardless of outcome</div><div class="moment-emotion" style="color:var(--gray)">Confused → Annoyed</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Flies to Tampa for a showing the agent cancels — $600 in airfare wasted</div><div class="moment-emotion" style="color:var(--gray)">Angry</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Runs the commission math: $12,000 to forward offers and unlock doors</div><div class="moment-emotion" style="color:var(--gray)">Shocked</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="journey-act" style="background:rgba(168,200,86,0.04)">
+        <div class="act-num">Act 2</div>
+        <div class="act-label" style="color:var(--green)">Discovery</div>
+        <div class="act-hook">"Wait, 1%? Let me see how this works."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Sees traditional vs. Key Lime cost comparison</div><div class="moment-emotion" style="color:var(--green)">Relieved, curious</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Books a $20 chaperone showing — "That's it? Like Uber?"</div><div class="moment-emotion" style="color:var(--green)">Delighted</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Runs AI comps on a listing they've been watching for weeks</div><div class="moment-emotion" style="color:var(--green)">Confident</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Calculates $9,000 savings in real dollars</div><div class="moment-emotion" style="color:var(--green)">Motivated</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--green)">
+          "Key Lime isn't a shortcut. It's what the process would look like if it were designed for the buyer, not built around the agent."
+        </div>
+      </div>
+      <div class="journey-act">
+        <div class="act-num">Act 3</div>
+        <div class="act-label" style="color:var(--gold)">Transformation</div>
+        <div class="act-hook">"I did this. And I saved $9,000."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Closes at $500K — paid 1%, not 2.67%. Savings sitting in emergency fund.</div><div class="moment-emotion" style="color:var(--gold)">Proud, relieved</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Tells friends: "It's like DoorDash for home tours. You have to use it."</div><div class="moment-emotion" style="color:var(--gold)">Evangelical</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Understood every document they signed — "that's different from most people"</div><div class="moment-emotion" style="color:var(--gold)">Transformed</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--gold)">
+          "You bought a home in Tampa and know exactly what you paid for. No hidden fees. No one taking a percentage of your biggest financial decision."
+        </div>
+      </div>
+    </div>
+
+    <!-- Messaging -->
+    <div class="section-title" style="color:var(--green)">Messaging Framework</div>
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--green)">6 Headline Frameworks</h4>
+        <div class="headline-list">
+          <div class="headline-item" style="border-color:var(--gold)">
+            <div class="headline-label">Math Drop · Retargeting</div>
+            <div class="headline-text">"You'll pay $13,350 to a buyer's agent on a $500K home. Or 1%. You choose."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--green)">
+            <div class="headline-label">Access Unlock · Rebel · TOFU</div>
+            <div class="headline-text">"You don't need an agent to see a house. You need $20 and 10 minutes."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">Research Peer · Sage · MOFU</div>
+            <div class="headline-text">"You already know the neighborhood. The AI knows every comp in it."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gray)">
+            <div class="headline-label">Relocator Hook · Out-of-State</div>
+            <div class="headline-text">"You shouldn't have to book a flight to see a house. Book a $20 chaperone instead."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gray)">
+            <div class="headline-label">Post-NAR Reframe · Sage/Rebel</div>
+            <div class="headline-text">"The NAR settlement promised buyers lower fees. Agents are charging more than ever."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--green)">
+            <div class="headline-label">First-Time Hero · Hero</div>
+            <div class="headline-text">"First-time buyer doesn't mean first-time disadvantaged. The AI knows every step."</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--green)">Voice · Words to Use / Avoid</h4>
+        <table class="word-table">
+          <tr><td class="word-use">Book a showing</td><td>Removes agent friction from language</td></tr>
+          <tr><td class="word-use">1% closing fee</td><td>"Commission" implies agent structure — "fee" is direct</td></tr>
+          <tr><td class="word-use">Keep the difference</td><td>Specific and active vs. generic "save money"</td></tr>
+          <tr><td class="word-use">On your schedule</td><td>Buyer-centric framing vs. feature description</td></tr>
+          <tr><td class="word-use">Data-backed offer</td><td>Specific to Key Lime advantage</td></tr>
+          <tr><td class="word-use">Your offer</td><td>Reinforces buyer ownership of the process</td></tr>
+          <tr><td class="word-avoid">Low commission</td><td>"Commission" implies traditional agent structure</td></tr>
+          <tr><td class="word-avoid">Automated valuation</td><td>Jargon — "AI comps" is buyer-native language</td></tr>
+          <tr><td class="word-avoid">Flexible showings</td><td>Feature description, not buyer-centric</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Savings Table -->
+    <div class="section-title" style="color:var(--green)">Savings Calculator</div>
+    <table class="savings-table">
+      <thead><tr>
+        <th>Home Price</th><th>Agent Cost (2.67%)</th><th>Key Lime (1%)</th><th>Buyer Saves</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="price">$325,000</td><td class="traditional">$8,677</td><td class="homedirect">$3,250</td><td class="savings">$5,427</td></tr>
+        <tr><td class="price">$400,000</td><td class="traditional">$10,680</td><td class="homedirect">$4,000</td><td class="savings">$6,680</td></tr>
+        <tr><td class="price">$500,000</td><td class="traditional">$13,350</td><td class="homedirect">$5,000</td><td class="savings">$8,350</td></tr>
+        <tr><td class="price">$600,000</td><td class="traditional">$16,020</td><td class="homedirect">$6,000</td><td class="savings">$10,020</td></tr>
+        <tr><td class="price">$650,000</td><td class="traditional">$17,355</td><td class="homedirect">$6,500</td><td class="savings">$10,855</td></tr>
+        <tr><td class="price">$750,000</td><td class="traditional">$20,025</td><td class="homedirect">$7,500</td><td class="savings">$12,525</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Ad Concepts -->
+    <div class="section-title" style="color:var(--green)">Ad Creative Concepts</div>
+    <div class="ad-grid">
+      <div class="ad-card">
+        <div class="ad-label">Concept 01</div>
+        <div class="ad-name">The Math Ad</div>
+        <div class="ad-meta">
+          <span class="ad-tag">Move-Up Millennial + Relocator</span>
+          <span class="ad-tag">TOFU/MOFU</span>
+          <span class="ad-tag">Meta · LinkedIn</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(168,200,86,0.06);border-color:var(--green);color:var(--offwhite)">
+          "Your buyer's agent costs $13,350 on a $500K home. Key Lime costs $5,000. The math isn't complicated."
+        </div>
+        <div class="ad-body">Dark slate bg. Two columns: Traditional (red/crossed out) vs. Key Lime (green). Center: savings amount in Savings Gold. Video: calculator types $13,350 → $5,000 → $8,350 animated in gold.</div>
+        <div class="ad-cta" style="color:var(--green)">CTA: "Run your number →"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 02</div>
+        <div class="ad-name">The Flight</div>
+        <div class="ad-meta">
+          <span class="ad-tag">Out-of-State Relocator</span>
+          <span class="ad-tag">TOFU</span>
+          <span class="ad-tag">Meta geo NY/NJ/CA · LinkedIn</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(168,200,86,0.06);border-color:var(--green);color:var(--offwhite)">
+          "You shouldn't have to book a flight to see a house."
+        </div>
+        <div class="ad-body">Split screen: boarding pass left / $20 Key Lime showing confirmation right. "You know South Tampa from Westchase. You just need to see the inside." Retargeting variant inserts their origin city dynamically.</div>
+        <div class="ad-cta" style="color:var(--green)">CTA: "Book a Tampa showing — no flight required →"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 03</div>
+        <div class="ad-name">DoorDash for Home Tours</div>
+        <div class="ad-meta">
+          <span class="ad-tag">First-Time Buyer</span>
+          <span class="ad-tag">TOFU</span>
+          <span class="ad-tag">TikTok · Instagram Reels · YouTube Shorts</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(168,200,86,0.06);border-color:var(--teal);color:var(--offwhite)">
+          "Okay, real talk. Home showings now work like food delivery."
+        </div>
+        <div class="ad-body">30-sec vertical, UGC-style. "Find a house on Zillow. Book a showing. For $20, someone meets you there tomorrow. No agent contract. No $12,000 door-unlocking fee. First-time buyer doesn't mean you do it the expensive way."</div>
+        <div class="ad-cta" style="color:var(--teal)">CTA: "Book your first showing — $20"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 04</div>
+        <div class="ad-name">The NAR Settlement Didn't Save You</div>
+        <div class="ad-meta">
+          <span class="ad-tag">Move-Up Millennial · Relocator</span>
+          <span class="ad-tag">MOFU</span>
+          <span class="ad-tag">Reddit · LinkedIn · Long-form Facebook</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(168,200,86,0.06);border-color:var(--gold);color:var(--offwhite)">
+          "The NAR settlement was supposed to lower what buyers pay agents. Commissions just hit a new high."
+        </div>
+        <div class="ad-body">Sage archetype at maximum. Long-form native content: shows the data, names the gap between what was promised and what happened. "Average combined commission: 5.44% — up from 5.32% pre-settlement." Financially literate buyers will forward this.</div>
+        <div class="ad-cta" style="color:var(--gold)">CTA: "See how much you'd save on your target price →"</div>
+      </div>
+    </div>
+
+    <!-- Channels -->
+    <div class="section-title" style="color:var(--green)">Channel Strategy</div>
+    <div class="channel-grid">
+      <div class="channel-card"><div class="channel-name">Meta (Facebook/Instagram)</div><div class="channel-segment">All three segments</div><span class="channel-priority p1">P1</span><div class="channel-note">Largest reach. Geo-target origin markets (NY, NJ, CA) + Tampa. Retarget with savings math at price range.</div></div>
+      <div class="channel-card"><div class="channel-name">Google Search (SEM)</div><div class="channel-segment">All three · BOFU</div><span class="channel-priority p1">P1</span><div class="channel-note">High-intent: "buy home without realtor Tampa," "buyer agent fee Tampa," "do I need a buyer's agent 2025"</div></div>
+      <div class="channel-card"><div class="channel-name">Reddit</div><div class="channel-segment">Relocators · Move-Up</div><span class="channel-priority p1">P1</span><div class="channel-note">r/tampa, r/FirstTimeHomeBuyer, r/personalfinance, r/floridamoving. Alex voice. Organic first, 60–90 days.</div></div>
+      <div class="channel-card"><div class="channel-name">Email (Owned)</div><div class="channel-segment">All three · MOFU/BOFU</div><span class="channel-priority p1">P1</span><div class="channel-note">Highest ROI. 6-email nurture from showing booking to offer. Personalized savings number in subject line.</div></div>
+      <div class="channel-card"><div class="channel-name">YouTube</div><div class="channel-segment">All three · TOFU</div><span class="channel-priority p2">P2</span><div class="channel-note">Neighborhood/market explainers. Pre-roll on Tampa real estate content. 5–10 min organic walkthroughs.</div></div>
+      <div class="channel-card"><div class="channel-name">TikTok</div><div class="channel-segment">First-Time Buyers</div><span class="channel-priority p2">P2</span><div class="channel-note">Real estate education content. UGC-style 30-sec videos. "How to buy a house without an agent" angle.</div></div>
+    </div>
+
+    <!-- Objections -->
+    <div class="section-title" style="color:var(--green)">Objection Handling</div>
+    <div class="obj-list">
+      <div class="obj-item">
+        <div class="obj-q" style="color:var(--green)">"Without an agent, I'll overpay."</div>
+        <div class="obj-a">Buyer's agents are compensated as a % of purchase price — they benefit when you pay more. Key Lime's AI negotiation is based on Tampa Bay transaction data, comps, days on market, and seller concession trends — with zero financial incentive to push toward a higher price. The $9,000 you're not paying stays in your pocket regardless.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" style="color:var(--green)">"The chaperone can't answer my questions about the house."</div>
+        <div class="obj-a">Here's what happens at a traditional showing: you ask about the school district, the agent says "great question, I'll look that up." The chaperone gets you in for $20. The AI answers school ratings, flood zone, HOA, recent sales, and estimated repair costs before you walk in. You arrive informed, not dependent.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" style="color:var(--green)">"I'm a first-time buyer — I don't know enough to do this without help."</div>
+        <div class="obj-a">The complexity of home buying is real — but it's process complexity, not expertise complexity. It's documentation, deadlines, and disclosures — all managed by the platform. Every step has a plain-language explanation. First-time buyers who use Key Lime leave understanding every document they signed. That's different from most buyers who used an agent.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SELLER PANEL -->
+<!-- ════════════════════════════════════════ -->
+<div id="panel-seller" class="panel">
+  <div class="container">
+
+    <!-- Panel Hero -->
+    <div class="panel-hero">
+      <div>
+        <div class="panel-hero-eyebrow" style="color:var(--gold)">Audience 02 · Sellers</div>
+        <h2>List at 1%.<br />Keep $19,000 more.</h2>
+        <p>Tampa Bay sellers are preparing for a $430K transaction and have no idea they're about to hand $24,000 to two agents — one of whom they never hired. For the Commission-Awakened seller, the retroactive realization — "I paid this on every transaction" — is the gut-punch that converts browsers to buyers.</p>
+        <blockquote class="panel-hero-quote" style="border-color:var(--gold)">
+          "Most Tampa Bay sellers walk away from closing having paid $20,000–$24,000 in commissions. About half had no idea half of that went to the buyer's agent — the person working against them at the negotiating table."
+        </blockquote>
+      </div>
+      <div class="panel-stats">
+        <div class="stat-box">
+          <div class="val" style="color:var(--gold)">$19,650</div>
+          <div class="lbl">Net savings vs. traditional<br />on a $430K sale</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--green)">5.57%</div>
+          <div class="lbl">Tampa avg. commission<br />vs. Key Lime 1%</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--teal)">4</div>
+          <div class="lbl">Seller segments</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segments -->
+    <div class="section-title" style="color:var(--gold)">Seller Segments</div>
+    <div class="segment-grid cols-4">
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Hero</span>
+        <div class="seg-name">Equity-Motivated Move-Up Millennial</div>
+        <div class="seg-demo">Age 32–42 · HHI $90–160K · Home $350–550K<br />South Tampa, Westchase, Wesley Chapel</div>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Google Search</span>
+          <span class="seg-tag">Reddit</span>
+          <span class="seg-tag">BiggerPockets</span>
+        </div>
+        <div class="seg-position" style="background:rgba(245,183,49,0.07);color:var(--gold)">
+          "You've got $120K in equity and a $24,000 commission bill coming. The AI handles negotiation, docs, and disclosures. A $20/hr chaperone shows your home. You pay 1%. Run the math."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Rebel</span>
+        <div class="seg-name">Commission-Awakened Repeat Seller</div>
+        <div class="seg-demo">Age 45–62 · HHI $100–200K · Home $450–800K<br />2–4 prior sales; cumulative commission: $60–100K+</div>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Facebook</span>
+          <span class="seg-tag">YouTube</span>
+          <span class="seg-tag">Email nurture</span>
+        </div>
+        <div class="seg-position" style="background:rgba(245,183,49,0.07);color:var(--gold)">
+          "You've paid commissions on 3 homes. You just found out half went to the buyer's agent — the one working against you. This time, keep it."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Sage</span>
+        <div class="seg-name">Active Investor / House Flipper</div>
+        <div class="seg-demo">Age 30–55 · 2–10+ sales/year · $300–600K range<br />Seminole Heights, Ybor, Temple Terrace flips</div>
+        <div class="seg-tag-row">
+          <span class="seg-tag">BiggerPockets</span>
+          <span class="seg-tag">FB Investor Groups</span>
+          <span class="seg-tag">Email ROI content</span>
+        </div>
+        <div class="seg-position" style="background:rgba(107,122,141,0.07);color:var(--gray)">
+          "5 flips last year. 5.57% commission each time. That's $91K you paid in commissions. Key Lime charges 1%. Model what that does to your annual net."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Hero+Sage</span>
+        <div class="seg-name">FSBO Upgrader</div>
+        <div class="seg-demo">Age 35–58 · Home $250–500K<br />Tried Zillow FSBO; 30–90 days, no offer or panicked at contract</div>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Google Search</span>
+          <span class="seg-tag">FSBO forums</span>
+          <span class="seg-tag">Comparison sites</span>
+        </div>
+        <div class="seg-position" style="background:rgba(107,122,141,0.07);color:var(--gray)">
+          "FSBO felt right until the contract showed up. Key Lime handles negotiation, paperwork, and disclosures — you still pay 1%. Not 5.5%. Not nothing."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Journey -->
+    <div class="section-title" style="color:var(--gold)">Seller Hero Journey Arc</div>
+    <div class="journey-grid">
+      <div class="journey-act">
+        <div class="act-num">Act 1</div>
+        <div class="act-label" style="color:var(--gray)">The Current Pain</div>
+        <div class="act-hook">"I'm about to pay $24,000 and I don't fully understand why."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">49% of sellers didn't know they were paying the buyer's agent commission</div><div class="moment-emotion" style="color:var(--gray)">Uninformed → Shocked</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">$23,950 commission bill on a $430K home — half to an agent they never hired</div><div class="moment-emotion" style="color:var(--gray)">Angry</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Commission-Awakened: cumulative lifetime total hits — $60K, $80K, $100K+</div><div class="moment-emotion" style="color:var(--gray)">Righteously furious</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">FSBO route explored — agent-listed homes sell for $55K more than FSBO</div><div class="moment-emotion" style="color:var(--gray)">Trapped</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--gray)">
+          "The system was built by agents, for agents. The rules haven't changed in 50 years. Until now."
+        </div>
+      </div>
+      <div class="journey-act" style="background:rgba(245,183,49,0.03)">
+        <div class="act-num">Act 2</div>
+        <div class="act-label" style="color:var(--gold)">The Third Option</div>
+        <div class="act-hook">"Pay 5.5%. Go FSBO and lose $55K. Or..."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Discovers Key Lime via Google, Nextdoor, or Facebook — skeptical</div><div class="moment-emotion" style="color:var(--gold)">Curious, cautious</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">AI comp analysis explained — trained on Tampa Bay transactions, pricing confidence score</div><div class="moment-emotion" style="color:var(--gold)">Reassured</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Chaperone model explained — seller never coordinates a showing</div><div class="moment-emotion" style="color:var(--gold)">Relieved</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Investor runs the model: 5 flips × 4.57% savings = $91K/year retained</div><div class="moment-emotion" style="color:var(--gold)">Convinced</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--gold)">
+          "The NAR settlement cracked open a 50-year-old model. AI made a real alternative possible. There's a third option — and it's the one industry spent a decade trying to prevent."
+        </div>
+      </div>
+      <div class="journey-act">
+        <div class="act-num">Act 3</div>
+        <div class="act-label" style="color:var(--green)">Closing With $19K More</div>
+        <div class="act-hook">"Closed at $432,000. Paid $4,320. That's $19,630 back."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Millennial: $19,650 toward down payment on larger next home</div><div class="moment-emotion" style="color:var(--green)">Proud, smart</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Commission-Awakened: justice — and a dinner party story that converts friends</div><div class="moment-emotion" style="color:var(--green)">Evangelical</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Investor: $98,250/year retained across 5 transactions</div><div class="moment-emotion" style="color:var(--green)">Compounding advantage</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--green)">
+          "AI negotiated. A chaperone showed the house. You approved the deal from your phone. This is what selling a home looks like now."
+        </div>
+      </div>
+    </div>
+
+    <!-- Messaging -->
+    <div class="section-title" style="color:var(--gold)">Messaging Framework</div>
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--gold)">6 Headline Frameworks</h4>
+        <div class="headline-list">
+          <div class="headline-item" style="border-color:var(--gold)">
+            <div class="headline-label">Math Drop · Search / Facebook</div>
+            <div class="headline-text">"Tampa sellers pay $23,950 in commissions. Key Lime charges $4,300. The difference is yours."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gold)">
+            <div class="headline-label">System Reveal · Commission-Awakened</div>
+            <div class="headline-text">"You were paying the buyer's agent too. For every transaction. Key Lime changes that."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gray)">
+            <div class="headline-label">Third Option · YouTube · Retargeting</div>
+            <div class="headline-text">"Pay 5.5% to an agent. Go FSBO and lose $55K. Or list with Key Lime and keep both."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">AI Proof · How It Works / Email</div>
+            <div class="headline-text">"AI trained on 10,000+ Tampa Bay transactions priced your home, wrote the contract, and counter-offered in real time."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--green)">
+            <div class="headline-label">Equity Reframe · Instagram / Email</div>
+            <div class="headline-text">"$19,650 is a semester of college. A year of car payments. Stop leaving it at the closing table."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gray)">
+            <div class="headline-label">Investor ROI · BiggerPockets / Email</div>
+            <div class="headline-text">"5 flips. 5.57% commission each time. That's $91,000 you paid last year that you didn't have to."</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--gold)">Alex's Voice for Sellers</h4>
+        <table class="word-table">
+          <tr><td class="word-use">Keep $19,650 more</td><td>Not "discount" — positions as smart, not cheap</td></tr>
+          <tr><td class="word-use">AI handles negotiation</td><td>Specific capability — never vague</td></tr>
+          <tr><td class="word-use">You approve every step</td><td>Addresses control anxiety directly</td></tr>
+          <tr><td class="word-use">On a $430K home...</td><td>Anchors to real, local Tampa numbers</td></tr>
+          <tr><td class="word-use">Traditional agent commission</td><td>Not adversarial; factual framing</td></tr>
+          <tr><td class="word-avoid">Discount / cheap</td><td>Positions as bargain, not smart choice</td></tr>
+          <tr><td class="word-avoid">Easy / simple / just</td><td>Minimizes a $430K transaction — breaks trust</td></tr>
+          <tr><td class="word-avoid">Robot / algorithm</td><td>Cold, untrustworthy framing of AI</td></tr>
+          <tr><td class="word-avoid">Disruptive / game-changing</td><td>Vague tech-bro language — Alex never says this</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Channels -->
+    <div class="section-title" style="color:var(--gold)">Channel Strategy</div>
+    <div class="channel-grid">
+      <div class="channel-card"><div class="channel-name">Google Search (SEM)</div><div class="channel-segment">All segments · BOFU</div><span class="channel-priority p1">P1</span><div class="channel-note">"How much do realtors charge in Tampa," "sell home without agent Tampa," "alternatives to real estate agents." Intercept the research phase.</div></div>
+      <div class="channel-card"><div class="channel-name">Facebook</div><div class="channel-segment">Commission-Awakened · Millennial</div><span class="channel-priority p1">P1</span><div class="channel-note">Primary research platform for 45–62 demo. Facebook groups, news shares, paid ads. Longer-form content performs well here.</div></div>
+      <div class="channel-card"><div class="channel-name">YouTube</div><div class="channel-segment">All segments</div><span class="channel-priority p1">P1</span><div class="channel-note">5–10 min explainers for Commission-Awakened. "Third option" framing. Pre-roll on HGTV-adjacent and personal finance content.</div></div>
+      <div class="channel-card"><div class="channel-name">Email Nurture</div><div class="channel-segment">All segments · MOFU/BOFU</div><span class="channel-priority p1">P1</span><div class="channel-note">High open rates for repeat sellers. Personalized savings number in subject line. 6-email sequence from calculator to listing start.</div></div>
+      <div class="channel-card"><div class="channel-name">NextDoor</div><div class="channel-segment">All Tampa segments</div><span class="channel-priority p2">P2</span><div class="channel-note">"Did you know you pay both agents?" — fact-first framing. Promoted posts in target Tampa neighborhoods.</div></div>
+      <div class="channel-card"><div class="channel-name">BiggerPockets / Investor Email</div><div class="channel-segment">Investor/Flipper</div><span class="channel-priority p2">P2</span><div class="channel-note">Operator-level ROI content. Case studies with actual deal math. Annualized commission savings across transaction volume.</div></div>
+    </div>
+
+    <!-- Ad Concepts -->
+    <div class="section-title" style="color:var(--gold)">Ad Creative Concepts</div>
+    <div class="ad-grid">
+      <div class="ad-card">
+        <div class="ad-label">Concept 01</div>
+        <div class="ad-name">The Math Drop</div>
+        <div class="ad-meta">
+          <span class="ad-tag">All Sellers</span>
+          <span class="ad-tag">Search Ads · Facebook · Savings Calculator LP</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--gold);color:var(--offwhite)">
+          "Tampa sellers pay $23,950 in commissions. Key Lime charges $4,300. The difference is yours."
+        </div>
+        <div class="ad-body">Savings Gold (#F5C842) on the difference number. Two-column comparison. Drives to savings calculator — lowest friction entry. "Enter your home value → see what you'd keep."</div>
+        <div class="ad-cta" style="color:var(--gold)">CTA: "See What You'd Keep →"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 02</div>
+        <div class="ad-name">The System Reveal</div>
+        <div class="ad-meta">
+          <span class="ad-tag">Commission-Awakened · 45–62</span>
+          <span class="ad-tag">Facebook · YouTube Pre-roll · Email Subject</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--gold);color:var(--offwhite)">
+          "You were paying the buyer's agent too. For every transaction. Key Lime changes that."
+        </div>
+        <div class="ad-body">Rebel archetype activation — directed at the system, not individual agents (brand guardrail). The retroactive math ("$60K over a lifetime of moves") is the gut-punch. Drives to explainer content, then listing CTA.</div>
+        <div class="ad-cta" style="color:var(--gold)">CTA: "Show Me the Math →"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 03</div>
+        <div class="ad-name">The Third Option</div>
+        <div class="ad-meta">
+          <span class="ad-tag">FSBO Upgrader · Millennial</span>
+          <span class="ad-tag">YouTube Mid-roll · Comparison LPs · Retargeting</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--teal);color:var(--offwhite)">
+          "Pay 5.5% to an agent. Go FSBO and lose $55K. Or list with Key Lime and keep both."
+        </div>
+        <div class="ad-body">Three-way comparison: Full agent (too expensive) vs. FSBO (too risky, $55K price gap) vs. Key Lime (agent-caliber outcome at 1%). The industry didn't want sellers to find the third option.</div>
+        <div class="ad-cta" style="color:var(--teal)">CTA: "Your Home Could Be Listed Today"</div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-label">Concept 04</div>
+        <div class="ad-name">The Investor ROI Frame</div>
+        <div class="ad-meta">
+          <span class="ad-tag">Investor/Flipper</span>
+          <span class="ad-tag">BiggerPockets · Investor Email Lists · LinkedIn</span>
+        </div>
+        <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--gold);color:var(--offwhite)">
+          "5 flips. 5.57% commission each time. That's $91,000 you paid last year that you didn't have to."
+        </div>
+        <div class="ad-body">Sage archetype. Operator-level language: ARV, net-to-list ratio, cost per transaction. Model it across transaction volume. Targets Facebook Tampa Bay RE Investors groups + BiggerPockets channel. Data-led cold outreach.</div>
+        <div class="ad-cta" style="color:var(--gold)">CTA: "Model Your Annual Net →"</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- CONCIERGE PANEL -->
+<!-- ════════════════════════════════════════ -->
+<div id="panel-concierge" class="panel">
+  <div class="container">
+
+    <!-- Panel Hero -->
+    <div class="panel-hero">
+      <div>
+        <div class="panel-hero-eyebrow" style="color:var(--teal)">Audience 03 · Concierges</div>
+        <h2>Your Tampa knowledge<br />finally has a dollar value.</h2>
+        <p>Tampa Bay processes 3,000+ home sales per month — every one of those buyers tours homes first. Key Lime's $20 gig-economy showing model creates a new category of flexible professional work for Tampa locals who are underearning on delivery apps, underutilizing their neighborhood knowledge, or trying to break into real estate.</p>
+        <blockquote class="panel-hero-quote" style="border-color:var(--teal)">
+          "Your Tampa knowledge is worth $20 every time you open a door."
+        </blockquote>
+      </div>
+      <div class="panel-stats">
+        <div class="stat-box">
+          <div class="val" style="color:var(--gold)">$20</div>
+          <div class="lbl">Per showing<br />30–45 min</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--teal)">$40/hr</div>
+          <div class="lbl">Effective rate<br />30-min showings</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--green)">3</div>
+          <div class="lbl">Concierge segments</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segments -->
+    <div class="section-title" style="color:var(--teal)">Concierge Segments</div>
+    <div class="segment-grid cols-3">
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(91,181,162,0.1);color:var(--teal);border:1px solid rgba(91,181,162,0.2)">Tier 1 · Primary Target</span>
+        <div class="seg-name">The Gig Upgrader</div>
+        <div class="seg-demo">Age 22–40 · Active DoorDash/Uber/Instacart driver<br />80+ miles/day · $19–25/hr gross before gas</div>
+        <blockquote class="seg-quote" style="border-color:var(--teal)">
+          "I drove 80 miles today and made $22/hr before gas. That math doesn't work."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">TikTok</span>
+          <span class="seg-tag">Facebook Gig Groups</span>
+          <span class="seg-tag">r/doordash_drivers</span>
+        </div>
+        <div class="seg-position" style="background:rgba(91,181,162,0.07);color:var(--teal)">
+          "DoorDash paid me $22/hr and put 90 miles on my car. This pays the same and I drove 4 miles."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(91,181,162,0.1);color:var(--teal);border:1px solid rgba(91,181,162,0.2)">Tier 1 · Primary Target</span>
+        <div class="seg-name">The Tampa Local</div>
+        <div class="seg-demo">Age 25–55 · Stay-at-home parent, part-timer, or retiree<br />Deep neighborhood knowledge; underutilized time</div>
+        <blockquote class="seg-quote" style="border-color:var(--teal)">
+          "Someone just moved into our neighborhood and paid $450K. They had no idea which streets are best. I could have told them."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Nextdoor</span>
+          <span class="seg-tag">Local FB Groups</span>
+          <span class="seg-tag">HOA Newsletters</span>
+        </div>
+        <div class="seg-position" style="background:rgba(91,181,162,0.07);color:var(--teal)">
+          "You already know every neighborhood in Tampa Bay. Now get paid $20 every time you show one."
+        </div>
+      </div>
+
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2</span>
+        <div class="seg-name">The Real Estate Aspirant</div>
+        <div class="seg-demo">Age 22–35 · Pre-license or exploring RE career<br />Studying 63-hr FL coursework; needs an on-ramp</div>
+        <blockquote class="seg-quote" style="border-color:var(--gray)">
+          "I've done 50 showings and I know Seminole Heights better than any agent in Tampa."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Indeed</span>
+          <span class="seg-tag">LinkedIn</span>
+          <span class="seg-tag">BiggerPockets</span>
+          <span class="seg-tag">r/realestate</span>
+        </div>
+        <div class="seg-position" style="background:rgba(107,122,141,0.07);color:var(--gray)">
+          "Can't get into real estate without a license? There's a side door."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Journey -->
+    <div class="section-title" style="color:var(--teal)">Concierge Hero Journey Arc</div>
+    <div class="journey-grid">
+      <div class="journey-act">
+        <div class="act-num">Act 1</div>
+        <div class="act-label" style="color:var(--gray)">Stuck — The Old Story</div>
+        <div class="act-hook">"This isn't working. There has to be something better."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Gig Upgrader: 80 miles/day destroying resale value; surge pricing random; $22/hr before gas</div><div class="moment-emotion" style="color:var(--gray)">Frustrated, resentful</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">Tampa Local: knows every neighborhood but no one has ever paid them for it</div><div class="moment-emotion" style="color:var(--gray)">Undervalued</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">RE Aspirant: 63-hr license requirement; no way to "try" real estate; income gap while studying</div><div class="moment-emotion" style="color:var(--gray)">Stuck, impatient</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gray)"></div>
+            <div><div class="moment-text">The crack: "I drove 80 miles and made $22/hr before gas. That math doesn't work."</div><div class="moment-emotion" style="color:var(--gray)">Looking for alternatives</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="journey-act" style="background:rgba(91,181,162,0.03)">
+        <div class="act-num">Act 2</div>
+        <div class="act-label" style="color:var(--teal)">Discovery</div>
+        <div class="act-hook">"Wait. I could actually get paid to do this?"</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Encounters TikTok comparison: "No mileage. No food spills. $20 every time you open a door."</div><div class="moment-emotion" style="color:var(--teal)">Curious, cautious</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Runs the earnings math: $20 × 20 showings/week = $400/week, 4 miles vs. 80</div><div class="moment-emotion" style="color:var(--teal)">Calculating</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Checks legitimacy — social proof from other concierges, reviews, "day in the life" content</div><div class="moment-emotion" style="color:var(--teal)">Due diligence</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Applies in 5 minutes — background check + orientation; no experience required</div><div class="moment-emotion" style="color:var(--teal)">Cautiously optimistic</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--teal)">
+          Specificity converts. "Earn money in real estate" doesn't convert. "$20 per showing, 30–45 minutes, no license required" does.
+        </div>
+      </div>
+      <div class="journey-act">
+        <div class="act-num">Act 3</div>
+        <div class="act-label" style="color:var(--gold)">Earned</div>
+        <div class="act-hook">"This is actually what I should have been doing."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">First showing: showed up, opened the door, toured, submitted report. $20 hit the account. It felt professional.</div><div class="moment-emotion" style="color:var(--gold)">Proud, competent</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Gig Upgrader: "I used to deliver food. Now I facilitate home tours."</div><div class="moment-emotion" style="color:var(--gold)">Identity upgrade</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">RE Aspirant: "I've done 50 showings and know Seminole Heights better than any agent in Tampa."</div><div class="moment-emotion" style="color:var(--gold)">Career capital building</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Refers a neighbor: "Know another Tampa local who'd be great at this? Earn $25."</div><div class="moment-emotion" style="color:var(--gold)">Loyal, evangelical</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--gold)">
+          The concierge is the hero — Key Lime is the mechanism that creates the opportunity. Every piece of recruitment content frames them as the protagonist.
+        </div>
+      </div>
+    </div>
+
+    <!-- Messaging -->
+    <div class="section-title" style="color:var(--teal)">Messaging Framework</div>
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--teal)">6 Headline Frameworks</h4>
+        <div class="headline-list">
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">Earnings Comparison · Gig Upgrader</div>
+            <div class="headline-text">"DoorDash paid me $22/hr and put 90 miles on my car. This pays the same and I drove 4 miles."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">Role Reframe · Dignity-Seeking</div>
+            <div class="headline-text">"Ditched DoorDash. Now I unlock doors."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gold)">
+            <div class="headline-label">Local Knowledge · Tampa Local</div>
+            <div class="headline-text">"You already know every neighborhood in Tampa Bay. Now get paid $20 every time you show one."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">Math Reveal · Universal</div>
+            <div class="headline-text">"30 minutes. $20. No restaurant waits. No mileage. This is a Tampa home showing."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gray)">
+            <div class="headline-label">Career On-Ramp · RE Aspirant</div>
+            <div class="headline-text">"Can't get into real estate without a license? There's a side door."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">Demand Signal · Trust-Building</div>
+            <div class="headline-text">"Tampa had 3,452 home sales in July 2025. Every buyer toured first. Be the person who opens the door."</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--teal)">Voice · Concierge Recruitment Tone</h4>
+        <table class="word-table">
+          <tr><td class="word-use">Concierge / Showing Pro</td><td>Professional title — not "gig worker" in aspirational content</td></tr>
+          <tr><td class="word-use">$20 per showing</td><td>Always lead with the specific earnings number</td></tr>
+          <tr><td class="word-use">No mileage, daylight hours</td><td>Remove the specific pains of gig delivery</td></tr>
+          <tr><td class="word-use">Your Tampa neighborhood</td><td>"Tampa" is an identity badge — use neighborhood names</td></tr>
+          <tr><td class="word-use">Open the door. Report back.</td><td>Honest simplicity — the job is simple, that's a feature</td></tr>
+          <tr><td class="word-avoid">Gig (in aspirational content)</td><td>Reinforces the identity they're trying to leave</td></tr>
+          <tr><td class="word-avoid">Easy money / passive income</td><td>Signals scam — this audience is scam-savvy</td></tr>
+          <tr><td class="word-avoid">Unlimited earning potential</td><td>Sounds like MLM — this audience will walk</td></tr>
+          <tr><td class="word-avoid">Empower / disruptive</td><td>Corporate buzzwords — kills street credibility</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CTA Stages -->
+    <div class="section-title" style="color:var(--teal)">CTA Language by Funnel Stage</div>
+    <div class="cta-grid">
+      <div class="cta-stage">
+        <div class="cta-stage-label" style="color:var(--teal)">Stage 1 — Awareness</div>
+        <div class="cta-items">
+          <div class="cta-item"><div class="cta-context">TikTok/Reel mid-roll</div><div class="cta-text">"See how much Tampa concierges actually earn →"</div></div>
+          <div class="cta-item"><div class="cta-context">Facebook ad (Gig Upgrader)</div><div class="cta-text">"Find out if this beats what you're making now"</div></div>
+          <div class="cta-item"><div class="cta-context">Nextdoor (Tampa Local)</div><div class="cta-text">"Learn how to turn your neighborhood knowledge into income"</div></div>
+          <div class="cta-item"><div class="cta-context">Reddit (RE Aspirant)</div><div class="cta-text">"No license required — here's how to build RE experience now"</div></div>
+        </div>
+      </div>
+      <div class="cta-stage">
+        <div class="cta-stage-label" style="color:var(--teal)">Stage 2–3 — Consideration + Apply</div>
+        <div class="cta-items">
+          <div class="cta-item"><div class="cta-context">Landing page hero</div><div class="cta-text">"See the earnings breakdown"</div></div>
+          <div class="cta-item"><div class="cta-context">FAQ section close</div><div class="cta-text">"Ready to see if you qualify? Apply in 5 minutes."</div></div>
+          <div class="cta-item"><div class="cta-context">Testimonial section</div><div class="cta-text">"Join 200+ Tampa concierges already earning"</div></div>
+          <div class="cta-item"><div class="cta-context">Application button</div><div class="cta-text">"Start My Application" (not "Submit")</div></div>
+        </div>
+      </div>
+      <div class="cta-stage">
+        <div class="cta-stage-label" style="color:var(--gold)">Stage 4–5 — Onboard + Activate</div>
+        <div class="cta-items">
+          <div class="cta-item"><div class="cta-context">Orientation email subject</div><div class="cta-text">"Your first showing is closer than you think"</div></div>
+          <div class="cta-item"><div class="cta-context">Post-orientation</div><div class="cta-text">"You're cleared. Accept your first showing."</div></div>
+          <div class="cta-item"><div class="cta-context">Post-showing push</div><div class="cta-text">"$20 earned. Check your next showing opportunity."</div></div>
+          <div class="cta-item"><div class="cta-context">Referral prompt</div><div class="cta-text">"Know a Tampa local who'd be great at this? Earn $25."</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Channels -->
+    <div class="section-title" style="color:var(--teal)">Channel Strategy</div>
+    <div class="channel-grid">
+      <div class="channel-card"><div class="channel-name">TikTok (organic + paid)</div><div class="channel-segment">Gig Upgrader · Primary</div><span class="channel-priority p1">Tier 1</span><div class="channel-note">30–60s comparison videos. "POV: I switched from DoorDash to home showings." Lead with earnings math first 3 seconds. Partner 3–5 Tampa micro-influencers (2K–20K followers).</div></div>
+      <div class="channel-card"><div class="channel-name">Facebook Groups</div><div class="channel-segment">Gig Upgrader + Tampa Local</div><span class="channel-priority p1">Tier 1</span><div class="channel-note">Tampa Bay Gig Workers, DoorDash Tampa, Tampa Bay Moms. Lead with Tampa market data, not "WE'RE HIRING." Organic presence first.</div></div>
+      <div class="channel-card"><div class="channel-name">Nextdoor</div><div class="channel-segment">Tampa Local · Primary</div><span class="channel-priority p1">Tier 1</span><div class="channel-note">Hyper-local. Reference specific neighborhoods: Hyde Park, Seminole Heights, Palma Ceia. "Flexible local work for Tampa residents" — not gig economy language.</div></div>
+      <div class="channel-card"><div class="channel-name">Indeed</div><div class="channel-segment">All segments</div><span class="channel-priority p1">Tier 1</span><div class="channel-note">Listing: "Home Showing Concierge — Tampa Bay (Flexible, $20/Showing)." Lead with earnings math and "no experience required." Sponsor listing during ramp-up.</div></div>
+      <div class="channel-card"><div class="channel-name">Reddit</div><div class="channel-segment">Gig Upgrader + RE Aspirant</div><span class="channel-priority p2">Tier 2</span><div class="channel-note">r/doordash_drivers, r/uberdrivers: respond to "alternatives to delivery" threads — disclose affiliation. r/realestate: frame as career on-ramp.</div></div>
+      <div class="channel-card"><div class="channel-name">Instagram Reels</div><div class="channel-segment">Gig Upgrader + RE Aspirant</div><span class="channel-priority p2">Tier 2</span><div class="channel-note">Repurpose TikTok content. Career content for RE Aspirant. Day-in-the-life format performs for this segment.</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- BRAND PANEL -->
+<!-- ════════════════════════════════════════ -->
+<div id="panel-brand" class="panel">
+  <div class="container">
+
+    <!-- Panel Hero -->
+    <div class="panel-hero">
+      <div>
+        <div class="panel-hero-eyebrow" style="color:var(--crust)">Brand Bible · April 2026</div>
+        <h2>The complete Key Lime<br /><em>brand playbook.</em></h2>
+        <p>Philosophy, positioning, archetypes, voice, visual identity — everything a designer, marketer, or creative partner needs to build on-brand for Key Lime. The brand is the bridge between the product and the person it's built for. This is the blueprint for that bridge.</p>
+        <blockquote class="panel-hero-quote" style="border-color:var(--green)">
+          "Our job is to make it effortless for the right person to look at Key Lime and immediately say: 'This is mine. This is how I do things.'"
+        </blockquote>
+      </div>
+      <div class="panel-stats">
+        <div class="stat-box">
+          <div class="val" style="color:var(--green)">5</div>
+          <div class="lbl">Core values</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--gold)">3</div>
+          <div class="lbl">Brand archetypes</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" style="color:var(--teal)">Alex</div>
+          <div class="lbl">Voice persona</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BRAND PHILOSOPHY ── -->
+    <div class="section-title" style="color:var(--crust)">Brand Philosophy</div>
+
+    <div style="background:var(--cream); border-radius:16px; padding:32px 28px; margin-bottom:20px; border-left:4px solid var(--green);">
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--green); margin-bottom:12px;">The Identity Contract</div>
+      <p style="font-family:'DM Sans'; font-size:0.95rem; color:var(--text-primary); line-height:1.7; margin:0 0 12px;">When a person chooses Key Lime, they are making a statement about themselves:</p>
+      <blockquote style="margin:0; padding:14px 20px; border-left:3px solid var(--gold); font-family:'DM Sans'; font-style:italic; font-size:0.92rem; color:var(--crust); line-height:1.7; background:rgba(245,183,49,0.05); border-radius:0 10px 10px 0;">
+        "I see through unnecessary complexity. I don't pay for things that don't deliver value. I take control of the biggest decisions in my life. And I expect the process to be easy."
+      </blockquote>
+    </div>
+
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--crust)">Mission</h4>
+        <p style="font-family:'DM Sans'; font-size:0.88rem; color:var(--text-primary); line-height:1.7;">Key Lime makes buying and selling a home as easy as it should have always been — without agents, without unnecessary fees, and without the complexity the industry built to justify itself.</p>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--crust)">Vision</h4>
+        <p style="font-family:'DM Sans'; font-size:0.88rem; color:var(--text-primary); line-height:1.7;">A world where paying 6% of your home's value to two people who facilitated a transaction feels as antiquated as hailing a cab in the rain. The brand must be designed for the end state, not the MVP — it must feel <strong>inevitable</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Core Values -->
+    <div class="section-title" style="color:var(--green)">Core Values</div>
+    <div class="segment-grid cols-3">
+      <div class="seg-card">
+        <div class="seg-name">Simplicity</div>
+        <div class="seg-demo">The name says it all. Key Lime takes something needlessly complicated and makes it clear. Not dumbed-down — clarified.</div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">Every interaction should feel: "Why wasn't it always this way?"</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-name">Empowerment</div>
+        <div class="seg-demo">Key Lime equips you to do it yourself, with confidence. The user is never a passenger. They're the driver. The platform is the road.</div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">The feeling at closing: "I did this."</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-name">Transparency</div>
+        <div class="seg-demo">No hidden fees, no opaque negotiations, no fine print. Every cost, comp, and document — visible, explainable, yours.</div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">If it can't be explained in one sentence, redesign it.</div>
+      </div>
+    </div>
+    <div class="messaging-grid" style="margin-top:4px;">
+      <div class="msg-card">
+        <h4 style="color:var(--gold)">Fairness</h4>
+        <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">1%, not 6%. Key Lime charges for what it delivers and nothing more. Never position savings as a "discount" — position it as what the service actually costs when you remove the middleman markup.</p>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--teal)">Intelligence</h4>
+        <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">Smarter than any individual agent — processes more data, negotiates without emotional bias, available 24/7. But never cold. AI is personified as "your advisor," in service of the user, never a replacement for human judgment.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--cream); border-radius:12px; padding:16px 20px; margin-top:4px; border-left:3px solid var(--green); font-family:'DM Sans'; font-size:0.78rem; color:var(--text-secondary); line-height:1.6;">
+      <strong>The bridge:</strong> A brand is a bridge between a product and the person it's built for. Every decision — name, color, tone, persona — serves one purpose: making the bridge between Key Lime and the right person as short, clear, and inevitable as possible.
+    </div>
+
+    <!-- ── THE PRODUCT — UNBUNDLED ── -->
+    <div class="section-title" style="color:var(--crust)">The Product — Unbundled</div>
+    <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.6; margin-bottom:16px;">The traditional agent bundles five distinct functions into a single, expensive service. Key Lime unbundles them and delivers each one better:</p>
+    <table class="savings-table">
+      <thead><tr>
+        <th>Function</th><th>Traditional Agent</th><th>Key Lime</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="price">Access to homes</td><td class="traditional">Agent schedules on their calendar</td><td class="homedirect">On-demand chaperone, $20, book anytime</td></tr>
+        <tr><td class="price">Market intelligence</td><td class="traditional">Agent's personal opinion on comps</td><td class="homedirect">AI comp analysis trained on local data</td></tr>
+        <tr><td class="price">Negotiation</td><td class="traditional">Agent negotiates (incentivized to close fast)</td><td class="homedirect">AI negotiation — no conflict of interest</td></tr>
+        <tr><td class="price">Documentation</td><td class="traditional">Forwards paperwork, defers to attorneys</td><td class="homedirect">Platform generates &amp; manages all docs</td></tr>
+        <tr><td class="price">Process guidance</td><td class="traditional">Agent explains when asked</td><td class="homedirect">AI advisor, 24/7, tailored to your deal</td></tr>
+      </tbody>
+    </table>
+    <div style="background:var(--cream); border-radius:12px; padding:16px 20px; margin-top:12px; border-left:3px solid var(--teal); font-family:'DM Sans'; font-size:0.82rem; color:var(--text-secondary); line-height:1.7;">
+      <strong style="color:var(--teal)">The Chaperone Model:</strong> The signature innovation. Key Lime replaces the agent-gated showing model with a gig-economy chaperone network — local people who escort buyers through homes for $20 per showing. Like DoorDash for home tours. The chaperone provides access; the AI provides intelligence. This unbundling is what makes the 1% fee possible.
+    </div>
+
+    <!-- ── BRAND POSITIONING ── -->
+    <div class="section-title" style="color:var(--crust)">Brand Positioning</div>
+
+    <div style="background:var(--cream); border-radius:16px; padding:28px; margin-bottom:20px;">
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--crust); margin-bottom:16px;">The Disruptor Playbook</div>
+      <table class="savings-table" style="margin:0;">
+        <thead><tr><th>Brand</th><th>What Was "Normal"</th><th>What They Made Obvious</th></tr></thead>
+        <tbody>
+          <tr><td class="price">Uber</td><td>Call a dispatcher, wait on a corner</td><td class="homedirect">Tap a button, car appears</td></tr>
+          <tr><td class="price">Tesla</td><td>Go to a dealership, haggle, burn gas</td><td class="homedirect">Order online, it drives itself</td></tr>
+          <tr><td class="price">Lemonade</td><td>Call an agent, fill paperwork, wait weeks</td><td class="homedirect">App, instant, transparent</td></tr>
+          <tr><td class="price">Robinhood</td><td>Call a broker, pay commissions</td><td class="homedirect">Free trades, beautiful app</td></tr>
+          <tr><td class="price" style="color:var(--green);font-weight:700">Key Lime</td><td>Pay 6% to two agents, months of complexity</td><td class="homedirect" style="font-weight:600">AI-guided, 1% fee, on-demand showings</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--green)">Competitive Posture: Confident Inevitability</h4>
+        <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">Key Lime does not attack real estate agents. Key Lime simply <strong>exists so compellingly that the old way looks silly.</strong></p>
+        <div style="margin-top:12px;">
+          <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:4px;">❌ Not this: "The 6% commission is a scam. Stop funding it."</div>
+          <div style="font-size:0.78rem; color:var(--green); font-weight:600;">✅ This: "No agents. Easy as pie."</div>
+        </div>
+        <p style="font-family:'DM Sans'; font-size:0.82rem; color:var(--text-muted); margin-top:12px; line-height:1.5;">Think Lemonade's energy: "Forget everything you know about insurance" — playful, confident, not combative.</p>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--gold)">Messaging Hierarchy</h4>
+        <div style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:2;">
+          <strong style="color:var(--crust)">1.</strong> <strong>The revelation:</strong> You don't need a real estate agent.<br>
+          <strong style="color:var(--crust)">2.</strong> <strong>The experience:</strong> The process is easy, guided, on your terms.<br>
+          <strong style="color:var(--crust)">3.</strong> <strong>The savings:</strong> 1% instead of 6%. You keep the difference.<br>
+          <strong style="color:var(--crust)">4.</strong> <strong>The intelligence:</strong> Your advisor handles comps, negotiation, docs — better than any agent.
+        </div>
+        <div style="margin-top:12px; padding:10px 14px; background:rgba(168,200,86,0.08); border-radius:8px; font-size:0.8rem; color:var(--green); font-weight:600;">
+          Key Lime is not the cheaper way — it's the better way that also saves you money.
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted); margin:24px 0 12px;">Tagline Candidates</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <span style="padding:10px 18px; background:var(--cream); border-radius:100px; font-weight:700; font-size:0.85rem; color:var(--crust); border:1px solid var(--border);">No agents. Just keys.</span>
+      <span style="padding:10px 18px; background:var(--cream); border-radius:100px; font-weight:700; font-size:0.85rem; color:var(--crust); border:1px solid var(--border);">No agents. Easy as pie.</span>
+      <span style="padding:10px 18px; background:var(--cream); border-radius:100px; font-weight:700; font-size:0.85rem; color:var(--crust); border:1px solid var(--border);">Forget the agent.</span>
+    </div>
+
+    <!-- The Core Reaction -->
+    <div style="background:var(--cream); border-radius:16px; padding:24px 28px; margin-top:20px; border-left:4px solid var(--gold);">
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">The Core Reaction</div>
+      <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.6; margin:0 0 8px;">When someone hears about Key Lime for the first time, the target reaction is:</p>
+      <blockquote style="margin:0; padding:14px 20px; border-left:3px solid var(--gold); font-family:'DM Sans'; font-style:italic; font-size:0.92rem; color:var(--crust); line-height:1.7; background:rgba(245,183,49,0.05); border-radius:0 10px 10px 0;">
+        "Holy shit, I didn't even know this was a thing. You can buy or sell a home without a real estate agent, the process is easy, and you save more money? You have to use Key Lime."
+      </blockquote>
+    </div>
+
+    <!-- ── TARGET PERSONAS ── -->
+    <div class="section-title" style="color:var(--green)">Target Personas</div>
+
+    <div style="background:var(--cream); border-radius:12px; padding:16px 20px; margin-bottom:20px; font-family:'DM Sans'; font-size:0.82rem; color:var(--text-secondary); border-left:3px solid var(--green);">
+      <strong>Audience weighting:</strong> Key Lime's brand is designed <strong style="color:var(--green)">80% toward the buyer</strong> (pull strategy — if buyers are here, sellers will come). Three primary personas, united by one psychographic thread: <strong>they see through unnecessary complexity and expect better.</strong>
+    </div>
+
+    <div class="segment-grid cols-3">
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(168,200,86,0.1);color:var(--green);border:1px solid rgba(168,200,86,0.2)">Primary · 40%</span>
+        <div class="seg-name">The First Timer</div>
+        <div class="seg-demo">Age 26–36 · HHI $70–110K · Target $325–480K<br>Renting in Tampa; digitally native, AI-comfortable</div>
+        <blockquote class="seg-quote" style="border-color:var(--green)">
+          "Every time I start the process, there's a step I'm missing — and the person who claims to help costs thousands."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Robinhood</span>
+          <span class="seg-tag">Chime</span>
+          <span class="seg-tag">DoorDash</span>
+          <span class="seg-tag">Spotify</span>
+        </div>
+        <div class="seg-position" style="background:rgba(168,200,86,0.07);color:var(--green)">Never used an agent. Don't want to start. Buying a home should work like everything else in their life — from their phone.</div>
+      </div>
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Secondary · 35%</span>
+        <div class="seg-name">The Been-There</div>
+        <div class="seg-demo">Age 32–45 · HHI $90–180K · Target $450–700K<br>Current homeowner; buying/selling to move up</div>
+        <blockquote class="seg-quote" style="border-color:var(--gold)">
+          "I bought my first place in 2019. I know what agents do and don't do. I'm not paying 3% again."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Tesla</span>
+          <span class="seg-tag">Wealthfront</span>
+          <span class="seg-tag">Lemonade</span>
+          <span class="seg-tag">Warby Parker</span>
+        </div>
+        <div class="seg-position" style="background:rgba(245,183,49,0.07);color:var(--gold)">Watched an agent collect $22K at closing. They know the math. Highest savings, strongest word-of-mouth.</div>
+      </div>
+      <div class="seg-card">
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Launch · 25%</span>
+        <div class="seg-name">The Optimizer</div>
+        <div class="seg-demo">Age 30–55 · HHI $80–160K · Target $280–550K<br>FSBO-inclined or FSBO-experienced owner</div>
+        <blockquote class="seg-quote" style="border-color:var(--gray)">
+          "I tried to sell it myself. I priced it wrong, got low offers, and almost caved and called an agent."
+        </blockquote>
+        <div class="seg-tag-row">
+          <span class="seg-tag">Home Depot</span>
+          <span class="seg-tag">TurboTax</span>
+          <span class="seg-tag">Carvana</span>
+          <span class="seg-tag">Costco</span>
+        </div>
+        <div class="seg-position" style="background:rgba(107,122,141,0.07);color:var(--gray)">Already believes in the premise — needs the platform. Tried FSBO and hit the walls. Lowest acquisition cost, day-1 segment.</div>
+      </div>
+    </div>
+
+    <!-- Associative Brand Constellation -->
+    <div style="background:var(--cream); border-radius:16px; padding:28px; margin-top:4px;">
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--crust); margin-bottom:16px;">Associative Brand Constellation</div>
+      <p style="font-family:'DM Sans'; font-size:0.82rem; color:var(--text-secondary); line-height:1.6; margin:0 0 16px;">The person who instinctively chooses Key Lime already lives in this brand universe. Every design decision must feel like it belongs next to these brands.</p>
+      <table class="savings-table" style="margin:0;">
+        <thead><tr><th>Category</th><th>Brand</th><th>Identity Signal</th></tr></thead>
+        <tbody>
+          <tr><td class="price">Car</td><td>Tesla</td><td>"I chose the future. No dealership needed."</td></tr>
+          <tr><td class="price">Insurance</td><td>Lemonade</td><td>"Instant, transparent, and human."</td></tr>
+          <tr><td class="price">Investing</td><td>Robinhood / Wealthfront</td><td>"I manage my own money. No broker."</td></tr>
+          <tr><td class="price">Travel</td><td>Airbnb</td><td>"Experience over institutions."</td></tr>
+          <tr><td class="price">Eyewear</td><td>Warby Parker</td><td>"Premium quality, no middleman markup."</td></tr>
+          <tr><td class="price">Banking</td><td>Chime / Mercury</td><td>"No branches, no fees, all in the app."</td></tr>
+          <tr><td class="price">Tax</td><td>TurboTax</td><td>"Guided self-service over expensive pros."</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:12px 16px; background:rgba(168,200,86,0.06); border-radius:8px; font-family:'DM Sans'; font-size:0.8rem; color:var(--green); font-weight:600; text-align:center; line-height:1.5;">
+        "I'm forward-thinking. I question defaults. I don't pay for legacy overhead. And I expect beautiful, effortless experiences."
+      </div>
+    </div>
+
+    <!-- ── BRAND ARCHETYPES ── -->
+    <div class="section-title" style="color:var(--crust)">Brand Archetypes</div>
+    <div class="journey-grid">
+      <div class="journey-act" style="background:rgba(168,200,86,0.04)">
+        <div class="act-num">Primary</div>
+        <div class="act-label" style="color:var(--green)">The Hero</div>
+        <div class="act-hook">"You fought back. You won."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Champion Hero — fights on behalf of others, not a personal glory-seeker</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">The enemy is the broken commission system, not agents as individuals</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">The customer becomes the hero — Key Lime is the guide (Yoda, not Luke)</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--green)"></div>
+            <div><div class="moment-text">Campaign visuals: real Tampa Bay homeowners, real savings numbers, not stock photos</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--green)">
+          Reference brands: Nike ("Just Do It"), Tesla, Peloton, Robinhood
+        </div>
+      </div>
+      <div class="journey-act">
+        <div class="act-num">Secondary</div>
+        <div class="act-label" style="color:var(--teal)">The Sage</div>
+        <div class="act-hook">"We show our work."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Intelligence, expertise, data-driven guidance, truth-telling</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Educational content: "Here's exactly how a real estate transaction works"</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Data transparency: publish transaction outcomes, average savings, days to close</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--teal)"></div>
+            <div><div class="moment-text">Unlike an agent who says "trust me," Key Lime shows the comp analysis and the logic</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--teal)">
+          Reference brands: Stripe (trust through intelligence), TurboTax, Redfin
+        </div>
+      </div>
+      <div class="journey-act">
+        <div class="act-num">Selective</div>
+        <div class="act-label" style="color:var(--gold)">The Rebel</div>
+        <div class="act-hook">"The system was built for agents. We built this for you."</div>
+        <div class="act-moments">
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Questions rules, challenges authority, fights for what's right</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Used selectively — primarily for Commission-Awakened sellers and conquest campaigns</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Should not dominate brand identity (would alienate trust-sensitive ICPs)</div></div>
+          </div>
+          <div class="moment">
+            <div class="moment-dot" style="background:var(--gold)"></div>
+            <div><div class="moment-text">Deployed in NAR/commission settlement awareness moments and social ad campaigns</div></div>
+          </div>
+        </div>
+        <div class="act-voice" style="border-color:var(--gold)">
+          Reference brands: Oatly, Dollar Shave Club, Monzo (hot coral rebel)
+        </div>
+      </div>
+    </div>
+
+    <!-- Archetype Integration Matrix -->
+    <table class="savings-table" style="margin-top:4px;">
+      <thead><tr><th>Archetype</th><th>Primary Channel</th><th>Primary ICP</th><th>Tone</th></tr></thead>
+      <tbody>
+        <tr><td class="price" style="color:var(--green)">Hero</td><td>Homepage hero, brand video, success stories</td><td>All segments</td><td>Empowering, action-oriented</td></tr>
+        <tr><td class="price" style="color:var(--teal)">Sage</td><td>Blog, help center, savings calculator</td><td>Investors, Relocators, FSBO</td><td>Intelligent, data-driven</td></tr>
+        <tr><td class="price" style="color:var(--gold)">Rebel</td><td>Social ads, email subjects, comparison pages</td><td>Commission Awakened, Millennials</td><td>Provocative, righteous</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ── VOICE PERSONA: ALEX ── -->
+    <div class="section-title" style="color:var(--crust)">Brand Voice: Alex</div>
+
+    <div style="background:var(--cream); border-radius:16px; padding:28px; margin-bottom:20px; border-left:4px solid var(--teal);">
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--teal); margin-bottom:12px;">The Voice Persona</div>
+      <p style="font-family:'DM Sans'; font-size:0.88rem; color:var(--text-primary); line-height:1.7; margin:0 0 12px;">Key Lime speaks like <strong>your smartest friend who happens to know real estate.</strong> The persona is <strong>Alex</strong> — a 35-year-old Tampa Bay resident who has completed multiple real estate transactions, works in tech/finance, and got tired of watching money leave at closings for unclear reasons.</p>
+      <p style="font-family:'DM Sans'; font-size:0.85rem; color:var(--text-secondary); line-height:1.7; margin:0;">Alex is <strong>not a salesperson</strong> — Alex is a knowledgeable friend who explains things clearly and pulls no punches. Shows the math instead of asking for trust. Confident without arrogance. Warm without being saccharine. Treats you like a capable adult.</p>
+    </div>
+
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--teal)">Alex in Action</h4>
+        <div class="headline-list">
+          <div class="headline-item" style="border-color:var(--crust)">
+            <div class="headline-label">Blog post opening</div>
+            <div class="headline-text">"The 2024 NAR settlement changed one thing: sellers finally found out what they'd been paying for decades. Most weren't happy about it."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--green)">
+            <div class="headline-label">Savings calculator intro</div>
+            <div class="headline-text">"Type in your home value. We'll tell you exactly how much you're leaving on the table with a traditional agent."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--teal)">
+            <div class="headline-label">FAQ answer</div>
+            <div class="headline-text">"Yes, everything we do is fully licensed under Florida real estate law. We're not a workaround — we're a better version of the process."</div>
+          </div>
+          <div class="headline-item" style="border-color:var(--gold)">
+            <div class="headline-label">Email subject line</div>
+            <div class="headline-text">"You paid $23,000 at your last closing. We charge $4,300."</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--teal)">Tone by Context</h4>
+        <table class="word-table">
+          <tr><td class="word-use">First touch</td><td>Confident, revelatory — "You don't need an agent."</td></tr>
+          <tr><td class="word-use">Education</td><td>Clear, peer-level — "Here's exactly how an offer works."</td></tr>
+          <tr><td class="word-use">In-product</td><td>Warm, reassuring — "Your advisor reviewed the inspection."</td></tr>
+          <tr><td class="word-use">Celebration</td><td>Proud, empowering — "You just bought a home. You understood every step."</td></tr>
+        </table>
+        <div style="margin-top:16px;">
+          <h4 style="color:var(--teal); margin-bottom:8px;">Language Rules</h4>
+          <table class="word-table">
+            <tr><td class="word-use">Your advisor</td><td>Not "Our AI" or "artificial intelligence"</td></tr>
+            <tr><td class="word-use">Book a showing</td><td>Not "Schedule a tour with your agent"</td></tr>
+            <tr><td class="word-use">1% closing fee</td><td>Not "Low commission" or "discount"</td></tr>
+            <tr><td class="word-use">Keep the difference</td><td>Not "Save money" (too vague)</td></tr>
+            <tr><td class="word-use">No agent required</td><td>Not "FSBO" (inherits FSBO reputation)</td></tr>
+            <tr><td class="word-use">Data-backed offer</td><td>Specific to Key Lime advantage</td></tr>
+            <tr><td class="word-avoid">Cheap / Discount</td><td>Signals low quality — this is about being smart</td></tr>
+            <tr><td class="word-avoid">Robot / Algorithm</td><td>Dehumanizes; triggers algorithm aversion</td></tr>
+            <tr><td class="word-avoid">Easy / Simple / Just</td><td>Undermines thoroughness — use "clear" and "controlled"</td></tr>
+            <tr><td class="word-avoid">Disrupting / Game-changing</td><td>Pitch deck word, not consumer brand word</td></tr>
+            <tr><td class="word-avoid">Cut out the middleman</td><td>Sounds anti-human, not pro-consumer</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Personification -->
+    <div style="background:var(--cream); border-radius:12px; padding:16px 20px; margin-top:4px; border-left:3px solid var(--teal); font-family:'DM Sans'; font-size:0.82rem; color:var(--text-secondary); line-height:1.7;">
+      <strong style="color:var(--teal)">AI Personification:</strong> Called <strong>"your advisor"</strong> — never AI, algorithm, or chatbot. Proactive: "I reviewed the inspection — here are three items worth discussing." Transparent: "Based on 47 comparable sales in this neighborhood..." Deferential: "Here are your options. What would you like to do?" May receive a proper name in future — this guideline establishes the role.
+    </div>
+
+    <!-- ── STRATEGIC GUARDRAILS ── -->
+    <div class="section-title" style="color:var(--crust)">Strategic Guardrails</div>
+    <div class="messaging-grid">
+      <div class="msg-card">
+        <h4 style="color:var(--green)">Must-Haves</h4>
+        <div class="obj-list" style="margin:0;">
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--green); font-size:0.82rem;">Never feel niche</div>
+            <div class="obj-a" style="font-size:0.8rem;">Brand works for everyone who buys/sells, not just the FSBO crowd.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--green); font-size:0.82rem;">Never feel budget</div>
+            <div class="obj-a" style="font-size:0.8rem;">1% is efficiency, not a discount. Key Lime is the better way, not the cheaper way.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--green); font-size:0.82rem;">Never attack agents</div>
+            <div class="obj-a" style="font-size:0.8rem;">Confident inevitability — the old way becomes irrelevant on its own.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--green); font-size:0.82rem;">Always feel premium</div>
+            <div class="obj-a" style="font-size:0.8rem;">Must meet the standard of Tesla, Lemonade, Warby Parker.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--green); font-size:0.82rem;">Always center the user</div>
+            <div class="obj-a" style="font-size:0.8rem;">The user is the hero. Key Lime is the tool.</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-card">
+        <h4 style="color:var(--gold)">Must-Nots</h4>
+        <div class="obj-list" style="margin:0;">
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--gold); font-size:0.82rem;">Never box into FSBO</div>
+            <div class="obj-a" style="font-size:0.8rem;">Transcend the FSBO starting point — never inherit its reputation.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--gold); font-size:0.82rem;">Never lead with technology</div>
+            <div class="obj-a" style="font-size:0.8rem;">AI is the engine, not the brand. Lead with outcomes.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--gold); font-size:0.82rem;">Never make homebuying look trivial</div>
+            <div class="obj-a" style="font-size:0.8rem;">"Easy" means clear, guided, and controlled — not casual.</div>
+          </div>
+          <div class="obj-item" style="padding:12px 0;">
+            <div class="obj-q" style="color:var(--gold); font-size:0.82rem;">Never restrict expansion</div>
+            <div class="obj-a" style="font-size:0.8rem;">Brand must work for every market, every buyer type, every transaction scale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── COMPETITIVE LANDSCAPE ── -->
+    <div class="section-title" style="color:var(--crust)">Competitive Landscape</div>
+    <table class="savings-table">
+      <thead><tr><th>Platform</th><th>Positioning</th><th>Fee</th><th>Key Lime Advantage</th></tr></thead>
+      <tbody>
+        <tr><td class="price">Traditional Agent</td><td>Full service, relationship</td><td class="traditional">5.44%</td><td>Fee opacity, misaligned incentives</td></tr>
+        <tr><td class="price">Redfin</td><td>Tech-powered agent, discount</td><td class="traditional">1.5%</td><td>Still agent-dependent</td></tr>
+        <tr><td class="price">Opendoor</td><td>iBuyer, instant cash</td><td class="traditional">5–8%</td><td>Lower net proceeds</td></tr>
+        <tr><td class="price">Houzeo / Flat Fee</td><td>DIY seller tools</td><td>$300–$1K</td><td>No AI, no negotiation, pure DIY</td></tr>
+        <tr><td class="price">FSBO (no platform)</td><td>Pure DIY</td><td>$0</td><td>Sell for 29% less; execution risk</td></tr>
+        <tr><td class="price" style="color:var(--green);font-weight:700">Key Lime</td><td style="color:var(--green)">AI full-service + human chaperone</td><td class="homedirect" style="font-weight:700">1%</td><td style="color:var(--green);font-weight:600">First-mover AI-negotiation + human hybrid</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ── KEY MARKET DATA ── -->
+    <div class="section-title" style="color:var(--gold)">Key Market Data for Messaging</div>
+    <table class="savings-table">
+      <thead><tr><th>Statistic</th><th>Source</th><th>Use In</th></tr></thead>
+      <tbody>
+        <tr><td class="price">Average commission 2025: <strong>5.44%</strong></td><td>Clever Real Estate / PR Newswire</td><td>Comparison charts, savings calc</td></tr>
+        <tr><td class="price"><strong>67%</strong> believe agents value profits over clients</td><td>Clever Real Estate</td><td>Trust/empathy messaging</td></tr>
+        <tr><td class="price"><strong>94%</strong> of sellers support commission changes</td><td>Clever Real Estate</td><td>Market validation, PR</td></tr>
+        <tr><td class="price">Tampa Bay median: <strong>~$430,000</strong></td><td>The Tenpenny Collection</td><td>Savings calculator default</td></tr>
+        <tr><td class="price"><strong>36.3%</strong> inventory increase YoY</td><td>Selling Sunsets of Florida</td><td>Buyer's market urgency</td></tr>
+        <tr><td class="price">First-time buyer median age: <strong>40</strong> (record high)</td><td>NAR 2025 Profile</td><td>Audience validation</td></tr>
+        <tr><td class="price"><strong>43%</strong> of Gen Z use AI for homebuying</td><td>National MI NextGen Report</td><td>AI-forward positioning</td></tr>
+        <tr><td class="price">FSBO homes sell for <strong>~29% less</strong></td><td>Coldwell Banker Heritage</td><td>Differentiation from FSBO</td></tr>
+        <tr><td class="price">Avg flip gross profit: <strong>$70,250</strong> (Q3 2024)</td><td>REsimpli</td><td>Investor segment messaging</td></tr>
+        <tr><td class="price">Tampa: <strong>50/50</strong> owner-renter split</td><td>Graystone Investment Group</td><td>Market opportunity framing</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ── COLORS ── -->
+    <div class="brand-section">
+      <div class="brand-section-title green">Color Palette — Key Lime Pie</div>
+      <div class="color-palette">
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#3E2C1C;"><span class="swatch-hex">#3E2C1C</span></div>
+          <div class="swatch-info"><div class="swatch-name">Graham Crust</div><div class="swatch-role">Nav bar, dark text, headings. The warm grounding anchor of the brand.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#55402F;"><span class="swatch-hex">#55402F</span></div>
+          <div class="swatch-info"><div class="swatch-name">Crust Mid</div><div class="swatch-role">Secondary brown — table headers, hover states, depth layers.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#FFF8ED;"><span class="swatch-hex">#FFF8ED</span></div>
+          <div class="swatch-info"><div class="swatch-name">Cream</div><div class="swatch-role">Page backgrounds, breathing space. Warm white — never pure #FFF.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#FFFFFF; border-bottom: 1px solid #eee;"><span class="swatch-hex">#FFFFFF</span></div>
+          <div class="swatch-info"><div class="swatch-name">White</div><div class="swatch-role">Card surfaces, content containers. Contrast against cream background.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#A8C856;"><span class="swatch-hex">#A8C856</span></div>
+          <div class="swatch-info"><div class="swatch-name">Key Lime</div><div class="swatch-role">Accent buttons, CTAs, brand mark only. The hero color — use sparingly.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#8BAF3E;"><span class="swatch-hex">#8BAF3E</span></div>
+          <div class="swatch-info"><div class="swatch-name">Key Lime Dark</div><div class="swatch-role">Hover states, text-on-cream for green labels. Accessible contrast.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#E8A317;"><span class="swatch-hex">#E8A317</span></div>
+          <div class="swatch-info"><div class="swatch-name">Savings Gold</div><div class="swatch-role">Dollar savings figures ONLY. Never decorative. Reserved for money.</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-color" style="background:#5BB5A2;"><span class="swatch-hex">#5BB5A2</span></div>
+          <div class="swatch-info"><div class="swatch-name">Concierge Teal</div><div class="swatch-role">Concierge audience accent. Secondary to green in hierarchy.</div></div>
+        </div>
+      </div>
+      <div class="brand-note">
+        <strong>The pie rule:</strong> Graham Crust is the grounding base. Cream is the body. White is the surface. Key Lime Green is the filling that makes it special — use it where you want the eye to go. If the green is diluted across the page, it loses its punch.
+      </div>
+    </div>
+
+    <!-- ── TYPOGRAPHY ── -->
+    <div class="brand-section">
+      <div class="brand-section-title brown">Typography</div>
+      <div class="type-specimens">
+        <div class="type-specimen">
+          <div class="type-meta">
+            <span class="type-tag primary">Primary</span>
+            <span class="type-font-name">Manrope</span>
+          </div>
+          <div class="type-preview">
+            <div class="type-preview-row">
+              <span class="type-weight-label">ExtraBold 800</span>
+              <span class="type-sample" style="font-weight:800; font-size:2rem; letter-spacing:-0.03em;">$8,350 saved</span>
+            </div>
+            <div class="type-preview-row">
+              <span class="type-weight-label">Bold 700</span>
+              <span class="type-sample" style="font-weight:700; font-size:1.4rem; letter-spacing:-0.02em;">Same mission. Three stories.</span>
+            </div>
+            <div class="type-preview-row">
+              <span class="type-weight-label">SemiBold 600</span>
+              <span class="type-sample" style="font-weight:600; font-size:1.1rem;">Buyer Segments · Messaging</span>
+            </div>
+            <div class="type-preview-row">
+              <span class="type-weight-label">Medium 500</span>
+              <span class="type-sample" style="font-weight:500; font-size:0.9rem;">Labels, metadata, and functional UI text</span>
+            </div>
+          </div>
+        </div>
+        <div class="type-specimen">
+          <div class="type-meta">
+            <span class="type-tag secondary">Secondary</span>
+            <span class="type-font-name">DM Sans</span>
+          </div>
+          <div class="type-preview">
+            <div class="type-preview-row">
+              <span class="type-weight-label">Medium 500</span>
+              <span class="type-sample" style="font-family:'DM Sans'; font-weight:500; font-size:1rem;">The brand psychology, color system, and archetypes don't change.</span>
+            </div>
+            <div class="type-preview-row">
+              <span class="type-weight-label">Regular 400</span>
+              <span class="type-sample" style="font-family:'DM Sans'; font-weight:400; font-size:0.9rem; color:var(--text-secondary);">Body copy, quotes, descriptions, and long-form content. Generous line-height, never dense or cramped.</span>
+            </div>
+            <div class="type-preview-row">
+              <span class="type-weight-label">Italic</span>
+              <span class="type-sample" style="font-family:'DM Sans'; font-weight:400; font-size:0.9rem; font-style:italic; color:var(--text-secondary);">"You've done the research. You know the neighborhoods. You have the down payment."</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="brand-note">
+        <strong>Hierarchy rule:</strong> Manrope is for headlines, savings numbers, labels, and anything that needs to punch. DM Sans is for body copy, quotes, and supporting text. Never use serif. Never use ultra-thin weights — this is a major financial transaction.
+      </div>
+    </div>
+
+    <!-- ── ICONOGRAPHY ── -->
+    <div class="brand-section">
+      <div class="brand-section-title cream-title">Iconography</div>
+      <div class="icon-grid" id="iconGrid">
+        <div class="icon-slot" id="icon-logo">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <span class="icon-slot-label">Logo Mark</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-wordmark">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+          <span class="icon-slot-label">Wordmark</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-lockup">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg></div>
+          <span class="icon-slot-label">Full Lockup</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-favicon">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+          <span class="icon-slot-label">Favicon</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-app">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg></div>
+          <span class="icon-slot-label">App Icon</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-social">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/></svg></div>
+          <span class="icon-slot-label">Social Avatar</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-yardsign">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="10" rx="2"/><path d="M12 14v7"/><path d="M8 21h8"/></svg></div>
+          <span class="icon-slot-label">Yard Sign</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+        <div class="icon-slot" id="icon-custom">
+          <div class="icon-placeholder"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+          <span class="icon-slot-label">Add Icon</span>
+          <input type="file" accept="image/*" onchange="handleIconUpload(event, this.parentElement)" />
+        </div>
+      </div>
+      <div class="brand-note">
+        <strong>Drop zone:</strong> Click any slot to upload an icon or logo variant. Images are previewed locally — drag and drop your logo mark, wordmark, lockup, and other brand assets to keep them in one place.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid var(--border); padding:24px 2.5rem; display:flex; align-items:center; justify-content:space-between; background:var(--cream);">
+  <p style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.04em;">Key Lime · Tampa Bay, FL · ICP Playbooks · April 2026</p>
+  <a href="hub.html" style="font-size:0.78rem; font-weight:600; color:var(--green-dark); text-decoration:none;">← Back to Hub</a>
+</footer>
+
+<script>
+  function switchTab(audience, btn) {
+    // Hide all panels
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    // Remove active from all buttons
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active-buyer', 'active-seller', 'active-concierge', 'active-brand');
+    });
+    // Show selected panel
+    document.getElementById('panel-' + audience).classList.add('active');
+    // Activate button
+    btn.classList.add('active-' + audience);
+    // Scroll to top of content
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  }
+
+  // Icon upload handler
+  function handleIconUpload(event, slot) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      // Clear placeholder content
+      const placeholder = slot.querySelector('.icon-placeholder');
+      const label = slot.querySelector('.icon-slot-label');
+      if (placeholder) placeholder.remove();
+      // Add uploaded image
+      slot.classList.add('has-icon');
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.alt = label ? label.textContent : 'Icon';
+      slot.insertBefore(img, slot.querySelector('input'));
+      if (label) label.textContent = file.name.split('.')[0];
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+</body>
+</html>
