@@ -174,6 +174,32 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--border-lime);
 }
 
+/* External cross-links to sibling apps */
+.kl-nav-divider {
+  width: 1px; height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+  align-self: center;
+}
+.kl-nav-links a.kl-nav-external {
+  color: var(--text);
+  background: var(--cream-sunken);
+  border-color: var(--border);
+  font-weight: 700;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.kl-nav-links a.kl-nav-external::after {
+  content: '↗';
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+.kl-nav-links a.kl-nav-external:hover {
+  color: var(--lime-dark);
+  border-color: var(--border-lime);
+  background: var(--lime-dim);
+}
+.kl-nav-links a.kl-nav-external:hover::after { opacity: 1; }
+
 /* ────────────────────────────────────────────────────────
    Layout
    ──────────────────────────────────────────────────────── */

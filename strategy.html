@@ -293,6 +293,9 @@
       <a href="icp-hub.html">ICP Playbooks</a>
       <a href="look-and-feel.html">Look &amp; Feel</a>
       <a href="strategy.html" class="active">Strategy</a>
+      <span class="kl-nav-divider"></span>
+      <a href="https://homedirect-hq.example" class="kl-nav-external" title="HomeDirect HQ — planning &amp; launch ops">HomeDirect HQ</a>
+      <a href="https://www.perplexity.ai/computer/a/homedirectai-marketing-hub-EZWU81Z.T6KISFvXLyhTnA" class="kl-nav-external" title="Marketing HQ — creative &amp; campaign ops">Marketing HQ</a>
     </div>
   </nav>
 
@@ -693,6 +696,256 @@
           </ul>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Proposed Tactics -->
+    <section class="kl-section" style="padding-bottom: 4rem; border-top: 1px solid var(--border);">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">08 · Proposed Tactics · Launch Window</div>
+        <h2>Recommended plays awaiting sequencing.</h2>
+        <p>Tactics surfaced during strategy review, not yet assigned. Each card tags its <strong>automation lane</strong> — Automated means Marketing HQ can deploy it via API; Manual means it needs a human owner tracked in HomeDirect HQ. Click <em>Plan this</em> on any card to open the launch workspace.</p>
+      </div>
+
+      <style>
+        .pt-group { margin-bottom: 2rem; }
+        .pt-group-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.9rem; padding-left: 2px; }
+        .pt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.9rem; }
+        .pt-card { background: var(--cream-card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 1.1rem 1.25rem; position: relative; display: flex; flex-direction: column; gap: 0.5rem; }
+        .pt-card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .pt-title { font-size: 0.92rem; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.3; }
+        .pt-lane { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+        .pt-lane.auto   { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(91,181,162,0.25); }
+        .pt-lane.manual { background: var(--terracotta-dim); color: var(--terracotta); border: 1px solid rgba(217,142,90,0.25); }
+        .pt-desc { font-family: var(--font-body); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+        .pt-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+        .pt-meta .phase { font-family: var(--font-body); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.02em; }
+        .pt-plan { font-family: var(--font-display); font-size: 0.74rem; font-weight: 700; color: var(--lime-dark); letter-spacing: 0.02em; }
+        .pt-plan:hover { color: var(--ink); }
+      </style>
+
+      <!-- SUPPLY SIDE -->
+      <div class="pt-group">
+        <div class="pt-group-label">Supply-side · Seller acquisition</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Expired MLS seller email</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Pull MLS expired listings in Tampa Bay; send commission-math email with personalized savings figure.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T-7</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Canceled / withdrawn listings</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Hotter than expired — seller actively pulled the listing. Smaller list, much higher intent.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T-7</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">High-DOM listings (60+ days)</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Still listed, agent underperforming. Email hits at the moment of doubt.</div>
+            <div class="pt-meta"><span class="phase">T-30</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Recent closings direct mail</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Pull county recorder data; Lob-API postcards with exact commission paid + Key Lime alternative math.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T-7</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">FSBO listing portage</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Import active FSBO listings onto Key Lime with seller outreach — immediate inventory + warm seller relationships.</div>
+            <div class="pt-meta"><span class="phase">T-30</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">FSBO sign photo routes</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Student/contractor drives Tampa neighborhoods weekly, photographs FSBO signs, reverse-lookup → direct mail.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T+30</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Zillow FSBO scrape</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Capture Tampa Bay FSBO listings from Zillow; seller outreach before they pick a platform.</div>
+            <div class="pt-meta"><span class="phase">T-14 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEMAND SIDE -->
+      <div class="pt-group">
+        <div class="pt-group-label">Demand-side · Buyer acquisition</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Meta + Instagram geo-targeted</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Tampa Bay radius, life-event signals, savings-calculator CTA. Retargeting on abandoners.</div>
+            <div class="pt-meta"><span class="phase">T-7 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Google PPC — Tampa buyer intent</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">$500/mo sniper budget, keyword tiers from google-ads-buyer-campaign.md, competitor bid on Homa/reAlpha.</div>
+            <div class="pt-meta"><span class="phase">T-7 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Reddit (r/tampa, r/movingtotampa)</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Reddit Ads geo-targeted + value-first organic posts. CPMs fraction of Meta for same audience.</div>
+            <div class="pt-meta"><span class="phase">T-14 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">NextDoor Tampa neighborhoods</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Local paid ads + business mentions. Hyper-relevant, rarely used by competitors.</div>
+            <div class="pt-meta"><span class="phase">T-14 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Tampa Facebook Groups</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">"Moving to Tampa Bay" (80K), "Tampa Real Estate." Organic presence + paid amplification.</div>
+            <div class="pt-meta"><span class="phase">T-30 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">YouTube neighborhood tours</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">"South Tampa tour," "Wesley Chapel tour." Out-of-state relocator intent. Doubles as SEO.</div>
+            <div class="pt-meta"><span class="phase">T-30 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Tampa Bay REIA + BiggerPockets</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Investor segment — 1 active flipper = 5–10 retail transactions/yr. Highest LTV in the funnel.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T-7</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONVERSION -->
+      <div class="pt-group">
+        <div class="pt-group-label">Conversion infrastructure</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Pixel + CAPI + GA4 + CallRail</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">All tracking deployed and tested <em>before</em> paid spend. Meta CAPI + Google conversion tag + GA4 + call tracking.</div>
+            <div class="pt-meta"><span class="phase">T-21 (blocking)</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Dedicated LPs per traffic source</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Expired-listing LP ≠ FSBO LP ≠ Tampa buyer LP ≠ relocator LP. Typical 2–3× uplift.</div>
+            <div class="pt-meta"><span class="phase">T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Savings calculator as hero</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Personalized dollar figure before signup. Shareable results page for organic amplification.</div>
+            <div class="pt-meta"><span class="phase">T-14 (blocking)</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Calculator abandoner retargeting</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">30-day Meta + Google retargeting on users who started the calculator but didn't sign up.</div>
+            <div class="pt-meta"><span class="phase">T-7 → ongoing</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">SMS opt-in, not just email</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">90%+ open rate. Postscript / Klaviyo SMS / Attentive. Tampa locals expect texts.</div>
+            <div class="pt-meta"><span class="phase">T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Hot-lead response &lt; 5 min</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Human or AI receptionist. Conversion drops ~80% past 1 hour.</div>
+            <div class="pt-meta"><span class="phase">T-7 (blocking)</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AMPLIFIERS -->
+      <div class="pt-group">
+        <div class="pt-group-label">Launch-moment amplifiers</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Pre-launch waitlist (4–6 wks)</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">"First 100 Tampa closings: free 1% fee." Builds list + creates launch-day news moment.</div>
+            <div class="pt-meta"><span class="phase">T-45 → T-0</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Tampa local press embargo</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Tampa Bay Times, TBBJ, WTSP/WFLA. "Tampa startup replaces real estate agents with AI, 1% fee."</div>
+            <div class="pt-meta"><span class="phase">T-14 · T-0</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Local influencer seeding</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">3–5 Tampa real-estate TikTokers + local news anchors. Preview access, launch-day post.</div>
+            <div class="pt-meta"><span class="phase">T-14 · T-0</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Podcast tour</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">BiggerPockets, Side Hustle Nation, local Tampa shows. 4–6 episodes booked for launch month.</div>
+            <div class="pt-meta"><span class="phase">T-30 · T+30</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Title + lender partnership seeding</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">2–3 indep Tampa title companies + 2 local lenders. Audience amplification + cost sharing. No homepage logos.</div>
+            <div class="pt-meta"><span class="phase">T-60 · T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRUST -->
+      <div class="pt-group">
+        <div class="pt-group-label">Trust basics</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Licensed FL broker publicly named</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Broker of record on homepage + footer. Required for MLS access, top trust signal.</div>
+            <div class="pt-meta"><span class="phase">T-14 (blocking)</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">E&amp;O insurance visible</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">"Covered up to $Xm per transaction." Verified by carrier.</div>
+            <div class="pt-meta"><span class="phase">T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Tampa phone + address</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Even virtual. $430K-home buyers call to verify you're real.</div>
+            <div class="pt-meta"><span class="phase">T-21</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">"How it works" 90-sec video</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">Search → $20 chaperone tour → AI negotiates. Demo beats explanation.</div>
+            <div class="pt-meta"><span class="phase">T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Legal claims review process</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">FTC-style substantiation for "$19K savings," "AI negotiates better." Doc it before first ad ships.</div>
+            <div class="pt-meta"><span class="phase">T-21 (blocking)</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEASUREMENT -->
+      <div class="pt-group">
+        <div class="pt-group-label">Measurement &amp; ops</div>
+        <div class="pt-grid">
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Daily launch-week dashboard</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">One page reviewed 10am daily. Signups, sessions, calc completions, CPL, response time.</div>
+            <div class="pt-meta"><span class="phase">T-7 · T+14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Daily budget reallocation owner</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">One named person reallocates spend daily launch week 1–2. Worth 30–50% channel lift.</div>
+            <div class="pt-meta"><span class="phase">T-0 · T+14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Pre-seed 30+ SEO articles</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">Indexed + ranking-competitive at launch, not 90 days after. Marketing HQ SEO workspace drives it.</div>
+            <div class="pt-meta"><span class="phase">T-60 · T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">"Compare vs X" LPs</div><span class="pt-lane auto">Auto</span></div>
+            <div class="pt-desc">vs Redfin, Homa, reAlpha, Opendoor, Houzeo, Clever. Bottom-funnel SEO gold.</div>
+            <div class="pt-meta"><span class="phase">T-30</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+          <div class="pt-card">
+            <div class="pt-card-head"><div class="pt-title">Competitive response playbook</div><span class="pt-lane manual">Manual</span></div>
+            <div class="pt-desc">What we do if Zillow / Redfin / local brokerage attacks us in week one. Scenarios + triggers.</div>
+            <div class="pt-meta"><span class="phase">T-14</span><a class="pt-plan" href="#launch-hq">Plan this →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; padding: 1.25rem 1.5rem; background: var(--lime-dim); border: 1px solid var(--border-lime); border-left: 3px solid var(--lime); border-radius: 0 var(--r-md) var(--r-md) 0;">
+        <div style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime-dark); margin-bottom: 8px;">How this gets operationalized</div>
+        <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text); line-height: 1.7;">
+          These tactics are <strong style="color: var(--ink); font-weight: 700;">defined</strong> here. They get <strong style="color: var(--ink); font-weight: 700;">sequenced + owned</strong> in <a href="#launch-hq" style="color: var(--lime-dark); font-weight: 700;">HomeDirect HQ · Launch</a>. <span class="pt-lane auto" style="display: inline-block;">Auto</span> items are <strong style="color: var(--ink); font-weight: 700;">executed</strong> from <a href="#marketing-hq" style="color: var(--lime-dark); font-weight: 700;">Marketing HQ</a> (Plan → Create → Deploy → Monitor). <span class="pt-lane manual" style="display: inline-block;">Manual</span> items are tracked as HomeDirect HQ tasks with a human owner.
+        </p>
       </div>
     </section>
 
