@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — Brand Philosophy</title>
+  <meta name="description" content="Why Key Lime exists, who it's for, and the identity contract it offers. The worldview every other brand decision gets tested against." />
+  <link rel="stylesheet" href="styles/keylime.css" />
+  <style>
+    .phil-hero h1 { max-width: 900px; margin-inline: auto; }
+
+    /* Value cards */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .value-card {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--lime);
+    }
+    .value-card.gold::before { background: var(--gold); }
+    .value-card.teal::before { background: var(--teal); }
+    .value-card.terra::before { background: var(--terracotta); }
+    .value-card .num {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .value-card h3 {
+      font-size: 1.2rem; font-weight: 800; color: var(--ink);
+      margin-bottom: 10px; letter-spacing: -0.015em;
+    }
+    .value-card p {
+      font-family: var(--font-body);
+      font-size: 0.88rem; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 12px;
+    }
+    .value-card .practice {
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--ink);
+      background: var(--lime-dim);
+      border-left: 2px solid var(--lime);
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+    }
+    .value-card.gold .practice { background: var(--gold-dim); border-left-color: var(--gold); }
+    .value-card.teal .practice { background: var(--teal-dim); border-left-color: var(--teal); }
+    .value-card.terra .practice { background: var(--terracotta-dim); border-left-color: var(--terracotta); }
+
+    /* Framework diagram */
+    .framework {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+      text-align: center;
+      font-family: var(--font-body);
+    }
+    .framework-flow {
+      display: inline-flex; align-items: center;
+      gap: 18px; flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .framework-node {
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 0.95rem;
+      letter-spacing: 0.03em;
+    }
+    .framework-node.product { background: var(--ink); color: var(--cream); }
+    .framework-node.brand { background: var(--lime); color: var(--ink); box-shadow: 0 4px 14px var(--lime-glow); }
+    .framework-node.icp { background: var(--terracotta); color: var(--cream); }
+    .framework-arrow { color: var(--text-muted); font-size: 1.2rem; font-weight: 800; }
+    .framework p {
+      font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.7; max-width: 540px; margin: 0 auto;
+    }
+
+    /* Identity contract callout */
+    .contract {
+      background: linear-gradient(135deg, var(--lime-dim), rgba(168,200,86,0.03));
+      border: 1px solid var(--border-lime);
+      border-left: 4px solid var(--lime);
+      border-radius: var(--r-lg);
+      padding: 2rem 2.25rem;
+      text-align: center;
+      max-width: 760px; margin: 0 auto;
+    }
+    .contract-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--lime-dark); margin-bottom: 14px;
+    }
+    .contract blockquote {
+      font-family: var(--font-body);
+      font-size: 1.15rem; font-style: italic;
+      color: var(--ink); line-height: 1.7;
+      font-weight: 500;
+    }
+
+    /* Mission / vision two-col */
+    .mv-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .mv-card {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.75rem;
+    }
+    .mv-card .lbl {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lime-dark); margin-bottom: 10px;
+    }
+    .mv-card h3 {
+      font-size: 1.3rem; font-weight: 800; color: var(--ink);
+      line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.018em;
+    }
+    .mv-card p {
+      font-family: var(--font-body);
+      font-size: 0.92rem; color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Trajectory table */
+    .traj-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .traj-table th, .traj-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+    }
+    .traj-table th {
+      font-family: var(--font-display);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--lime-dark);
+      background: var(--cream-sunken);
+    }
+    .traj-table td { font-size: 0.88rem; color: var(--text); }
+    .traj-table td:first-child { font-weight: 700; color: var(--ink); font-family: var(--font-display); }
+    .traj-table tr:last-child td { border-bottom: none; }
+
+    /* Unbundling table */
+    .unbundle-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .unbundle-table th, .unbundle-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .unbundle-table th {
+      font-family: var(--font-display);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--cream-sunken);
+    }
+    .unbundle-table th:nth-child(1) { color: var(--ink); }
+    .unbundle-table th:nth-child(2) { color: var(--text-muted); }
+    .unbundle-table th:nth-child(3) { color: var(--lime-dark); }
+    .unbundle-table td { font-family: var(--font-body); font-size: 0.85rem; line-height: 1.65; color: var(--text-secondary); }
+    .unbundle-table td:first-child { font-weight: 700; color: var(--ink); font-family: var(--font-display); }
+    .unbundle-table tr:last-child td { border-bottom: none; }
+
+    /* Disruptor rows */
+    .disruptor {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr 1fr;
+      gap: 1rem; align-items: center;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 16px 20px;
+      margin-bottom: 10px;
+    }
+    .disruptor .brand-name {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 800;
+      color: var(--ink);
+    }
+    .disruptor.keylime {
+      background: var(--lime-dim);
+      border-color: var(--border-lime);
+    }
+    .disruptor.keylime .brand-name { color: var(--lime-dark); }
+    .disruptor .d-col {
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;
+    }
+    .disruptor .d-col.reaction {
+      color: var(--ink); font-style: italic; font-weight: 500;
+    }
+    .disruptor .d-header {
+      font-family: var(--font-display);
+      font-size: 0.64rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    /* Persona cards */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .persona {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem;
+      position: relative;
+    }
+    .persona::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: var(--r-lg) var(--r-lg) 0 0;
+    }
+    .persona.first::before  { background: var(--lime); }
+    .persona.been::before   { background: var(--gold); }
+    .persona.optim::before  { background: var(--terracotta); }
+    .persona .p-label {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .persona h3 {
+      font-size: 1.15rem; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.015em; margin-bottom: 10px;
+    }
+    .persona .p-quote {
+      font-family: var(--font-body);
+      font-size: 0.85rem; font-style: italic;
+      color: var(--ink); line-height: 1.65;
+      padding: 10px 14px;
+      background: var(--cream-sunken);
+      border-left: 2px solid var(--border-strong);
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 14px;
+    }
+    .persona.first  .p-quote { border-left-color: var(--lime); }
+    .persona.been   .p-quote { border-left-color: var(--gold); }
+    .persona.optim  .p-quote { border-left-color: var(--terracotta); }
+    .persona .p-attrs {
+      display: flex; flex-direction: column; gap: 6px;
+      padding-top: 10px; border-top: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .persona .p-row {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+    }
+    .persona .p-row .k { color: var(--text-muted); }
+    .persona .p-row .v { color: var(--ink); font-weight: 600; }
+    .persona .p-weight {
+      margin-top: 10px;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .persona.first  .p-weight { color: var(--lime-dark); }
+    .persona.been   .p-weight { color: var(--gold); }
+    .persona.optim  .p-weight { color: var(--terracotta); }
+
+    /* Guardrails */
+    .rails-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .rails {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.75rem;
+    }
+    .rails-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .rails.must .rails-label { color: var(--lime-dark); }
+    .rails.never .rails-label { color: var(--error); }
+    .rails-list {
+      display: flex; flex-direction: column; gap: 10px;
+      list-style: none;
+    }
+    .rails-list li {
+      font-family: var(--font-body);
+      font-size: 0.88rem; color: var(--text);
+      line-height: 1.6;
+      padding-left: 22px;
+      position: relative;
+    }
+    .rails.must .rails-list li::before  { content: '✓'; position: absolute; left: 0; color: var(--lime-dark); font-weight: 800; }
+    .rails.never .rails-list li::before { content: '✕'; position: absolute; left: 0; color: var(--error); font-weight: 800; }
+    .rails-list li strong { color: var(--ink); font-weight: 700; }
+
+    @media (max-width: 860px) {
+      .mv-grid { grid-template-columns: 1fr; }
+      .rails-grid { grid-template-columns: 1fr; }
+      .disruptor { grid-template-columns: 1fr; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="kl-nav">
+    <a class="kl-wordmark" href="index.html">
+      <span class="kl-logo"></span>
+      Key Lime
+    </a>
+    <div class="kl-nav-links">
+      <a href="index.html">Hub</a>
+      <a href="philosophy.html" class="active">Philosophy</a>
+      <a href="brand-guide.html">Brand Guide</a>
+      <a href="messaging.html">Messaging</a>
+      <a href="icp-hub.html">ICP Playbooks</a>
+      <a href="look-and-feel.html">Look &amp; Feel</a>
+      <a href="strategy.html">Strategy</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="kl-hero phil-hero">
+    <div class="kl-hero-eyebrow">Guide 01 · Foundation</div>
+    <h1>A brand is a bridge.<br /><em>This is how ours is built.</em></h1>
+    <p>Why Key Lime exists, who it's for, and the identity contract it offers. Every other decision in the brand — name, color, tone, messaging — gets tested against this.</p>
+  </section>
+
+  <div class="kl-container">
+
+    <!-- 1. Philosophy -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">01 · Core Belief</div>
+        <h2>People don't buy products. They declare identities.</h2>
+        <p>When someone says "I drive a Tesla" or "I use Robinhood," they're not describing a product — they're declaring an identity: <em>I see through the status quo. I don't pay for things that don't earn their price. I choose the future.</em> Our job is to make it effortless for the right person to look at Key Lime and say: "This is mine. This is how I do things."</p>
+      </div>
+
+      <div class="framework">
+        <div class="framework-flow">
+          <div class="framework-node product">PRODUCT</div>
+          <span class="framework-arrow">←——</span>
+          <div class="framework-node brand">BRAND (the bridge)</div>
+          <span class="framework-arrow">——→</span>
+          <div class="framework-node icp">ICP</div>
+        </div>
+        <p>The better you understand both sides, the simpler the bridge becomes. Good branding is a simple bridge.</p>
+      </div>
+    </section>
+
+    <!-- The Identity Contract -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">The Identity Contract</div>
+        <h2>What choosing Key Lime says about you.</h2>
+        <p>When a person chooses Key Lime, they are making a statement about themselves. Every touchpoint — from the logo to the UI to the first ad — must reinforce this contract instantly.</p>
+      </div>
+
+      <div class="contract">
+        <div class="contract-label">The Contract</div>
+        <blockquote>
+          "I see through unnecessary complexity. I don't pay for things that don't deliver value. I take control of the biggest decisions in my life. And I expect the process to be easy."
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 2. Mission & Vision -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">02 · Mission &amp; Vision</div>
+        <h2>Make the old way feel antiquated.</h2>
+        <p>Uber didn't campaign against taxis — it showed people a button that summoned a car. Tesla didn't argue about gas prices — it built a car that didn't need gas. Key Lime will make real estate agencies obsolete the same way.</p>
+      </div>
+
+      <div class="mv-grid">
+        <div class="mv-card">
+          <div class="lbl">Mission</div>
+          <h3>Buying and selling a home, as easy as it should have always been.</h3>
+          <p>Without agents, without unnecessary fees, and without the complexity the industry built to justify itself.</p>
+        </div>
+        <div class="mv-card">
+          <div class="lbl">Vision</div>
+          <h3>A world where 6% commission feels as antiquated as hailing a cab in the rain.</h3>
+          <p>The brand must be designed for the end state, not the MVP. Never niche, never FSBO-specific, never anti-agent. It must feel inevitable.</p>
+        </div>
+      </div>
+
+      <div style="height: 1.5rem;"></div>
+
+      <table class="traj-table">
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Market</th>
+            <th>Brand Posture</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>MVP (Now)</td><td>FSBO-inclined buyers &amp; sellers who already question the agent model</td><td>"The platform for people who see a better way"</td></tr>
+          <tr><td>Growth</td><td>All first-time and repeat buyers/sellers in target markets</td><td>"The modern way to buy and sell a home"</td></tr>
+          <tr><td>Scale</td><td>National — every real estate transaction</td><td>"Home, made simple"</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. Core Values -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">03 · Core Values</div>
+        <h2>Five principles. Every decision tested against them.</h2>
+        <p>These aren't marketing words. They're load-bearing — a decision that violates one of these is the wrong decision, even if it looks right in isolation.</p>
+      </div>
+
+      <div class="values-grid">
+
+        <div class="value-card">
+          <div class="num">Value 01</div>
+          <h3>Simplicity</h3>
+          <p>The name says it all. Key Lime takes something needlessly complicated and makes it clear. Not dumbed-down — <em>clarified</em>. The process was never inherently complex; the industry made it complex to justify itself.</p>
+          <div class="practice">In practice: every interaction should feel like "Why wasn't it always this way?"</div>
+        </div>
+
+        <div class="value-card gold">
+          <div class="num">Value 02</div>
+          <h3>Empowerment</h3>
+          <p>Key Lime doesn't do things <em>for</em> you — it equips you to do them yourself, with confidence. The user is never a passenger. They're the driver. The platform is the road.</p>
+          <div class="practice">In practice: the feeling at closing is "I did this."</div>
+        </div>
+
+        <div class="value-card teal">
+          <div class="num">Value 03</div>
+          <h3>Transparency</h3>
+          <p>No hidden fees, no opaque negotiations, no fine print. Every cost, comp, and document — visible, explainable, yours.</p>
+          <div class="practice">In practice: if it can't be explained in one sentence, redesign it.</div>
+        </div>
+
+        <div class="value-card terra">
+          <div class="num">Value 04</div>
+          <h3>Fairness</h3>
+          <p>1%, not 6%. Key Lime charges for what it delivers and nothing more. The user keeps the difference.</p>
+          <div class="practice">Never position savings as a "discount" — position it as what the service actually costs when you remove the middleman markup.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="num">Value 05</div>
+          <h3>Intelligence</h3>
+          <p>Smarter than any individual agent — processes more data, negotiates without emotional bias, available 24/7. Never cold. Always in service of the user, never a replacement for human judgment.</p>
+          <div class="practice">AI is personified, not labeled. The user talks to "your advisor," not "our AI."</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. Product Unbundled -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">04 · The Product, Unbundled</div>
+        <h2>The agent bundles five functions. Key Lime unbundles them.</h2>
+        <p>The traditional agent bundles five distinct functions into a single, expensive service. Key Lime delivers each one better, separately, and without the conflict of interest.</p>
+      </div>
+
+      <table class="unbundle-table">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Traditional Agent</th>
+            <th>Key Lime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Access to homes</td><td>Agent schedules on their calendar</td><td>On-demand chaperone, $20, book anytime</td></tr>
+          <tr><td>Market intelligence</td><td>Agent's personal opinion on comps</td><td>AI comp analysis trained on local data</td></tr>
+          <tr><td>Negotiation</td><td>Agent negotiates (incentivized to close fast)</td><td>AI negotiation — no conflict of interest</td></tr>
+          <tr><td>Documentation</td><td>Forwards paperwork, defers to attorneys</td><td>Platform generates &amp; manages all docs</td></tr>
+          <tr><td>Process guidance</td><td>Agent explains when asked</td><td>AI advisor, 24/7, tailored to your deal</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--teal-dim); border-left: 3px solid var(--teal); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-body); font-size: 0.9rem; color: var(--ink); line-height: 1.7;">
+        <strong style="font-weight: 700;">The chaperone model is the signature innovation.</strong> Key Lime replaces the agent-gated showing model with a gig-economy network — local people who escort buyers through homes for $20 per showing. Like DoorDash for home tours. The chaperone provides access; the AI provides intelligence. This unbundling is what makes the 1% fee possible.
+      </div>
+    </section>
+
+    <!-- 5. Positioning / Disruptor Playbook -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">05 · The Disruptor Playbook</div>
+        <h2>"Holy shit, I didn't even know this was a thing."</h2>
+        <p>That's the target reaction on first exposure. Key Lime follows a proven industry-disruption pattern: name what was "normal," make what's better obvious, and let the user feel they've been waiting for it.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 60px 1fr 1fr 1fr; gap: 1rem; padding: 0 20px; margin-bottom: 8px;">
+        <div></div>
+        <div class="d-header" style="font-family: var(--font-display); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">What Was Normal</div>
+        <div class="d-header" style="font-family: var(--font-display); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">What They Made Obvious</div>
+        <div class="d-header" style="font-family: var(--font-display); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">User Feeling</div>
+      </div>
+
+      <div class="disruptor">
+        <div class="brand-name">Uber</div>
+        <div class="d-col">Call dispatcher, wait on corner</div>
+        <div class="d-col">Tap a button, car appears</div>
+        <div class="d-col reaction">"Why did we ever do it the old way?"</div>
+      </div>
+      <div class="disruptor">
+        <div class="brand-name">Tesla</div>
+        <div class="d-col">Dealership, haggle, burn gas</div>
+        <div class="d-col">Order online, it drives itself</div>
+        <div class="d-col reaction">"This is obviously the future."</div>
+      </div>
+      <div class="disruptor">
+        <div class="brand-name">Lemonade</div>
+        <div class="d-col">Call agent, paperwork, wait weeks</div>
+        <div class="d-col">App, instant, transparent</div>
+        <div class="d-col reaction">"Insurance doesn't have to suck."</div>
+      </div>
+      <div class="disruptor">
+        <div class="brand-name">Robinhood</div>
+        <div class="d-col">Call a broker, pay commissions</div>
+        <div class="d-col">Free trades, beautiful app</div>
+        <div class="d-col reaction">"I control my own money."</div>
+      </div>
+      <div class="disruptor keylime">
+        <div class="brand-name">Key Lime</div>
+        <div class="d-col">Pay 6% to two agents, months of complexity</div>
+        <div class="d-col">AI-guided, 1% fee, on-demand showings</div>
+        <div class="d-col reaction">"I didn't even know this was possible."</div>
+      </div>
+
+      <div style="margin-top: 2rem; background: var(--cream-card); border: 1px solid var(--border); border-left: 3px solid var(--terracotta); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 1.25rem 1.5rem;">
+        <div style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 8px;">Competitive Posture · Confident Inevitability</div>
+        <p style="font-family: var(--font-body); font-size: 0.92rem; color: var(--text); line-height: 1.7;">
+          Key Lime does not attack agents. Key Lime exists so compellingly that the old way looks silly. <strong style="color: var(--ink); font-weight: 700;">Not this:</strong> "The 6% commission is a scam — stop funding it." <strong style="color: var(--ink); font-weight: 700;">This:</strong> "No agents. Easy as pie." Think Lemonade's energy — playful, confident, not combative.
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Personas -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">06 · Target Personas</div>
+        <h2>Three audiences. One psychographic thread.</h2>
+        <p>Defined by relationship to homebuying, united by one belief: <em>they see through unnecessary complexity and expect better.</em> Brand is weighted <strong>80% toward the buyer</strong> — if buyers are here, sellers follow.</p>
+      </div>
+
+      <div class="persona-grid">
+
+        <div class="persona first">
+          <div class="p-label">Persona 01 · Primary</div>
+          <h3>The First Timer</h3>
+          <div class="p-quote">"I've been renting for four years. I'm ready to buy, but every time I start, there's a step I'm missing — and the person who claims to help costs thousands of dollars."</div>
+          <div class="p-attrs">
+            <div class="p-row"><span class="k">Age</span><span class="v">26–36</span></div>
+            <div class="p-row"><span class="k">Income</span><span class="v">$70K–$110K</span></div>
+            <div class="p-row"><span class="k">Target price</span><span class="v">$325K–$480K</span></div>
+            <div class="p-row"><span class="k">Why Key Lime</span><span class="v">Never used an agent; doesn't want to start</span></div>
+          </div>
+          <div class="p-weight">40% brand weight</div>
+        </div>
+
+        <div class="persona been">
+          <div class="p-label">Persona 02 · Secondary</div>
+          <h3>The Been-There</h3>
+          <div class="p-quote">"I bought my first place in 2019. I know what agents do and don't do. I'm not paying 3% again for someone to forward my offers."</div>
+          <div class="p-attrs">
+            <div class="p-row"><span class="k">Age</span><span class="v">32–45</span></div>
+            <div class="p-row"><span class="k">Income</span><span class="v">$90K–$180K</span></div>
+            <div class="p-row"><span class="k">Target price</span><span class="v">$450K–$700K</span></div>
+            <div class="p-row"><span class="k">Why Key Lime</span><span class="v">Informed frustration — knows exactly what they overpaid for</span></div>
+          </div>
+          <div class="p-weight">35% brand weight</div>
+        </div>
+
+        <div class="persona optim">
+          <div class="p-label">Persona 03 · Launch</div>
+          <h3>The Optimizer</h3>
+          <div class="p-quote">"I tried to sell my house myself. I priced it wrong, got low offers, and almost caved and called an agent. There has to be a better middle ground."</div>
+          <div class="p-attrs">
+            <div class="p-row"><span class="k">Age</span><span class="v">30–55</span></div>
+            <div class="p-row"><span class="k">Income</span><span class="v">$80K–$160K</span></div>
+            <div class="p-row"><span class="k">Target price</span><span class="v">$280K–$550K</span></div>
+            <div class="p-row"><span class="k">Why Key Lime</span><span class="v">FSBO burnout — already in the funnel, just needs the platform</span></div>
+          </div>
+          <div class="p-weight">25% brand weight</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. Strategic Guardrails -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">07 · Strategic Guardrails</div>
+        <h2>The fence around every decision.</h2>
+        <p>If a proposed execution violates one of these, it's the wrong execution — regardless of how compelling it looks in isolation.</p>
+      </div>
+
+      <div class="rails-grid">
+        <div class="rails must">
+          <div class="rails-label">Must-Haves</div>
+          <ul class="rails-list">
+            <li><strong>Never feel niche.</strong> The brand works for everyone who buys or sells — not just FSBO-adjacent.</li>
+            <li><strong>Never feel budget.</strong> 1% is efficiency, not a discount. Key Lime is the better way, not the cheaper way.</li>
+            <li><strong>Never attack agents.</strong> Confident inevitability — the old way becomes irrelevant on its own.</li>
+            <li><strong>Always feel premium.</strong> Must meet the standard of Tesla, Lemonade, Warby Parker.</li>
+            <li><strong>Always center the user.</strong> The user is the hero. Key Lime is the tool.</li>
+          </ul>
+        </div>
+
+        <div class="rails never">
+          <div class="rails-label">Must-Nots</div>
+          <ul class="rails-list">
+            <li><strong>Never box into FSBO.</strong> Transcend the FSBO starting point — never inherit its reputation.</li>
+            <li><strong>Never lead with technology.</strong> AI is the engine, not the brand. Lead with outcomes.</li>
+            <li><strong>Never make homebuying look trivial.</strong> "Easy" means clear, guided, controlled — not casual.</li>
+            <li><strong>Never restrict expansion.</strong> The brand must work for every market, every buyer type, every scale.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="kl-divider"></div>
+
+      <div class="kl-pullquote">
+        <div class="q-label">Reference</div>
+        <blockquote>"Our job is to make it effortless for the right person to look at Key Lime and immediately say: 'This is mine. This is how I do things.'"</blockquote>
+        <cite>— Brand Philosophy, Section 1</cite>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="kl-footer">
+    <p>Key Lime · Brand Philosophy · Guide 01 of 06</p>
+    <div class="kl-footer-badge">
+      <a href="brand-guide.html" style="color: var(--lime-dark); font-weight: 700;">Next: Brand Style Guide →</a>
+    </div>
+  </footer>
+
+</body>
+</html>

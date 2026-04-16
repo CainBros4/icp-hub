@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — Look &amp; Feel</title>
+  <meta name="description" content="Creative territory for Key Lime — reference brands, campaign archetypes, photography direction, and the competitive visual lane." />
+  <link rel="stylesheet" href="styles/keylime.css" />
+  <style>
+    /* Reference brand cards */
+    .ref-grid {
+      display: grid; gap: 1.25rem;
+    }
+    .ref {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.75rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ref.primary {
+      border-color: var(--border-lime);
+      background: linear-gradient(135deg, rgba(168,200,86,0.08), var(--cream-card));
+    }
+    .ref-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .ref-title { font-size: 1.35rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+    .ref-rank {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 100px;
+      background: var(--lime-dim); color: var(--lime-dark);
+      border: 1px solid var(--border-lime);
+    }
+    .ref-rank.gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(232,163,23,0.25); }
+    .ref-rank.teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(91,181,162,0.25); }
+    .ref-rank.terra { background: var(--terracotta-dim); color: var(--terracotta); border-color: rgba(217,142,90,0.25); }
+    .ref-why {
+      font-family: var(--font-body);
+      font-size: 0.95rem; color: var(--text); line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .ref-why strong { color: var(--ink); font-weight: 700; }
+
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+    }
+    .ref-table th, .ref-table td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      vertical-align: top;
+    }
+    .ref-table th {
+      font-family: var(--font-display);
+      font-size: 0.64rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--cream-sunken);
+      width: 22%;
+    }
+    .ref-table td { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+    .ref-table tr:last-child td, .ref-table tr:last-child th { border-bottom: none; }
+
+    .ref-study {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: var(--cream-sunken);
+      border-radius: var(--r-sm);
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .ref-study strong { color: var(--ink); font-weight: 700; }
+
+    /* Campaign cards */
+    .campaigns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1rem;
+    }
+    .camp {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+    }
+    .camp-tag {
+      display: inline-block;
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+      background: var(--lime-dim); color: var(--lime-dark);
+      margin-bottom: 10px;
+    }
+    .camp h4 {
+      font-size: 1.02rem; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.012em; margin-bottom: 8px;
+    }
+    .camp p {
+      font-family: var(--font-body);
+      font-size: 0.85rem; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 12px;
+    }
+    .camp .copy-block {
+      background: var(--ink);
+      color: var(--cream);
+      border-radius: var(--r-sm);
+      padding: 14px 16px;
+      font-family: var(--font-display);
+    }
+    .camp .copy-block .headline {
+      font-size: 1.15rem; font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .camp .copy-block .sub {
+      font-family: var(--font-body);
+      font-size: 0.78rem; color: rgba(255,248,237,0.72);
+      line-height: 1.5;
+    }
+    .camp .copy-block.light {
+      background: var(--cream-sunken);
+      color: var(--ink);
+    }
+    .camp .copy-block.light .sub { color: var(--text-secondary); }
+
+    /* Competitive visual audit */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .audit-table th, .audit-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      vertical-align: top;
+    }
+    .audit-table th {
+      font-family: var(--font-display);
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--cream-sunken);
+    }
+    .audit-table td { font-size: 0.86rem; color: var(--text); line-height: 1.6; }
+    .audit-table td:first-child {
+      font-family: var(--font-display);
+      font-weight: 700; color: var(--ink);
+    }
+    .audit-table td .v-tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 600;
+      padding: 2px 8px; border-radius: 5px;
+      background: var(--cream-sunken);
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .audit-table tr.keylime td {
+      background: var(--lime-dim);
+    }
+    .audit-table tr.keylime td:first-child { color: var(--lime-dark); }
+
+    /* Open lane banner */
+    .open-lane {
+      background: linear-gradient(135deg, var(--lime-dim), var(--cream));
+      border: 1px solid var(--border-lime);
+      border-radius: var(--r-lg);
+      padding: 2rem 2.25rem;
+      margin-top: 1.5rem;
+      display: flex; gap: 1.5rem; align-items: center;
+      flex-wrap: wrap;
+    }
+    .open-lane .ol-swatch {
+      width: 80px; height: 80px; border-radius: var(--r-md);
+      background: var(--lime);
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px var(--lime-glow);
+      position: relative;
+    }
+    .open-lane .ol-text { flex: 1; min-width: 280px; }
+    .open-lane h3 {
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--ink); margin-bottom: 8px;
+      letter-spacing: -0.015em;
+    }
+    .open-lane p {
+      font-family: var(--font-body);
+      font-size: 0.92rem; color: var(--text); line-height: 1.7;
+    }
+
+    /* Photography rules */
+    .photo-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+    }
+    .photo-col {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.75rem;
+    }
+    .photo-col.do .photo-label { color: var(--lime-dark); }
+    .photo-col.dont .photo-label { color: var(--error); }
+    .photo-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .photo-list {
+      display: flex; flex-direction: column; gap: 10px;
+      list-style: none;
+    }
+    .photo-list li {
+      font-family: var(--font-body);
+      font-size: 0.88rem; color: var(--text);
+      line-height: 1.6;
+      padding-left: 24px;
+      position: relative;
+    }
+    .photo-col.do   li::before { content: '✓'; position: absolute; left: 0; color: var(--lime-dark); font-weight: 800; }
+    .photo-col.dont li::before { content: '✕'; position: absolute; left: 0; color: var(--error); font-weight: 800; }
+
+    /* Moodboard */
+    .mood {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem 2.25rem;
+    }
+    .mood-eyebrow {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lime-dark);
+      margin-bottom: 10px;
+    }
+    .mood blockquote {
+      font-family: var(--font-body);
+      font-size: 1.15rem; font-style: italic;
+      color: var(--ink); line-height: 1.65;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    .mood .nots {
+      display: flex; flex-direction: column; gap: 6px;
+      padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .mood .nots div {
+      font-family: var(--font-body);
+      font-size: 0.85rem; color: var(--text-secondary);
+      padding-left: 20px; position: relative;
+    }
+    .mood .nots div::before {
+      content: '✕';
+      position: absolute; left: 0; color: var(--error); font-weight: 800;
+    }
+
+    @media (max-width: 860px) {
+      .photo-grid { grid-template-columns: 1fr; }
+      .ref-table th { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="kl-nav">
+    <a class="kl-wordmark" href="index.html">
+      <span class="kl-logo"></span>
+      Key Lime
+    </a>
+    <div class="kl-nav-links">
+      <a href="index.html">Hub</a>
+      <a href="philosophy.html">Philosophy</a>
+      <a href="brand-guide.html">Brand Guide</a>
+      <a href="messaging.html">Messaging</a>
+      <a href="icp-hub.html">ICP Playbooks</a>
+      <a href="look-and-feel.html" class="active">Look &amp; Feel</a>
+      <a href="strategy.html">Strategy</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="kl-hero">
+    <div class="kl-hero-eyebrow">Guide 05 · Inspiration</div>
+    <h1>The creative territory<br /><em>Key Lime lives in.</em></h1>
+    <p>Reference brands to sit next to. Campaign archetypes that work. Photography direction. And the competitive visual lane that's wide open.</p>
+  </section>
+
+  <div class="kl-container">
+
+    <!-- Moodboard -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">01 · The Feeling</div>
+        <h2>Not a conference room. Not a luxury showroom.</h2>
+        <p>Key Lime's visual world has one governing image. Every photograph, frame of video, and UI screen should map back to this.</p>
+      </div>
+
+      <div class="mood">
+        <div class="mood-eyebrow">The Governing Image</div>
+        <blockquote>"A warm Saturday morning, standing in the kitchen of a home you just bought, sunlight coming through the windows, keys on the counter."</blockquote>
+        <div class="nots">
+          <div>A fluorescent-lit corporate office</div>
+          <div>A staged luxury mansion with no personality</div>
+          <div>A cold, stock-photo handshake</div>
+          <div>An agent in a blazer in front of a lockbox</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disruptor reference brands -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">02 · Reference Brands</div>
+        <h2>The brands Key Lime should look and feel like a sibling of.</h2>
+        <p>Each one took a broken, incumbent-dominated industry and made the alternative feel obvious. Study how they did it — the naming, the color, the tone, the product experience.</p>
+      </div>
+
+      <div class="ref-grid">
+
+        <!-- Lemonade PRIMARY -->
+        <div class="ref primary">
+          <div class="ref-head">
+            <div class="ref-title">Lemonade <span style="font-weight: 500; color: var(--text-muted); font-size: 0.9rem;">(Insurance)</span></div>
+            <div class="ref-rank">Primary Reference</div>
+          </div>
+          <div class="ref-why">
+            <strong>Why this is #1:</strong> Lemonade is the closest analog to Key Lime in every dimension — name construction (fruit + financial service), visual identity (bright, warm, distinctive), tone (playful confidence), and market position (making an incumbent-dominated industry feel fresh).
+          </div>
+          <table class="ref-table">
+            <tr><th>Name</th><td>Fruit name that reframes a boring industry — same pattern as Key Lime</td></tr>
+            <tr><th>Color</th><td>Hot pink — instantly ownable. Key Lime does the same thing with warm key-lime green.</td></tr>
+            <tr><th>Tone</th><td>"Forget everything you know about insurance" — confident, playful, not aggressive</td></tr>
+            <tr><th>AI</th><td>Personified as "Maya" — an AI with a name and personality. Key Lime's future direction for "your advisor."</td></tr>
+            <tr><th>Website</th><td>Clean, airy, illustration-driven. Directional for Key Lime's marketing site.</td></tr>
+          </table>
+          <div class="ref-study">
+            <strong>Study:</strong> lemonade.com landing page structure · Maya's onboarding in-app · the "Forget Everything" launch campaign.
+          </div>
+        </div>
+
+        <!-- Tesla -->
+        <div class="ref">
+          <div class="ref-head">
+            <div class="ref-title">Tesla <span style="font-weight: 500; color: var(--text-muted); font-size: 0.9rem;">(Automotive)</span></div>
+            <div class="ref-rank teal">Aspiration Reference</div>
+          </div>
+          <div class="ref-why">
+            Tesla is the <strong>"confident inevitability"</strong> benchmark. They never argued against gas cars. They built something obviously better and let people draw their own conclusions.
+          </div>
+          <table class="ref-table">
+            <tr><th>Competitive posture</th><td>Never mentions competitors. The product IS the argument. Key Lime never attacks agents.</td></tr>
+            <tr><th>Premium feel</th><td>Everything considered — packaging, website, showroom, software. Key Lime must feel premium at every touchpoint.</td></tr>
+            <tr><th>Visual</th><td>Clean, minimal. Lets the product dominate. Lime accents on cream base; let the experience speak.</td></tr>
+            <tr><th>Feature reveal</th><td>Presented as "of course" — autopilot, OTA updates just exist. AI advisor, $20 showings just exist. Don't oversell.</td></tr>
+          </table>
+          <div class="ref-study">
+            <strong>Study:</strong> tesla.com configurator replacing the dealership · launch events — how they present features without comparing to competitors.
+          </div>
+        </div>
+
+        <!-- Robinhood -->
+        <div class="ref">
+          <div class="ref-head">
+            <div class="ref-title">Robinhood <span style="font-weight: 500; color: var(--text-muted); font-size: 0.9rem;">(Investing)</span></div>
+            <div class="ref-rank gold">Accessibility Reference</div>
+          </div>
+          <div class="ref-why">
+            Robinhood democratized an industry that seemed complex and gated. <strong>"Investing for everyone."</strong> The same mission Key Lime has for real estate.
+          </div>
+          <table class="ref-table">
+            <tr><th>Tagline pattern</th><td>"Investing for everyone" → Key Lime: homebuying for everyone who sees a better way</td></tr>
+            <tr><th>Color</th><td>Green (financial growth, go-signal) — same psychology. Warmer for Key Lime.</td></tr>
+            <tr><th>Onboarding</th><td>Gamified, simple, removed every barrier to entry. Key Lime must be frictionless: search → show → buy.</td></tr>
+            <tr><th>Data viz</th><td>Bold numbers, clean charts, savings made visceral. Savings calculator, comp comparisons, commission charts.</td></tr>
+            <tr><th>Caution</th><td>Robinhood was criticized for making finance TOO casual. Key Lime must maintain gravity — this is a home, not a stock trade.</td></tr>
+          </table>
+        </div>
+
+        <!-- Airbnb -->
+        <div class="ref">
+          <div class="ref-head">
+            <div class="ref-title">Airbnb <span style="font-weight: 500; color: var(--text-muted); font-size: 0.9rem;">(Travel)</span></div>
+            <div class="ref-rank terra">Experience Reference</div>
+          </div>
+          <div class="ref-why">
+            Airbnb turned a peer-to-peer marketplace into an aspirational brand. The chaperone model has direct parallels to Airbnb's host model.
+          </div>
+          <table class="ref-table">
+            <tr><th>Photography</th><td>Defined their category with photo quality. Made listings feel aspirational. Key Lime listings need the same standard.</td></tr>
+            <tr><th>Brand warmth</th><td>"Belong anywhere" — emotional, human, not transactional. Key Lime should feel warm and human, not cold-tech.</td></tr>
+            <tr><th>Two-sided marketplace</th><td>Hosts + guests, each with their own experience. Buyers + sellers + chaperones — each needs a tailored experience.</td></tr>
+            <tr><th>Trust mechanism</th><td>Reviews, verified hosts, insurance. Key Lime: chaperone ratings, advisor track record, licensed brokerage.</td></tr>
+          </table>
+        </div>
+
+        <!-- Warby Parker -->
+        <div class="ref">
+          <div class="ref-head">
+            <div class="ref-title">Warby Parker <span style="font-weight: 500; color: var(--text-muted); font-size: 0.9rem;">(Eyewear)</span></div>
+            <div class="ref-rank">Value Reference</div>
+          </div>
+          <div class="ref-why">
+            Warby Parker proved you can be <strong>premium AND affordable</strong> by cutting out the middleman. Key Lime's value prop is structurally identical.
+          </div>
+          <table class="ref-table">
+            <tr><th>Value framing</th><td>"Why pay $700 for glasses?" → $95 premium. Key Lime: "Why pay 6% commission?" → 1% full service.</td></tr>
+            <tr><th>Premium quality</th><td>The product looks and feels like it costs 3x more. Key Lime must never feel "discount."</td></tr>
+            <tr><th>Try-before-buy</th><td>Home try-on program reduced commitment barrier. $20 chaperone showing does the same.</td></tr>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Competitive visual audit -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">03 · Competitive Visual Audit</div>
+        <h2>Every real estate brand clusters in two zones. Neither is Key Lime's.</h2>
+        <p>The incumbents occupy corporate red/blue. The proptech upstarts occupy clinical purple/teal. Nobody owns warm green — so Key Lime does.</p>
+      </div>
+
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Visual Identity</th>
+            <th>Key Lime's Differentiation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Zillow</td>
+            <td><span class="v-tag">Blue · data-heavy</span><br>Corporate, feels like a database</td>
+            <td>Key Lime is warm, personal, guided — not a search engine</td>
+          </tr>
+          <tr>
+            <td>Redfin</td>
+            <td><span class="v-tag">Red · agent photos</span><br>Clean but corporate</td>
+            <td>Key Lime has no agent photos because there are no agents</td>
+          </tr>
+          <tr>
+            <td>Realtor.com</td>
+            <td><span class="v-tag">Red / blue · cluttered</span><br>Traditional portal</td>
+            <td>Key Lime is modern, minimal, app-first</td>
+          </tr>
+          <tr>
+            <td>Opendoor</td>
+            <td><span class="v-tag">Indigo / purple · cold</span><br>Modern but institutional</td>
+            <td>Key Lime is warm and human — not a faceless iBuyer</td>
+          </tr>
+          <tr>
+            <td>RE/MAX</td>
+            <td><span class="v-tag">Red / white / blue · balloon</span><br>Feels like 1990</td>
+            <td>The entire visual system Key Lime must be the opposite of</td>
+          </tr>
+          <tr>
+            <td>Keller Williams</td>
+            <td><span class="v-tag">Red · agent-centric</span></td>
+            <td>Agent-centric is the problem Key Lime solves</td>
+          </tr>
+          <tr class="keylime">
+            <td>Key Lime</td>
+            <td><span class="v-tag" style="background: var(--cream-card); color: var(--lime-dark); border: 1px solid var(--border-lime);">Warm green · cream base</span><br>Fresh, premium, open-lane</td>
+            <td>The first warm brand in a category full of cold ones</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="open-lane">
+        <div class="ol-swatch"></div>
+        <div class="ol-text">
+          <h3>The Open Lane · Warm Key-Lime Green</h3>
+          <p>Nobody is here. The warm key-lime green creates instant differentiation at every touchpoint — recognizable from across a street on a yard sign, distinctive on a home screen among dozens of icons, impossible to confuse with any competitor. Same move Lemonade made with hot pink in insurance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Campaign archetypes -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">04 · Campaign Archetypes</div>
+        <h2>Four creative templates. Every ad should be one of these.</h2>
+        <p>Not rigid formulas — starting frames. If you're briefing an agency or making your own assets, these are the archetypes that work for Key Lime's psychology.</p>
+      </div>
+
+      <div class="campaigns-grid">
+
+        <div class="camp">
+          <div class="camp-tag">Template 01 · The Math</div>
+          <h4>Static Social · Two-column commission comparison</h4>
+          <p>Dark base. Left: "Traditional Agent" with crossed-out commission. Right: "Key Lime" with 1% in lime. Center: savings in gold, massive. Logo bottom-right.</p>
+          <div class="copy-block">
+            <div class="headline">$500K = $13,350</div>
+            <div class="sub">Or $5,000 with Key Lime.<br>Keep the $8,350.</div>
+          </div>
+        </div>
+
+        <div class="camp">
+          <div class="camp-tag" style="background: var(--teal-dim); color: var(--teal);">Template 02 · The Chaperone</div>
+          <h4>Video / Reel · Split-screen, no voiceover needed</h4>
+          <p>Left: calling an agent, "I can show it Thursday." Right: booking a chaperone on the app, confirmed tomorrow 9am, $20. Not mocking — just showing the difference.</p>
+          <div class="copy-block light">
+            <div class="headline">"I can show it Thursday."<br>vs.<br>"Confirmed. Tomorrow, 9am. $20."</div>
+            <div class="sub">Confident. Not combative.</div>
+          </div>
+        </div>
+
+        <div class="camp">
+          <div class="camp-tag" style="background: var(--gold-dim); color: var(--gold);">Template 03 · The Revelation</div>
+          <h4>Carousel · Five slides, compounding the insight</h4>
+          <p>Slide 1: "Did you know you don't need a real estate agent to buy a home?" → agent math → Key Lime's fee → the $20 showing → logo + "Calculate your savings."</p>
+          <div class="copy-block">
+            <div class="headline">You never needed one.</div>
+            <div class="sub">Slide 1 of 5 · Forget the agent.</div>
+          </div>
+        </div>
+
+        <div class="camp">
+          <div class="camp-tag" style="background: var(--terracotta-dim); color: var(--terracotta);">Template 04 · The Testimonial</div>
+          <h4>Social &amp; web · Real person, specific number, neighborhood</h4>
+          <p>Warm cream bg. Quote in charcoal Manrope ExtraBold. Savings number in gold. Real photo, not stock. City/neighborhood below.</p>
+          <div class="copy-block light">
+            <div class="headline">"I saved <span style="color: var(--gold);">$9,200</span> selling my home in Westchase."</div>
+            <div class="sub">— Sarah K., Tampa Bay</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Photography -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">05 · Photography Direction</div>
+        <h2>Warm. Real. Mid-moment.</h2>
+        <p>Color-grade everything warm — cream whites, not blue whites. Slightly lifted blacks (modern film, not harsh contrast). Green accents in the environment when possible.</p>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-col do">
+          <div class="photo-label">✓ Do</div>
+          <ul class="photo-list">
+            <li>Natural light, warm golden-hour tones</li>
+            <li>Real people — diverse, authentic, mid-moment</li>
+            <li>Hands with keys (the universal homeownership moment)</li>
+            <li>Lived-in, styled-but-real home interiors</li>
+            <li>The app in natural context — on a couch, at a kitchen table</li>
+            <li>Unpacking boxes, families exploring, FaceTiming from a new room</li>
+          </ul>
+        </div>
+        <div class="photo-col dont">
+          <div class="photo-label">✕ Don't</div>
+          <ul class="photo-list">
+            <li>Harsh studio lighting, flash photography</li>
+            <li>Models, staged poses, stock photography</li>
+            <li>Corporate handshakes, suits, agent headshots</li>
+            <li>Empty staging, mansions, generic luxury</li>
+            <li>Floating screens, tech-render composites</li>
+            <li>"SOLD" signs, agent marketing clichés</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing call -->
+    <section class="kl-section" style="padding-bottom: 4rem;">
+      <div class="kl-pullquote">
+        <div class="q-label">The Brief</div>
+        <blockquote>"If you put Key Lime's homepage next to Lemonade, Tesla, and Airbnb — it should look like it belongs on the same shelf. Warm, modern, premium, and ownable."</blockquote>
+        <cite>— Creative Direction</cite>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="kl-footer">
+    <p>Key Lime · Look &amp; Feel · Guide 05 of 06</p>
+    <div class="kl-footer-badge">
+      <a href="messaging.html" style="color: var(--lime-dark); font-weight: 700;">Next: Messaging →</a>
+    </div>
+  </footer>
+
+</body>
+</html>

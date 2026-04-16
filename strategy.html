@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — Marketing Strategy</title>
+  <meta name="description" content="The strategic foundation for Key Lime — product value prop, market context, competitive positioning, channel strategy, metrics, and the execution roadmap." />
+  <link rel="stylesheet" href="styles/keylime.css" />
+  <style>
+    /* Executive summary card */
+    .exec {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lime);
+      border-radius: 0 var(--r-lg) var(--r-lg) 0;
+      padding: 1.75rem 2rem;
+    }
+    .exec p {
+      font-family: var(--font-body);
+      font-size: 0.98rem; color: var(--text); line-height: 1.75;
+    }
+    .exec p strong { color: var(--ink); font-weight: 700; }
+
+    /* Unbundle table */
+    .tbl {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .tbl th, .tbl td {
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+      vertical-align: top;
+    }
+    .tbl th {
+      font-family: var(--font-display);
+      font-size: 0.64rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--cream-sunken);
+    }
+    .tbl td:first-child {
+      font-family: var(--font-display);
+      font-weight: 700; color: var(--ink);
+    }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tr.us td { background: var(--lime-dim); }
+    .tbl tr.us td:first-child { color: var(--lime-dark); }
+    .tbl .mark { color: var(--lime-dark); font-weight: 700; }
+    .tbl .none { color: var(--text-muted); }
+    .tbl .hi  { background: rgba(199,96,75,0.12); color: var(--error); padding: 2px 8px; border-radius: 5px; font-weight: 700; display: inline-block; }
+    .tbl .mid { background: var(--gold-dim); color: var(--gold); padding: 2px 8px; border-radius: 5px; font-weight: 700; display: inline-block; }
+    .tbl .lo  { background: var(--lime-dim); color: var(--lime-dark); padding: 2px 8px; border-radius: 5px; font-weight: 700; display: inline-block; }
+
+    /* Market stats */
+    .market-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .market-stat {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .market-stat .v {
+      font-family: var(--font-display);
+      font-size: 1.55rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .market-stat .l {
+      font-family: var(--font-body);
+      font-size: 0.76rem; color: var(--text-muted);
+      margin-top: 6px; line-height: 1.4;
+    }
+    .market-stat .v.lime { color: var(--lime-dark); }
+    .market-stat .v.gold { color: var(--gold); }
+    .market-stat .v.teal { color: var(--teal); }
+    .market-stat .v.ink  { color: var(--ink); }
+
+    /* ICP mini cards */
+    .icp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1rem;
+    }
+    .icp-card {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .icp-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .icp-card.s1::before, .icp-card.s2::before, .icp-card.s6::before { background: var(--lime); }
+    .icp-card.s3::before, .icp-card.s4::before { background: var(--gold); }
+    .icp-card.s5::before { background: var(--teal); }
+    .icp-num {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .icp-card h3 {
+      font-size: 1.02rem; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.012em; margin-bottom: 10px; line-height: 1.3;
+    }
+    .icp-attrs {
+      font-family: var(--font-body);
+      font-size: 0.78rem; color: var(--text-secondary);
+      line-height: 1.55; margin-bottom: 10px;
+    }
+    .icp-attrs .l { color: var(--text-muted); }
+    .icp-msg {
+      padding: 10px 12px;
+      background: var(--cream-sunken);
+      border-left: 2px solid var(--border-strong);
+      border-radius: 0 6px 6px 0;
+      font-family: var(--font-body);
+      font-size: 0.82rem; font-style: italic;
+      color: var(--ink); line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .icp-card.s1 .icp-msg, .icp-card.s2 .icp-msg, .icp-card.s6 .icp-msg { border-left-color: var(--lime); }
+    .icp-card.s3 .icp-msg, .icp-card.s4 .icp-msg { border-left-color: var(--gold); }
+    .icp-card.s5 .icp-msg { border-left-color: var(--teal); }
+    .icp-channels {
+      font-family: var(--font-body);
+      font-size: 0.76rem; color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .icp-channels strong { color: var(--text-secondary); font-weight: 600; }
+
+    /* Tier sections (Channel Strategy) */
+    .tier {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .tier::before {
+      content: '';
+      position: absolute; left: 0; top: 24px; bottom: 24px;
+      width: 3px; border-radius: 0 2px 2px 0;
+    }
+    .tier.t1::before { background: var(--lime); }
+    .tier.t2::before { background: var(--gold); }
+    .tier.t3::before { background: var(--teal); }
+    .tier-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 14px; flex-wrap: wrap; }
+    .tier-label {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .tier.t1 .tier-label { color: var(--lime-dark); }
+    .tier.t2 .tier-label { color: var(--gold); }
+    .tier.t3 .tier-label { color: var(--teal); }
+    .tier-title { font-size: 1.18rem; font-weight: 800; color: var(--ink); letter-spacing: -0.015em; }
+    .tier-phase {
+      font-family: var(--font-body);
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+    .tier-channels {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .channel {
+      padding-left: 14px;
+      border-left: 2px solid var(--border);
+    }
+    .channel h4 {
+      font-size: 0.95rem; font-weight: 800; color: var(--ink);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .channel p {
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .channel p strong { color: var(--ink); font-weight: 700; }
+
+    /* Metrics table */
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .metrics-table th, .metrics-table td {
+      padding: 11px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+    }
+    .metrics-table th {
+      font-family: var(--font-display);
+      font-size: 0.64rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      background: var(--cream-sunken);
+      color: var(--lime-dark);
+    }
+    .metrics-table td:first-child { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+    .metrics-table td:not(:first-child) {
+      font-family: var(--font-display);
+      font-weight: 700; color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    /* Roadmap */
+    .roadmap {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .phase {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.65rem;
+      position: relative;
+    }
+    .phase::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: var(--r-lg) var(--r-lg) 0 0;
+    }
+    .phase.p1::before { background: var(--lime); }
+    .phase.p2::before { background: var(--gold); }
+    .phase.p3::before { background: var(--teal); }
+    .phase-num {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .phase h3 {
+      font-size: 1.08rem; font-weight: 800;
+      color: var(--ink); letter-spacing: -0.015em;
+      margin-bottom: 4px;
+    }
+    .phase .range {
+      font-family: var(--font-body);
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .phase ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .phase ul li {
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--text);
+      line-height: 1.6;
+      padding-left: 20px; position: relative;
+    }
+    .phase.p1 li::before { content: '→'; position: absolute; left: 0; color: var(--lime-dark); font-weight: 800; }
+    .phase.p2 li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 800; }
+    .phase.p3 li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-weight: 800; }
+
+    @media (max-width: 860px) {
+      .market-grid { grid-template-columns: 1fr 1fr; }
+      .tier-channels { grid-template-columns: 1fr; }
+      .roadmap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="kl-nav">
+    <a class="kl-wordmark" href="index.html">
+      <span class="kl-logo"></span>
+      Key Lime
+    </a>
+    <div class="kl-nav-links">
+      <a href="index.html">Hub</a>
+      <a href="philosophy.html">Philosophy</a>
+      <a href="brand-guide.html">Brand Guide</a>
+      <a href="messaging.html">Messaging</a>
+      <a href="icp-hub.html">ICP Playbooks</a>
+      <a href="look-and-feel.html">Look &amp; Feel</a>
+      <a href="strategy.html" class="active">Strategy</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="kl-hero">
+    <div class="kl-hero-eyebrow">Guide 06 · Go-to-Market</div>
+    <h1>The operator's playbook.<br /><em>Channels, positioning, metrics.</em></h1>
+    <p>Product value proposition, market context, competitive positioning, channel strategy by phase, target metrics, and the 12-month execution roadmap.</p>
+  </section>
+
+  <div class="kl-container">
+
+    <!-- Executive summary -->
+    <section class="kl-section">
+      <div class="exec">
+        <div class="kl-eyebrow" style="margin-bottom: 10px;">Executive Summary</div>
+        <p>
+          Key Lime is an AI-powered real estate platform that enables buyers and sellers to transact <strong>without traditional agents</strong>, charging <strong>1% at closing</strong> vs. the industry standard 5.44%. Platform features: AI negotiation, automated document generation, a DoorDash-style chaperone network ($20 per walkthrough), and a unified transaction hub. Initial market: <strong>Tampa Bay, FL</strong>. On a $430K median-priced Tampa home, the seller keeps ~$19,100 more than under the traditional commission model.
+        </p>
+      </div>
+    </section>
+
+    <!-- Product value prop -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">01 · Product Value Proposition</div>
+        <h2>AI-powered full service. Not a discount broker. Not FSBO.</h2>
+        <p>Key Lime unbundles the five things a traditional agent bundles — and delivers each one better, separately, and without the conflict of interest.</p>
+      </div>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Traditional Agent</th>
+            <th>Key Lime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Access to homes</td><td>Agent schedules on their calendar</td><td>On-demand chaperone, $20, book anytime</td></tr>
+          <tr><td>Market intelligence</td><td>Agent's opinion on comps</td><td>AI comp analysis trained on local transaction data</td></tr>
+          <tr><td>Negotiation</td><td>Agent negotiates (incentivized to close fast)</td><td>AI negotiation — aligned with user outcome, no conflict</td></tr>
+          <tr><td>Documentation</td><td>Forwards paperwork, defers to attorneys</td><td>Platform auto-generates and manages all closing docs</td></tr>
+          <tr><td>Process guidance</td><td>Explains steps when asked</td><td>Personified AI advisor, 24/7, tailored to your deal</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Market context -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">02 · Market Context</div>
+        <h2>Tampa Bay — the launch wedge.</h2>
+        <p>Tampa Bay has the conditions for disruption: a high-volume market shifting buyer-friendly, strong in-migration, and a post-NAR seller base that's newly aware of commission math.</p>
+      </div>
+
+      <div class="market-grid">
+        <div class="market-stat"><div class="v ink">$430K</div><div class="l">Median home price<br />(July 2025)</div></div>
+        <div class="market-stat"><div class="v lime">+36.3%</div><div class="l">Inventory YoY<br />(buyer's market)</div></div>
+        <div class="market-stat"><div class="v gold">3,452</div><div class="l">Homes sold<br />in July 2025</div></div>
+        <div class="market-stat"><div class="v teal">45 days</div><div class="l">Avg. days on market<br />(up from 28 in 2023)</div></div>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 12px;">Industry tailwinds</h3>
+        <div class="tier-channels">
+          <div class="channel">
+            <h4>NAR settlement aftermath</h4>
+            <p><strong>49%</strong> of sellers didn't know they were paying the buyer's agent. <strong>67%</strong> believe agents value profits over client interests. <strong>94%</strong> support commission changes. The Commission-Awakened seller is a freshly activated segment.</p>
+          </div>
+          <div class="channel">
+            <h4>AI-ready buyers</h4>
+            <p><strong>43%</strong> of Gen Z use AI tools for homebuying research. First-time buyer median age hit a record <strong>40</strong>. Move-up millennials and first-timers are natural early adopters for an AI-led transaction experience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ICPs -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">03 · Target Segments</div>
+        <h2>Six ICPs. One brand. Five demand-side, one supply-side.</h2>
+        <p>Each segment has a distinct trigger, message, and channel mix. Full playbooks with hero journeys, ad concepts, and headline frameworks live in <a href="icp-hub.html" style="color: var(--lime-dark); font-weight: 700;">the ICP Playbooks</a>.</p>
+      </div>
+
+      <div class="icp-grid">
+
+        <div class="icp-card s1">
+          <div class="icp-num">Segment 01 · Demand</div>
+          <h3>Equity-Motivated Move-Up Millennial Seller</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 32–42 · <span class="l">HHI</span> $90–160K · <span class="l">Home</span> $350–550K</div>
+          <div class="icp-msg">"You built equity. Keep it."</div>
+          <div class="icp-channels"><strong>Channels:</strong> YouTube, Reddit, Instagram, podcasts (BiggerPockets, Money Guy)</div>
+        </div>
+
+        <div class="icp-card s2">
+          <div class="icp-num">Segment 02 · Demand</div>
+          <h3>Out-of-State Digital Relocator</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 28–48 · <span class="l">HHI</span> $110–220K · <span class="l">Home</span> $350–700K</div>
+          <div class="icp-msg">"Buy your Tampa home from anywhere. A local chaperone handles the walkthrough."</div>
+          <div class="icp-channels"><strong>Channels:</strong> LinkedIn, YouTube neighborhood tours, r/moving, r/tampa, FB groups</div>
+        </div>
+
+        <div class="icp-card s3">
+          <div class="icp-num">Segment 03 · Demand</div>
+          <h3>Commission-Awakened Repeat Seller</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 45–62 · <span class="l">HHI</span> $100–200K · <span class="l">Home</span> $450–800K</div>
+          <div class="icp-msg">"The last $20,000 you'll ever give away at closing."</div>
+          <div class="icp-channels"><strong>Channels:</strong> Facebook, local news, Dave Ramsey, Google Search, NextDoor</div>
+        </div>
+
+        <div class="icp-card s4">
+          <div class="icp-num">Segment 04 · Demand</div>
+          <h3>Active Investor / House Flipper</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 30–55 · <span class="l">HHI</span> $120–400K · <span class="l">Volume</span> 2–10+ / yr</div>
+          <div class="icp-msg">"Cut selling costs 4–5% on every flip. That's $20,000 back per transaction."</div>
+          <div class="icp-channels"><strong>Channels:</strong> BiggerPockets, local REIA, PropStream, investor FB groups</div>
+        </div>
+
+        <div class="icp-card s5">
+          <div class="icp-num">Segment 05 · Supply</div>
+          <h3>Gig Economy Home Chaperone</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 22–50 · <span class="l">Supplement</span> $500–$2K/mo · <span class="l">Pay</span> $26–40/hr effective</div>
+          <div class="icp-msg">"Earn $20 per showing. Your Tampa knowledge is worth money."</div>
+          <div class="icp-channels"><strong>Channels:</strong> Facebook gig groups, Instagram, TikTok, app store search</div>
+        </div>
+
+        <div class="icp-card s6">
+          <div class="icp-num">Segment 06 · Demand</div>
+          <h3>FSBO Upgrader / Frustrated DIY Seller</h3>
+          <div class="icp-attrs"><span class="l">Age</span> 35–58 · <span class="l">HHI</span> $70–140K · <span class="l">Home</span> $280–480K</div>
+          <div class="icp-msg">"Sell smarter, not cheaper. AI-powered full service — not DIY."</div>
+          <div class="icp-channels"><strong>Channels:</strong> Google Search ("sell home without agent"), FSBO forums, YouTube</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Competitive Positioning -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">04 · Competitive Positioning</div>
+        <h2>Where Key Lime wins — and the risks to mitigate.</h2>
+        <p>The platform occupies a space competitors can't reach without fundamentally changing their model.</p>
+      </div>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Key Lime</th>
+            <th>Nearest Competitor</th>
+            <th>Our Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="us">
+            <td>Price</td>
+            <td><span class="lo">1% at closing</span></td>
+            <td>Redfin 1.5%, Houzeo 0.5–1.25% + upfront</td>
+            <td>Lowest all-in cost with full AI service</td>
+          </tr>
+          <tr>
+            <td>AI Negotiation</td>
+            <td class="mark">✓ Full engine</td>
+            <td class="none">None offer this</td>
+            <td>First mover — no competitor has AI negotiation</td>
+          </tr>
+          <tr>
+            <td>Document Generation</td>
+            <td class="mark">✓ Auto-generated</td>
+            <td class="none">Houzeo basic forms</td>
+            <td>Full transaction document suite</td>
+          </tr>
+          <tr>
+            <td>Walkthroughs</td>
+            <td class="mark">$20 chaperone</td>
+            <td>Redfin agent tours</td>
+            <td>10× cheaper; on-demand scheduling</td>
+          </tr>
+          <tr>
+            <td>Agent Dependency</td>
+            <td class="mark">Zero</td>
+            <td class="none">Redfin/Clever require agents</td>
+            <td>Only true agent-free full-service platform</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 12px;">Where we need to differentiate</h3>
+        <table class="tbl">
+          <thead>
+            <tr><th>Risk</th><th>Mitigation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Trust gap (new platform, no track record)</td><td>Savings calculator as hero · attorney endorsements · licensed brokerage status · live transaction counter</td></tr>
+            <tr><td>AI skepticism — "what if it gets it wrong?"</td><td>Publish AI negotiation win stories · show the comp analysis · offer human escalation path</td></tr>
+            <tr><td>Agent ecosystem retaliation</td><td>Build legal/compliance playbooks proactively · MLS access through licensed brokerage</td></tr>
+            <tr><td>FSBO stigma association</td><td>Aggressively differentiate: "AI-powered full service" — never "FSBO"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Channel Strategy -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">05 · Channel Strategy</div>
+        <h2>Three tiers, sequenced by phase.</h2>
+        <p>Foundation channels first — they compound. Growth channels layer on once the first 100 transactions exist as proof. Scale channels amplify proven winners.</p>
+      </div>
+
+      <div class="tier t1">
+        <div class="tier-head">
+          <div>
+            <div class="tier-label">Tier 01 · Foundation</div>
+            <div class="tier-title">Compounding, SEO-led</div>
+          </div>
+          <div class="tier-phase">Months 1–3</div>
+        </div>
+        <div class="tier-channels">
+          <div class="channel">
+            <h4>SEO Content Engine</h4>
+            <p>Non-negotiable. <strong>50 articles in 90 days, 200+ by month 6.</strong> Content clusters: "Sell home without agent Tampa," commission alternatives, AI real estate platform reviews, comparison pages. Playbook: Opendoor's pain-point SEO + Clever's 8,000-article moat.</p>
+          </div>
+          <div class="channel">
+            <h4>Google Search PPC</h4>
+            <p>Opendoor's single-landing-page model. Priority keywords: "sell my house Tampa," "sell home without agent," "low commission real estate FL." <strong>Competitor bidding</strong> on Houzeo, Clever, Redfin terms with comparison messaging.</p>
+          </div>
+          <div class="channel">
+            <h4>Savings Calculator</h4>
+            <p>The single most important conversion tool. Shows exact dollar savings vs. traditional agent, Redfin, Houzeo, FSBO. Placed on homepage hero, every blog post CTA, every landing page. <strong>Shareable results page</strong> for social proof.</p>
+          </div>
+          <div class="channel">
+            <h4>Email Drip</h4>
+            <p>Calculator users → education series → listing conversion. Triggered emails on price drops, new listings, transaction status. Weekly Tampa Bay market newsletter positions Key Lime as the Sage of the market.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier t2">
+        <div class="tier-head">
+          <div>
+            <div class="tier-label">Tier 02 · Growth</div>
+            <div class="tier-title">Paid + owned audience</div>
+          </div>
+          <div class="tier-phase">Months 3–6</div>
+        </div>
+        <div class="tier-channels">
+          <div class="channel">
+            <h4>Meta (Facebook + Instagram)</h4>
+            <p>Seller targeting on life-event signals + Tampa Bay radius. Carousel ads, video testimonials, savings comparison static. <strong>Chaperone recruitment</strong> targeting Tampa gig workers. Retargeting calculator users who didn't sign up.</p>
+          </div>
+          <div class="channel">
+            <h4>YouTube</h4>
+            <p>Weekly Tampa market explainer. "How AI handles your negotiation" demo. Customer savings stories with specific dollar amounts. Neighborhood tours targeting out-of-state relocators. Format: 5–10 min educational, not polished commercial.</p>
+          </div>
+          <div class="channel">
+            <h4>Podcast Advertising</h4>
+            <p>Underexploited by competitors — no major competitor is a heavy podcast advertiser. Priority: BiggerPockets, Money Guy, Dave Ramsey, local Tampa shows, Side Hustle Nation (chaperone recruitment). Host-read with calculator CTA.</p>
+          </div>
+          <div class="channel">
+            <h4>Comparison Landing Pages</h4>
+            <p>vs. Redfin, Zillow, Houzeo, Clever. Each with a live side-by-side fee calculator. These double as SEO pages for branded-competitor search and as bottom-funnel conversion pages.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier t3">
+        <div class="tier-head">
+          <div>
+            <div class="tier-label">Tier 03 · Scale</div>
+            <div class="tier-title">Amplify the winners</div>
+          </div>
+          <div class="tier-phase">Months 6–12</div>
+        </div>
+        <div class="tier-channels">
+          <div class="channel">
+            <h4>Streaming / OTT Video</h4>
+            <p>Hulu, Peacock, YouTube TV — cost-efficient and targetable. 30-second spots with real Tampa homeowners and specific savings amounts. Targeting: Tampa Bay DMA, homeowner demographics, $80K+ HHI.</p>
+          </div>
+          <div class="channel">
+            <h4>TikTok + Instagram Reels</h4>
+            <p>"Commission reveals," AI negotiation demos, chaperone day-in-the-life. Organic first → amplify winners with paid. This is where Gen Z and young millennial awareness lives.</p>
+          </div>
+          <div class="channel">
+            <h4>PR &amp; Media</h4>
+            <p>Tampa Bay Times, HousingWire, Inman, Real Trends. Angle: commission disruption + AI replacing agents + local success stories. Publish data-driven studies for pickup — Clever got cited by NYT and WSJ doing this.</p>
+          </div>
+          <div class="channel">
+            <h4>Local Partnerships</h4>
+            <p>Tampa Bay REIA (investor segment), relocation companies (out-of-state referrals), title/mortgage/lender referral relationships. Every local partner is a trust multiplier.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metrics -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">06 · Metrics &amp; KPIs</div>
+        <h2>What good looks like at each milestone.</h2>
+      </div>
+
+      <h3 style="font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 10px;">Acquisition targets</h3>
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Month 3</th>
+            <th>Month 6</th>
+            <th>Month 12</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Organic traffic / month</td><td>5,000</td><td>25,000</td><td>100,000</td></tr>
+          <tr><td>Savings calculator completions</td><td>500</td><td>3,000</td><td>15,000</td></tr>
+          <tr><td>Email list size</td><td>2,000</td><td>10,000</td><td>50,000</td></tr>
+          <tr><td>Listing sign-ups</td><td>20</td><td>100</td><td>500</td></tr>
+          <tr><td>Completed transactions</td><td>5</td><td>30</td><td>150</td></tr>
+          <tr><td>Active chaperones (Tampa Bay)</td><td>25</td><td>100</td><td>300</td></tr>
+          <tr><td>Trustpilot / Google reviews</td><td>10</td><td>100</td><td>500</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size: 1rem; font-weight: 800; color: var(--ink); margin: 1.5rem 0 10px;">Unit economics targets</h3>
+      <table class="metrics-table">
+        <thead>
+          <tr><th>Metric</th><th>Target</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CAC (Customer Acquisition Cost)</td><td>&lt; $500 per listing</td></tr>
+          <tr><td>LTV (1% of avg sale price)</td><td>~$4,300 per transaction</td></tr>
+          <tr><td>LTV : CAC ratio</td><td>&gt; 8 : 1</td></tr>
+          <tr><td>Conversion · Calculator → Sign-up</td><td>&gt; 5%</td></tr>
+          <tr><td>Conversion · Sign-up → Listing</td><td>&gt; 30%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="kl-section" style="padding-bottom: 4rem;">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">07 · Execution Roadmap</div>
+        <h2>12 months, three phases.</h2>
+        <p>Don't start Phase 2 until Phase 1 has shipped. Don't start Phase 3 until Phase 2 has proof points.</p>
+      </div>
+
+      <div class="roadmap">
+
+        <div class="phase p1">
+          <div class="phase-num">Phase 01</div>
+          <h3>Foundation</h3>
+          <div class="range">Months 1–3</div>
+          <ul>
+            <li>Deploy savings calculator as homepage hero</li>
+            <li>Launch brand identity (cream + lime, Manrope)</li>
+            <li>Publish 50 SEO articles (commission, FSBO, Tampa)</li>
+            <li>Set up Google Search PPC campaigns</li>
+            <li>Build 5 customer case studies with real savings figures</li>
+            <li>Secure attorney / legal endorsements for trust signals</li>
+            <li>Launch chaperone recruitment campaign</li>
+            <li>Set up email drip sequences for calculator users</li>
+          </ul>
+        </div>
+
+        <div class="phase p2">
+          <div class="phase-num">Phase 02</div>
+          <h3>Growth</h3>
+          <div class="range">Months 3–6</div>
+          <ul>
+            <li>Scale to 200+ SEO articles</li>
+            <li>Launch YouTube channel (weekly Tampa market content)</li>
+            <li>Begin podcast advertising</li>
+            <li>Deploy Meta retargeting campaigns</li>
+            <li>Build comparison landing pages (vs. Redfin, Zillow, Houzeo, Clever)</li>
+            <li>Present at Tampa Bay REIA for investor segment</li>
+            <li>Launch weekly Tampa Bay market newsletter</li>
+            <li>Target 100 verified reviews on Trustpilot / Google</li>
+          </ul>
+        </div>
+
+        <div class="phase p3">
+          <div class="phase-num">Phase 03</div>
+          <h3>Scale</h3>
+          <div class="range">Months 6–12</div>
+          <ul>
+            <li>Launch streaming / OTT video (Hulu, Peacock)</li>
+            <li>Deploy TikTok / Reels organic + paid strategy</li>
+            <li>Begin PR outreach (Tampa Bay Times, HousingWire, Inman)</li>
+            <li>Publish data-driven research for media pickup</li>
+            <li>Build neighborhood-specific landing pages</li>
+            <li>Launch referral program for completed transactions</li>
+            <li>Establish relocation company partnerships</li>
+            <li>Deploy live transaction counter on homepage</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="kl-footer">
+    <p>Key Lime · Marketing Strategy · Guide 06 of 06</p>
+    <div class="kl-footer-badge">
+      <a href="index.html" style="color: var(--lime-dark); font-weight: 700;">← Back to Hub</a>
+    </div>
+  </footer>
+
+</body>
+</html>

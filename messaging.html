@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Lime — Messaging &amp; Positioning</title>
+  <meta name="description" content="The psychological architecture behind Key Lime — archetype stack, buyer vs. seller psychology, and the persuasion sequences that get the brand to land." />
+  <link rel="stylesheet" href="styles/keylime.css" />
+  <style>
+    /* Archetype cards */
+    .arch-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .arch {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem;
+      position: relative; overflow: hidden;
+    }
+    .arch::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .arch.outlaw::before    { background: var(--lime); }
+    .arch.magician::before  { background: var(--teal); }
+    .arch.everyp::before    { background: var(--gold); }
+    .arch-rank {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .arch h3 {
+      font-size: 1.3rem; font-weight: 800;
+      letter-spacing: -0.018em; margin-bottom: 4px;
+    }
+    .arch.outlaw h3    { color: var(--lime-dark); }
+    .arch.magician h3  { color: var(--teal); }
+    .arch.everyp h3    { color: var(--gold); }
+    .arch .role {
+      font-family: var(--font-body);
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 14px; letter-spacing: 0.02em;
+    }
+    .arch .promise {
+      font-family: var(--font-body);
+      font-size: 0.92rem; font-style: italic;
+      color: var(--ink); line-height: 1.65;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .arch .attrs { display: flex; flex-direction: column; gap: 10px; }
+    .arch .attr .k {
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted);
+      display: block; margin-bottom: 2px;
+    }
+    .arch .attr .v {
+      font-family: var(--font-body);
+      font-size: 0.84rem; color: var(--text); line-height: 1.55;
+    }
+
+    /* Combination banner */
+    .combo {
+      background: var(--cream-sunken);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem;
+      display: flex; gap: 1.5rem; align-items: center;
+      flex-wrap: wrap;
+    }
+    .combo-label {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lime-dark); white-space: nowrap;
+    }
+    .combo-text {
+      font-family: var(--font-body);
+      color: var(--text); font-size: 0.92rem; line-height: 1.7;
+    }
+    .combo-text strong { color: var(--ink); font-weight: 700; }
+    .combo-text .tag { color: var(--lime-dark); font-weight: 700; }
+
+    /* Audience switcher */
+    .aud-switch {
+      display: inline-flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      background: var(--cream-card);
+      margin-bottom: 2rem;
+    }
+    .aud-btn {
+      padding: 11px 26px;
+      font-family: var(--font-display);
+      font-size: 0.85rem; font-weight: 700;
+      border: none; cursor: pointer;
+      background: transparent; color: var(--text-muted);
+      transition: all 0.2s ease;
+      border-right: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
+    .aud-btn:last-child { border-right: none; }
+    .aud-btn:hover { color: var(--ink); }
+    .aud-btn.active.buyer  { background: var(--lime-dim); color: var(--lime-dark); }
+    .aud-btn.active.seller { background: var(--gold-dim); color: var(--gold); }
+    .aud-panel { display: none; }
+    .aud-panel.active { display: block; }
+
+    /* Problem frame */
+    .frame {
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+      border: 1px solid;
+    }
+    .frame.buyer {
+      background: linear-gradient(135deg, var(--lime-dim), rgba(168,200,86,0.02));
+      border-color: var(--border-lime);
+    }
+    .frame.seller {
+      background: linear-gradient(135deg, var(--gold-dim), rgba(232,163,23,0.02));
+      border-color: rgba(232,163,23,0.22);
+    }
+    .frame-label {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .frame.buyer .frame-label  { color: var(--lime-dark); }
+    .frame.seller .frame-label { color: var(--gold); }
+    .frame h3 {
+      font-size: 1.2rem; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.018em; line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .frame p {
+      font-family: var(--font-body);
+      font-size: 0.93rem; color: var(--text); line-height: 1.72;
+    }
+    .frame p em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+    /* Move cards */
+    .moves-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .move {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.4rem 1.6rem;
+      transition: border-color 0.2s ease;
+    }
+    .move:hover { border-color: var(--border-strong); }
+    .move-num {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .move-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 12px; margin-bottom: 6px;
+    }
+    .move-title {
+      font-size: 1.08rem; font-weight: 800;
+      color: var(--ink); letter-spacing: -0.015em;
+    }
+    .move-arch {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+      white-space: nowrap;
+    }
+    .arch-outlaw    { background: var(--lime-dim);      color: var(--lime-dark); }
+    .arch-magician  { background: var(--teal-dim);      color: var(--teal); }
+    .arch-everyp    { background: var(--gold-dim);      color: var(--gold); }
+    .arch-deep      { background: var(--cream-sunken);  color: var(--ink); }
+    .arch-caregiver { background: var(--terracotta-dim);color: var(--terracotta); }
+    .arch-sovereign { background: var(--gold-dim);      color: var(--gold); }
+    .arch-mature    { background: var(--lime-dim);      color: var(--lime-dark); }
+    .arch-concrete  { background: var(--teal-dim);      color: var(--teal); }
+
+    .move-desc {
+      font-family: var(--font-body);
+      font-size: 0.86rem; color: var(--text-secondary);
+      line-height: 1.68; margin-bottom: 12px;
+    }
+    .move-ex-wrap {
+      display: flex; flex-direction: column; gap: 8px;
+      padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .move-ex {
+      font-family: var(--font-body);
+      font-size: 0.82rem; font-style: italic;
+      color: var(--ink); line-height: 1.55;
+      padding-left: 12px;
+      border-left: 2px solid var(--border);
+    }
+    .move.buyer  .move-ex { border-left-color: var(--lime); }
+    .move.seller .move-ex { border-left-color: var(--gold); }
+
+    /* Persuasion sequence */
+    .seq-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .seq-row {
+      display: grid;
+      grid-template-columns: 140px 160px 1fr;
+      gap: 20px; align-items: center;
+      padding: 16px 20px;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+    }
+    .seq-beat {
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .seq-row.b1 .seq-beat { color: var(--lime-dark); }
+    .seq-row.b2 .seq-beat { color: var(--teal); }
+    .seq-row.b3 .seq-beat { color: var(--gold); }
+    .seq-row.b4 .seq-beat { color: var(--terracotta); }
+    .seq-arch {
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--text); letter-spacing: 0.01em;
+    }
+    .seq-mom {
+      font-family: var(--font-body);
+      font-size: 0.9rem; font-style: italic;
+      color: var(--ink); line-height: 1.6;
+    }
+
+    /* North star */
+    .north {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .north::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 360px;
+      background: radial-gradient(ellipse at center top, rgba(168,200,86,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .north-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--lime-dark); margin-bottom: 16px;
+      position: relative;
+    }
+    .north h2 {
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 800; color: var(--ink);
+      letter-spacing: -0.02em; line-height: 1.3;
+      margin-bottom: 14px; position: relative;
+    }
+    .north h2 .hl {
+      color: var(--lime-dark);
+      font-style: italic;
+    }
+    .north > p {
+      font-family: var(--font-body);
+      font-size: 1rem; color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 640px; margin: 0 auto 1.75rem;
+      position: relative;
+    }
+    .identity {
+      position: relative;
+      background: var(--cream-sunken);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lime);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 1.25rem 1.5rem;
+      max-width: 680px; margin: 0 auto;
+      text-align: left;
+    }
+    .identity .id-label {
+      font-size: 0.64rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lime-dark); margin-bottom: 10px;
+    }
+    .identity blockquote {
+      font-family: var(--font-body);
+      font-size: 1rem; font-style: italic;
+      color: var(--ink); line-height: 1.75;
+    }
+
+    @media (max-width: 860px) {
+      .arch-grid { grid-template-columns: 1fr; }
+      .moves-grid { grid-template-columns: 1fr; }
+      .seq-row { grid-template-columns: 1fr; gap: 6px; }
+      .combo { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="kl-nav">
+    <a class="kl-wordmark" href="index.html">
+      <span class="kl-logo"></span>
+      Key Lime
+    </a>
+    <div class="kl-nav-links">
+      <a href="index.html">Hub</a>
+      <a href="philosophy.html">Philosophy</a>
+      <a href="brand-guide.html">Brand Guide</a>
+      <a href="messaging.html" class="active">Messaging</a>
+      <a href="icp-hub.html">ICP Playbooks</a>
+      <a href="look-and-feel.html">Look &amp; Feel</a>
+      <a href="strategy.html">Strategy</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="kl-hero">
+    <div class="kl-hero-eyebrow">Guide 03 · Message</div>
+    <h1>We don't convince.<br /><em>We resonate.</em></h1>
+    <p>The archetype system and persuasion sequence behind how Key Lime lands — three archetypes running simultaneously, distinct psychology for buyers and sellers, converging on a single moment of ownership.</p>
+  </section>
+
+  <div class="kl-container">
+
+    <!-- Resonance frame -->
+    <section class="kl-section">
+      <div class="kl-pullquote">
+        <div class="q-label">The Frame</div>
+        <blockquote>"Key Lime doesn't convince people. It resonates with a truth they already half-believe — and gives them permission to act on it."</blockquote>
+        <cite>— The brand's job is not to implant a belief. It's to unlock one.</cite>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--cream-card); border: 1px solid var(--border); border-left: 3px solid var(--terracotta); border-radius: 0 var(--r-md) var(--r-md) 0;">
+        <p style="font-family: var(--font-body); font-size: 0.92rem; color: var(--text); line-height: 1.72;">
+          Buyers already suspect agents are overpriced. Sellers already suspect they got fleeced last time. <strong style="color: var(--ink); font-weight: 700;">Resonance creates advocates; manipulation creates churn.</strong> The difference shows up in retention and referral numbers 18 months downstream.
+        </p>
+      </div>
+    </section>
+
+    <!-- Archetype stack -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">01 · The Archetype Stack</div>
+        <h2>Three archetypes, running at once.</h2>
+        <p>The combination is the signature. No single archetype carries the brand, and any one of them alone would fail.</p>
+      </div>
+
+      <div class="arch-grid">
+
+        <div class="arch outlaw">
+          <div class="arch-rank">Primary · Positioning</div>
+          <h3>The Outlaw</h3>
+          <div class="role">Disruption · Revelation</div>
+          <div class="promise">"The rules are broken. Here's what's actually possible."</div>
+          <div class="attrs">
+            <div class="attr"><span class="k">Core desire</span><span class="v">Disrupt what isn't working</span></div>
+            <div class="attr"><span class="k">Core fear</span><span class="v">Being powerless, being exploited by the system</span></div>
+            <div class="attr"><span class="k">Shadow</span><span class="v">Cynicism, anger for its own sake</span></div>
+            <div class="attr"><span class="k">Peer brands</span><span class="v">Tesla (early), Uber (early), Robinhood, Liquid Death</span></div>
+          </div>
+        </div>
+
+        <div class="arch magician">
+          <div class="arch-rank">Secondary · Product</div>
+          <h3>The Magician</h3>
+          <div class="role">Transformation · Demonstration</div>
+          <div class="promise">"What seemed impossible is now effortless."</div>
+          <div class="attrs">
+            <div class="attr"><span class="k">Core desire</span><span class="v">Make dreams reality, understand how things work</span></div>
+            <div class="attr"><span class="k">Core fear</span><span class="v">Unintended consequences, shallow trickery</span></div>
+            <div class="attr"><span class="k">Shadow</span><span class="v">Manipulation, "too good to be true" distrust</span></div>
+            <div class="attr"><span class="k">Peer brands</span><span class="v">Apple, Tesla (current), Stripe, Airbnb</span></div>
+          </div>
+        </div>
+
+        <div class="arch everyp">
+          <div class="arch-rank">Tertiary · Tone</div>
+          <h3>The Everyperson</h3>
+          <div class="role">Belonging · Accessibility</div>
+          <div class="promise">"Normal people are already doing this. You belong."</div>
+          <div class="attrs">
+            <div class="attr"><span class="k">Core desire</span><span class="v">Belonging, accessibility, not being excluded</span></div>
+            <div class="attr"><span class="k">Core fear</span><span class="v">Being out of their depth, joining a cult of disruptors</span></div>
+            <div class="attr"><span class="k">Shadow</span><span class="v">Blandness, loss of distinctiveness</span></div>
+            <div class="attr"><span class="k">Peer brands</span><span class="v">Lemonade (warmth), early Airbnb (accessibility)</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="combo" style="margin-top: 1.25rem;">
+        <div class="combo-label">The Combination</div>
+        <div class="combo-text">
+          <strong>Outlaw positioning</strong> (the system is broken) delivered with <strong>Magician composure</strong> (and here's the tool that makes it irrelevant), in an <strong>Everyperson tone</strong> (and anyone can use it). Operational shorthand: <span class="tag">"Confident inevitability."</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audience psychology -->
+    <section class="kl-section">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">02 · Audience Psychology</div>
+        <h2>Different problems. Same endpoint.</h2>
+        <p>Buyers carry 80% of brand weight — their archetype stack is <strong>Outlaw / Magician / Everyperson</strong>. Sellers need more stages of reassurance — their stack adds <strong>Caregiver / Sovereign / Mature Outlaw / Concrete Magician</strong>. Each audience gets its own four moves and persuasion sequence.</p>
+      </div>
+
+      <div class="aud-switch">
+        <button class="aud-btn buyer active" data-panel="buyer">Buyer · 80%</button>
+        <button class="aud-btn seller" data-panel="seller">Seller · 20%</button>
+      </div>
+
+      <!-- BUYER -->
+      <div class="aud-panel active" id="panel-buyer">
+
+        <div class="frame buyer">
+          <div class="frame-label">The Revelation Problem</div>
+          <h3>Buyers don't think they're choosing an agent. They think "that's just how you buy a house."</h3>
+          <p>The agent is <em>invisible infrastructure</em>. The job isn't to convince them Key Lime is better — it's to make the agent's role <em>visible</em>, because once visible, it's self-evidently overpriced.</p>
+        </div>
+
+        <div class="kl-sec-head" style="margin-bottom: 1.25rem;">
+          <div class="kl-eyebrow">The Four Moves · Buyer</div>
+        </div>
+
+        <div class="moves-grid">
+
+          <div class="move buyer">
+            <div class="move-num">Move 01</div>
+            <div class="move-head">
+              <div class="move-title">Hidden Cost Reveal</div>
+              <div class="move-arch arch-outlaw">Outlaw</div>
+            </div>
+            <div class="move-desc">Expose what the system is hiding. Tone is curious, not angry — the friend who just noticed something weird.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"The average homebuyer pays $15,000 to someone who unlocks doors."</div>
+              <div class="move-ex">"In most countries, buyer's agents don't exist. Only in America."</div>
+              <div class="move-ex">"Your agent's commission came out of your offer. You just didn't see it."</div>
+            </div>
+          </div>
+
+          <div class="move buyer">
+            <div class="move-num">Move 02</div>
+            <div class="move-head">
+              <div class="move-title">Peer Proof</div>
+              <div class="move-arch arch-everyp">Everyperson</div>
+            </div>
+            <div class="move-desc">Real customers, documentary-style. Not heroes — normal people their age, in their situation. Neutralizes the fear of being out of their depth.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"I'm 29. I work in marketing. I just bought my first house without an agent."</div>
+            </div>
+          </div>
+
+          <div class="move buyer">
+            <div class="move-num">Move 03</div>
+            <div class="move-head">
+              <div class="move-title">Magician Demonstration</div>
+              <div class="move-arch arch-magician">Magician</div>
+            </div>
+            <div class="move-desc">Show the impossible becoming easy. The Apple Keynote move — no explanation needed, the demonstration is the argument.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">30-second video: book a showing, walk in, get AI comps, make an offer.</div>
+            </div>
+          </div>
+
+          <div class="move buyer">
+            <div class="move-num">Move 04</div>
+            <div class="move-head">
+              <div class="move-title">Identity Flip</div>
+              <div class="move-arch arch-deep">Deep Layer</div>
+            </div>
+            <div class="move-desc">Shift who they are, behavior follows. From "homebuyer who needs an agent" to "capable adult who buys their own home." Needing an agent becomes a generational artifact.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"You handled your own portfolio. Your own taxes. You're handling your own home."</div>
+              <div class="move-ex">"Your parents needed an agent because they couldn't see the listings. You can."</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="kl-sec-head" style="margin-bottom: 1rem;">
+          <div class="kl-eyebrow">Persuasion Sequence · Buyer</div>
+          <h2 style="font-size: 1.25rem;">Feel, then think, then act.</h2>
+          <p style="font-size: 0.9rem;">Every buyer-side piece hits all three beats in order.</p>
+        </div>
+
+        <div class="seq-wrap">
+          <div class="seq-row b1">
+            <div class="seq-beat">Feel</div>
+            <div class="seq-arch">Outlaw</div>
+            <div class="seq-mom">"Wait, what does an agent actually do?"</div>
+          </div>
+          <div class="seq-row b2">
+            <div class="seq-beat">Think</div>
+            <div class="seq-arch">Magician</div>
+            <div class="seq-mom">"Oh, this platform actually handles it all."</div>
+          </div>
+          <div class="seq-row b3">
+            <div class="seq-beat">Act</div>
+            <div class="seq-arch">Everyperson</div>
+            <div class="seq-mom">"If they can do it, I can do it."</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SELLER -->
+      <div class="aud-panel" id="panel-seller">
+
+        <div class="frame seller">
+          <div class="frame-label">The Risk Problem</div>
+          <h3>Sellers aren't uninformed — they're scared to get this wrong because it's their biggest asset.</h3>
+          <p>The agent, even a bad one, represents <em>someone to blame</em> if things go wrong. That's what agents actually sell: diffused responsibility. Key Lime must provide the same psychological safety without the agent.</p>
+        </div>
+
+        <div class="kl-sec-head" style="margin-bottom: 1.25rem;">
+          <div class="kl-eyebrow">The Four Moves · Seller</div>
+        </div>
+
+        <div class="moves-grid">
+
+          <div class="move seller">
+            <div class="move-num">Move 01</div>
+            <div class="move-head">
+              <div class="move-title">Caregiver Stabilizer</div>
+              <div class="move-arch arch-caregiver">Caregiver</div>
+            </div>
+            <div class="move-desc">The advisor is the psychological replacement for the agent — not in function, but in the feeling of being held. The seller needs to feel protected, not alone.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"Your advisor is with you through every step."</div>
+              <div class="move-ex">"Never do this alone."</div>
+            </div>
+          </div>
+
+          <div class="move seller">
+            <div class="move-num">Move 02</div>
+            <div class="move-head">
+              <div class="move-title">Sovereign Elevation</div>
+              <div class="move-arch arch-sovereign">Sovereign</div>
+            </div>
+            <div class="move-desc">Reframe: agents don't serve you, they work at you. Key Lime serves you, period. The seller is the ruler of their own asset — not the delegate.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"Your home. Your price. Your terms."</div>
+              <div class="move-ex">"This is your asset. You decide."</div>
+            </div>
+          </div>
+
+          <div class="move seller">
+            <div class="move-num">Move 03</div>
+            <div class="move-head">
+              <div class="move-title">Informed Frustration</div>
+              <div class="move-arch arch-mature">Mature Outlaw</div>
+            </div>
+            <div class="move-desc">Not angry — knowing. Validate what they already suspected. You're the friend confirming their instinct, not the activist recruiting them.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"You already knew they weren't earning 3%. Now you don't have to pay it."</div>
+              <div class="move-ex">"One open house, a listing upload, and $22,000. You did the math."</div>
+            </div>
+          </div>
+
+          <div class="move seller">
+            <div class="move-num">Move 04</div>
+            <div class="move-head">
+              <div class="move-title">Mechanism Reveal</div>
+              <div class="move-arch arch-concrete">Concrete Magician</div>
+            </div>
+            <div class="move-desc">Sellers need the math shown. Long-form case studies, detailed process videos, real numbers. Buyers convert on vibe; sellers need proof of mechanism.</div>
+            <div class="move-ex-wrap">
+              <div class="move-ex">"Here's exactly what happened when Sarah sold her house with Key Lime in 23 days."</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="kl-sec-head" style="margin-bottom: 1rem;">
+          <div class="kl-eyebrow">Persuasion Sequence · Seller</div>
+          <h2 style="font-size: 1.25rem;">Validate, protect, prove, empower.</h2>
+          <p style="font-size: 0.9rem;">Different from the buyer — sellers need all four stages.</p>
+        </div>
+
+        <div class="seq-wrap">
+          <div class="seq-row b1">
+            <div class="seq-beat">Validate</div>
+            <div class="seq-arch">Mature Outlaw</div>
+            <div class="seq-mom">"You already suspected the agent wasn't worth it. You were right."</div>
+          </div>
+          <div class="seq-row b2">
+            <div class="seq-beat">Protect</div>
+            <div class="seq-arch">Caregiver</div>
+            <div class="seq-mom">"You won't do this alone. Your advisor is with you."</div>
+          </div>
+          <div class="seq-row b3">
+            <div class="seq-beat">Prove</div>
+            <div class="seq-arch">Concrete Magician</div>
+            <div class="seq-mom">"Here's exactly how it works. Here's someone like you who did it."</div>
+          </div>
+          <div class="seq-row b4">
+            <div class="seq-beat">Empower</div>
+            <div class="seq-arch">Sovereign</div>
+            <div class="seq-mom">"You're in control. You decide. You keep the difference."</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- North star -->
+    <section class="kl-section" style="padding-bottom: 4rem;">
+      <div class="kl-sec-head">
+        <div class="kl-eyebrow">North Star · The Unifying Moment</div>
+      </div>
+      <div class="north">
+        <div class="north-label">The Convergent Endpoint</div>
+        <h2>Buyer and seller diverge in approach,<br />converge on one feeling at closing: <span class="hl">"I did this."</span></h2>
+        <p>That's the Sovereign archetype reaching its healthy expression — owning the process, not delegating your agency. Everything upstream (Outlaw revelation, Magician demonstration, Caregiver protection) serves that final moment.</p>
+
+        <div class="identity">
+          <div class="id-label">The Identity Contract</div>
+          <blockquote>"I see through unnecessary complexity. I don't pay for things that don't deliver value. I take control of the biggest decisions in my life. And I expect the process to be easy."</blockquote>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="kl-footer">
+    <p>Key Lime · Messaging &amp; Positioning · Guide 03 of 06</p>
+    <div class="kl-footer-badge">
+      <a href="icp-hub.html" style="color: var(--lime-dark); font-weight: 700;">Next: ICP Playbooks →</a>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.aud-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.panel;
+        document.querySelectorAll('.aud-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.aud-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + target).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

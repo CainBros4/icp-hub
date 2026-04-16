@@ -508,13 +508,23 @@
 </head>
 <body>
 
+<link rel="stylesheet" href="styles/keylime.css" />
+
 <!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">
-    <div class="nav-dot"></div>
-    Key Lime — ICP Playbooks
+<nav class="kl-nav" style="position: sticky;">
+  <a class="kl-wordmark" href="index.html">
+    <span class="kl-logo"></span>
+    Key Lime
   </a>
-  <a class="nav-back" href="hub.html">← Back to Hub</a>
+  <div class="kl-nav-links">
+    <a href="index.html">Hub</a>
+    <a href="philosophy.html">Philosophy</a>
+    <a href="brand-guide.html">Brand Guide</a>
+    <a href="messaging.html">Messaging</a>
+    <a href="icp-hub.html" class="active">ICP Playbooks</a>
+    <a href="look-and-feel.html">Look &amp; Feel</a>
+    <a href="strategy.html">Strategy</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -713,11 +723,11 @@
             <div class="headline-text">"You'll pay $13,350 to a buyer's agent on a $500K home. Or 1%. You choose."</div>
           </div>
           <div class="headline-item" style="border-color:var(--green)">
-            <div class="headline-label">Access Unlock · Rebel · TOFU</div>
+            <div class="headline-label">Access Unlock · Outlaw · TOFU</div>
             <div class="headline-text">"You don't need an agent to see a house. You need $20 and 10 minutes."</div>
           </div>
           <div class="headline-item" style="border-color:var(--teal)">
-            <div class="headline-label">Research Peer · Sage · MOFU</div>
+            <div class="headline-label">Research Peer · Magician · MOFU</div>
             <div class="headline-text">"You already know the neighborhood. The AI knows every comp in it."</div>
           </div>
           <div class="headline-item" style="border-color:var(--gray)">
@@ -725,11 +735,11 @@
             <div class="headline-text">"You shouldn't have to book a flight to see a house. Book a $20 chaperone instead."</div>
           </div>
           <div class="headline-item" style="border-color:var(--gray)">
-            <div class="headline-label">Post-NAR Reframe · Sage/Rebel</div>
+            <div class="headline-label">Post-NAR Reframe · Magician/Outlaw</div>
             <div class="headline-text">"The NAR settlement promised buyers lower fees. Agents are charging more than ever."</div>
           </div>
           <div class="headline-item" style="border-color:var(--green)">
-            <div class="headline-label">First-Time Hero · Hero</div>
+            <div class="headline-label">First-Time Hero · Everyperson</div>
             <div class="headline-text">"First-time buyer doesn't mean first-time disadvantaged. The AI knows every step."</div>
           </div>
         </div>
@@ -822,7 +832,7 @@
         <div class="ad-headline" style="background:rgba(168,200,86,0.06);border-color:var(--gold);color:var(--offwhite)">
           "The NAR settlement was supposed to lower what buyers pay agents. Commissions just hit a new high."
         </div>
-        <div class="ad-body">Sage archetype at maximum. Long-form native content: shows the data, names the gap between what was promised and what happened. "Average combined commission: 5.44% — up from 5.32% pre-settlement." Financially literate buyers will forward this.</div>
+        <div class="ad-body">Magician archetype at maximum. Long-form native content: shows the data, names the gap between what was promised and what happened. "Average combined commission: 5.44% — up from 5.32% pre-settlement." Financially literate buyers will forward this.</div>
         <div class="ad-cta" style="color:var(--gold)">CTA: "See how much you'd save on your target price →"</div>
       </div>
     </div>
@@ -895,7 +905,7 @@
     <div class="segment-grid cols-4">
 
       <div class="seg-card">
-        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Hero</span>
+        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Sovereign</span>
         <div class="seg-name">Equity-Motivated Move-Up Millennial</div>
         <div class="seg-demo">Age 32–42 · HHI $90–160K · Home $350–550K<br />South Tampa, Westchase, Wesley Chapel</div>
         <div class="seg-tag-row">
@@ -909,7 +919,7 @@
       </div>
 
       <div class="seg-card">
-        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Rebel</span>
+        <span class="seg-tier" style="background:rgba(245,183,49,0.1);color:var(--gold);border:1px solid rgba(245,183,49,0.2)">Tier 1 · Mature Outlaw</span>
         <div class="seg-name">Commission-Awakened Repeat Seller</div>
         <div class="seg-demo">Age 45–62 · HHI $100–200K · Home $450–800K<br />2–4 prior sales; cumulative commission: $60–100K+</div>
         <div class="seg-tag-row">
@@ -923,7 +933,7 @@
       </div>
 
       <div class="seg-card">
-        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Sage</span>
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Concrete Magician</span>
         <div class="seg-name">Active Investor / House Flipper</div>
         <div class="seg-demo">Age 30–55 · 2–10+ sales/year · $300–600K range<br />Seminole Heights, Ybor, Temple Terrace flips</div>
         <div class="seg-tag-row">
@@ -937,7 +947,7 @@
       </div>
 
       <div class="seg-card">
-        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Hero+Sage</span>
+        <span class="seg-tier" style="background:rgba(107,122,141,0.1);color:var(--gray);border:1px solid var(--border)">Tier 2 · Caregiver+Sovereign</span>
         <div class="seg-name">FSBO Upgrader</div>
         <div class="seg-demo">Age 35–58 · Home $250–500K<br />Tried Zillow FSBO; 30–90 days, no offer or panicked at contract</div>
         <div class="seg-tag-row">
@@ -1116,7 +1126,7 @@
         <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--gold);color:var(--offwhite)">
           "You were paying the buyer's agent too. For every transaction. Key Lime changes that."
         </div>
-        <div class="ad-body">Rebel archetype activation — directed at the system, not individual agents (brand guardrail). The retroactive math ("$60K over a lifetime of moves") is the gut-punch. Drives to explainer content, then listing CTA.</div>
+        <div class="ad-body">Mature Outlaw archetype activation — directed at the system, not individual agents (brand guardrail). The retroactive math ("$60K over a lifetime of moves") is the gut-punch. Drives to explainer content, then listing CTA.</div>
         <div class="ad-cta" style="color:var(--gold)">CTA: "Show Me the Math →"</div>
       </div>
       <div class="ad-card">
@@ -1142,7 +1152,7 @@
         <div class="ad-headline" style="background:rgba(245,183,49,0.06);border-color:var(--gold);color:var(--offwhite)">
           "5 flips. 5.57% commission each time. That's $91,000 you paid last year that you didn't have to."
         </div>
-        <div class="ad-body">Sage archetype. Operator-level language: ARV, net-to-list ratio, cost per transaction. Model it across transaction volume. Targets Facebook Tampa Bay RE Investors groups + BiggerPockets channel. Data-led cold outreach.</div>
+        <div class="ad-body">Concrete Magician archetype. Operator-level language: ARV, net-to-list ratio, cost per transaction. Model it across transaction volume. Targets Facebook Tampa Bay RE Investors groups + BiggerPockets channel. Data-led cold outreach.</div>
         <div class="ad-cta" style="color:var(--gold)">CTA: "Model Your Annual Net →"</div>
       </div>
     </div>
@@ -1658,13 +1668,13 @@
     <div class="section-title" style="color:var(--crust)">Brand Archetypes</div>
     <div class="journey-grid">
       <div class="journey-act" style="background:rgba(168,200,86,0.04)">
-        <div class="act-num">Primary</div>
-        <div class="act-label" style="color:var(--green)">The Hero</div>
-        <div class="act-hook">"You fought back. You won."</div>
+        <div class="act-num">Primary · Positioning</div>
+        <div class="act-label" style="color:var(--green)">The Outlaw</div>
+        <div class="act-hook">"The rules are broken. Here's what's actually possible."</div>
         <div class="act-moments">
           <div class="moment">
             <div class="moment-dot" style="background:var(--green)"></div>
-            <div><div class="moment-text">Champion Hero — fights on behalf of others, not a personal glory-seeker</div></div>
+            <div><div class="moment-text">Disrupts what isn't working — curious, not combative</div></div>
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--green)"></div>
@@ -1672,78 +1682,70 @@
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--green)"></div>
-            <div><div class="moment-text">The customer becomes the hero — Key Lime is the guide (Yoda, not Luke)</div></div>
-          </div>
-          <div class="moment">
-            <div class="moment-dot" style="background:var(--green)"></div>
-            <div><div class="moment-text">Campaign visuals: real Tampa Bay homeowners, real savings numbers, not stock photos</div></div>
+            <div><div class="moment-text">Shadow to avoid: cynicism, anger for its own sake</div></div>
           </div>
         </div>
         <div class="act-voice" style="border-color:var(--green)">
-          Reference brands: Nike ("Just Do It"), Tesla, Peloton, Robinhood
+          Peer brands: Tesla (early), Uber (early), Robinhood, Liquid Death
         </div>
       </div>
       <div class="journey-act">
-        <div class="act-num">Secondary</div>
-        <div class="act-label" style="color:var(--teal)">The Sage</div>
-        <div class="act-hook">"We show our work."</div>
+        <div class="act-num">Secondary · Product</div>
+        <div class="act-label" style="color:var(--teal)">The Magician</div>
+        <div class="act-hook">"What seemed impossible is now effortless."</div>
         <div class="act-moments">
           <div class="moment">
             <div class="moment-dot" style="background:var(--teal)"></div>
-            <div><div class="moment-text">Intelligence, expertise, data-driven guidance, truth-telling</div></div>
+            <div><div class="moment-text">Transformation through demonstration — the Apple Keynote move</div></div>
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--teal)"></div>
-            <div><div class="moment-text">Educational content: "Here's exactly how a real estate transaction works"</div></div>
+            <div><div class="moment-text">Shows the comp analysis, negotiation rationale, document logic — never "trust me"</div></div>
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--teal)"></div>
-            <div><div class="moment-text">Data transparency: publish transaction outcomes, average savings, days to close</div></div>
-          </div>
-          <div class="moment">
-            <div class="moment-dot" style="background:var(--teal)"></div>
-            <div><div class="moment-text">Unlike an agent who says "trust me," Key Lime shows the comp analysis and the logic</div></div>
+            <div><div class="moment-text">Shadow to avoid: manipulation, "too good to be true" distrust</div></div>
           </div>
         </div>
         <div class="act-voice" style="border-color:var(--teal)">
-          Reference brands: Stripe (trust through intelligence), TurboTax, Redfin
+          Peer brands: Apple, Tesla (current), Stripe, Airbnb
         </div>
       </div>
       <div class="journey-act">
-        <div class="act-num">Selective</div>
-        <div class="act-label" style="color:var(--gold)">The Rebel</div>
-        <div class="act-hook">"The system was built for agents. We built this for you."</div>
+        <div class="act-num">Tertiary · Tone</div>
+        <div class="act-label" style="color:var(--gold)">The Everyperson</div>
+        <div class="act-hook">"Normal people are already doing this. You belong."</div>
         <div class="act-moments">
           <div class="moment">
             <div class="moment-dot" style="background:var(--gold)"></div>
-            <div><div class="moment-text">Questions rules, challenges authority, fights for what's right</div></div>
+            <div><div class="moment-text">Belonging and accessibility — peer proof, documentary-style</div></div>
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--gold)"></div>
-            <div><div class="moment-text">Used selectively — primarily for Commission-Awakened sellers and conquest campaigns</div></div>
+            <div><div class="moment-text">Neutralizes the fear of being out of their depth, or of joining a cult of disruptors</div></div>
           </div>
           <div class="moment">
             <div class="moment-dot" style="background:var(--gold)"></div>
-            <div><div class="moment-text">Should not dominate brand identity (would alienate trust-sensitive ICPs)</div></div>
-          </div>
-          <div class="moment">
-            <div class="moment-dot" style="background:var(--gold)"></div>
-            <div><div class="moment-text">Deployed in NAR/commission settlement awareness moments and social ad campaigns</div></div>
+            <div><div class="moment-text">Shadow to avoid: blandness, loss of distinctiveness</div></div>
           </div>
         </div>
         <div class="act-voice" style="border-color:var(--gold)">
-          Reference brands: Oatly, Dollar Shave Club, Monzo (hot coral rebel)
+          Peer brands: Lemonade (warmth), early Airbnb (accessibility)
         </div>
       </div>
     </div>
 
+    <div style="background:var(--cream, #FFF8ED); border:1px solid rgba(168,200,86,0.25); border-left:3px solid var(--green); border-radius:0 10px 10px 0; padding:16px 20px; margin-top:16px; font-family:'DM Sans'; font-size:0.9rem; color:var(--crust); line-height:1.7;">
+      <strong style="color:var(--green);">Seller-side psychology adds four more archetypes</strong> — Caregiver, Sovereign, Mature Outlaw, and Concrete Magician — because sellers need different reassurance than buyers. The full stack, the four moves per audience, and the persuasion sequences live in <a href="messaging.html" style="color:var(--green); font-weight:700;">the Messaging guide →</a>
+    </div>
+
     <!-- Archetype Integration Matrix -->
-    <table class="savings-table" style="margin-top:4px;">
+    <table class="savings-table" style="margin-top:20px;">
       <thead><tr><th>Archetype</th><th>Primary Channel</th><th>Primary ICP</th><th>Tone</th></tr></thead>
       <tbody>
-        <tr><td class="price" style="color:var(--green)">Hero</td><td>Homepage hero, brand video, success stories</td><td>All segments</td><td>Empowering, action-oriented</td></tr>
-        <tr><td class="price" style="color:var(--teal)">Sage</td><td>Blog, help center, savings calculator</td><td>Investors, Relocators, FSBO</td><td>Intelligent, data-driven</td></tr>
-        <tr><td class="price" style="color:var(--gold)">Rebel</td><td>Social ads, email subjects, comparison pages</td><td>Commission Awakened, Millennials</td><td>Provocative, righteous</td></tr>
+        <tr><td class="price" style="color:var(--green)">Outlaw</td><td>Social ads, comparison pages, NAR-moment content</td><td>Move-up Millennials, Commission-Awakened</td><td>Curious, not combative</td></tr>
+        <tr><td class="price" style="color:var(--teal)">Magician</td><td>Savings calculator, product demos, case studies</td><td>Investors, Relocators, FSBO Upgraders</td><td>Intelligent, data-driven</td></tr>
+        <tr><td class="price" style="color:var(--gold)">Everyperson</td><td>Homepage hero, testimonials, peer-proof video</td><td>First-time Tampa Buyers, all segments</td><td>Warm, accessible, documentary</td></tr>
       </tbody>
     </table>
 

@@ -19,7 +19,7 @@ const MIME = {
 
 const server = http.createServer((req, res) => {
   let url = req.url.split('?')[0];
-  if (url === '/') url = '/icp-hub.html';
+  if (url === '/') url = '/index.html';
 
   const filePath = path.join(DIR, url);
 
@@ -31,8 +31,8 @@ const server = http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // Fallback to icp-hub.html for any missing route
-      fs.readFile(path.join(DIR, 'icp-hub.html'), (err2, fallback) => {
+      // Fallback to index.html for any missing route
+      fs.readFile(path.join(DIR, 'index.html'), (err2, fallback) => {
         if (err2) {
           res.writeHead(404);
           return res.end('Not found');
