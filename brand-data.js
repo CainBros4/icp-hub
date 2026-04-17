@@ -158,6 +158,57 @@ const BRAND = {
     note: "Everything upstream (Outlaw revelation, Magician demonstration, Caregiver protection) serves this final moment.",
   },
 
+  // ── Both-Sides Negotiation — category-defining product pillar ──
+  // Key Lime runs an AI advisor on BOTH buyer and seller sides of a transaction.
+  // This is a structural advantage no competitor has and the single biggest
+  // category-ownership opportunity in the launch. But the framing determines
+  // whether it reads as "category-defining fairness" or "dystopian machine
+  // combat." This section is the canonical framing.
+  both_sides_negotiation: {
+    thesis:
+      "Both buyer and seller get the same advisor. Both see the same logic. The deal reflects the actual market — not whose agent was tougher.",
+    frame_as: "Fairness leveling",
+    never_frame_as: "AI combat, AI vs AI, machines handling it",
+    rationale:
+      "The old market's hidden unfairness: outcomes hinge on whose agent is more aggressive. Experienced sellers win on price, naive buyers overpay. That's a system problem. Key Lime's AI-on-both-sides doesn't amplify negotiation — it removes negotiation-skill asymmetry as a variable. The deal reflects actual market conditions.",
+    do_say: [
+      "Both sides get the same advisor.",
+      "Both of you have the data. Both of you have the math. The price is the price.",
+      "For the first time, neither side gets fleeced by a better-negotiator agent.",
+      "No more 'my agent vs your agent.' The deal is the deal.",
+      "The negotiation reflects the market, not whose agent was louder.",
+    ],
+    avoid_saying: [
+      "AI fights AI",
+      "AI vs AI negotiation",
+      "Let the machines handle it",
+      "Our AI beats their agent",
+      "AI-powered negotiation", // too tech-led, buries the outcome
+      "Bot-to-bot",
+      "Algorithmic negotiation",
+    ],
+    archetype_mapping: {
+      outlaw: "Exposes the hidden unfairness — outcomes shouldn't hinge on whose agent is tougher.",
+      magician: "Makes the impossible (a genuinely fair negotiation) effortless and visible to both parties.",
+      sovereign: "You still own the decision. The advisor informs; you approve every move.",
+    },
+    proof_formats: [
+      "Split-screen demo video — buyer's advisor left, seller's advisor right, offer→counter→close in real-time with visible logic on both sides",
+      "Case-study storytelling with real numbers — 'Sarah's advisor opened at $449K. Mike's advisor countered at $437K citing 3 comps. Final: $443K. 6 days. Both sides saw the math.'",
+      "Press angle — 'What happens when AI negotiates AI? A Tampa Bay startup is running the experiment' → Tampa Bay Business Journal, Inman, HousingWire",
+      "Comparison page — old-world table: hidden agent negotiation + emotional overrides vs Key Lime table: visible comp-based logic on both sides",
+    ],
+    category_ownership:
+      "Coin and own the term 'Both-sides negotiation.' No competitor has this configuration. It's the single biggest GEO/SEO play because the phrase has zero established meaning today.",
+    guardrails: [
+      "Never call it 'AI' in user-facing copy — it's 'your advisor' for the user, and 'the other side's advisor' for the counterparty.",
+      "Never suggest the user loses control. The advisor proposes; the user approves every move.",
+      "Never frame this as automation of the negotiation. Frame it as leveling the informational playing field.",
+      "Avoid 'robot,' 'algorithm,' 'bot' language entirely.",
+      "When the AI nature must be disclosed (legal/compliance), use the term 'AI-assisted' rather than 'AI-powered' or 'AI-driven.'",
+    ],
+  },
+
   voice: {
     persona: "Alex",
     description:

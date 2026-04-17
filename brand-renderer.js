@@ -79,6 +79,34 @@ function toMarkdown() {
   l.push(B.north_star.note + '\n');
   l.push('---\n');
 
+  // Both-Sides Negotiation
+  if (B.both_sides_negotiation) {
+    const bs = B.both_sides_negotiation;
+    l.push(h(2, 'Both-Sides Negotiation — Category Pillar'));
+    l.push(`> ${bs.thesis}\n`);
+    l.push(`**Frame as:** ${bs.frame_as}`);
+    l.push(`**Never frame as:** ${bs.never_frame_as}\n`);
+    l.push(`${bs.rationale}\n`);
+    l.push(h(3, 'Do say'));
+    bs.do_say.forEach(s => l.push(`- ${s}`));
+    l.push('');
+    l.push(h(3, 'Avoid saying'));
+    bs.avoid_saying.forEach(s => l.push(`- ${s}`));
+    l.push('');
+    l.push(h(3, 'Archetype mapping'));
+    Object.entries(bs.archetype_mapping).forEach(([k, v]) => {
+      l.push(`- **${k.charAt(0).toUpperCase() + k.slice(1)}:** ${v}`);
+    });
+    l.push('');
+    l.push(h(3, 'Proof formats'));
+    bs.proof_formats.forEach(p => l.push(`- ${p}`));
+    l.push('');
+    l.push(`**Category ownership:** ${bs.category_ownership}\n`);
+    l.push(h(3, 'Guardrails'));
+    bs.guardrails.forEach(g => l.push(`- ${g}`));
+    l.push('\n---\n');
+  }
+
   l.push(h(2, 'Brand Voice') + '\n');
   l.push(h(3, `Persona: ${B.voice.persona}`));
   l.push(B.voice.description + '\n');
@@ -145,6 +173,17 @@ function toPromptPack(assetManifest) {
   l.push('SELLER SEQUENCE: ' + B.seller_archetypes.persuasion_sequence);
   l.push('NORTH STAR: ' + B.north_star.unifying_moment);
   l.push('');
+
+  if (B.both_sides_negotiation) {
+    const bs = B.both_sides_negotiation;
+    l.push('BOTH-SIDES NEGOTIATION (category pillar):');
+    l.push('THESIS: ' + bs.thesis);
+    l.push('FRAME AS: ' + bs.frame_as + ' — not "' + bs.never_frame_as + '"');
+    l.push('DO SAY: ' + bs.do_say.slice(0, 3).map(s => '"' + s + '"').join(' | '));
+    l.push('NEVER SAY: ' + bs.avoid_saying.join(', '));
+    l.push('GUARDRAILS: ' + bs.guardrails.slice(0, 3).join(' | '));
+    l.push('');
+  }
   l.push('VOICE: ' + B.voice.persona + ' — ' + B.voice.description.split('.').slice(0, 2).join('.') + '.');
   l.push('AI = "' + B.voice.ai_personification + '"');
   l.push('USE: ' + B.voice.use.join(', '));
