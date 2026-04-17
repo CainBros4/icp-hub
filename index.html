@@ -107,8 +107,8 @@
       <a href="strategy.html">Strategy</a>
       <a href="assets.html">Assets</a>
       <span class="kl-nav-divider"></span>
-      <a href="https://homedirect-hub-production-d9ad.up.railway.app" class="kl-nav-external" title="HomeDirect HQ — planning &amp; launch ops">HomeDirect HQ</a>
-      <a href="https://marketinghq-production.up.railway.app" class="kl-nav-external" title="Marketing HQ — creative &amp; campaign ops">Marketing HQ</a>
+      <a href="https://homedirect-hub-production-d9ad.up.railway.app" class="kl-nav-external" title="HomeDirect HQ — planning &amp; launch ops"><span class="kl-live-dot"></span>&nbsp;HomeDirect HQ</a>
+      <a href="https://marketinghq-production.up.railway.app" class="kl-nav-external" title="Marketing HQ — creative &amp; campaign ops"><span class="kl-live-dot"></span>&nbsp;Marketing HQ</a>
     </div>
   </nav>
 
@@ -412,22 +412,26 @@
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-      <a href="/brand.json" class="kl-card kl-card--accent" style="min-height: 0;">
+      <a href="/brand.json" class="kl-card kl-card--accent" style="min-height: 0; position: relative;">
+        <span class="kl-live" style="position: absolute; top: 12px; right: 12px;">Live</span>
         <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--lime-dark); letter-spacing: 0.04em; margin-bottom: 8px;">GET · application/json</div>
         <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand.json</code></h3>
         <p>Structured brand spec — philosophy, values, archetypes, voice, visual identity, guardrails. Consume from any backend or API.</p>
       </a>
-      <a href="/brand.md" class="kl-card kl-card--accent" style="min-height: 0;">
+      <a href="/brand.md" class="kl-card kl-card--accent" style="min-height: 0; position: relative;">
+        <span class="kl-live" style="position: absolute; top: 12px; right: 12px;">Live</span>
         <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--lime-dark); letter-spacing: 0.04em; margin-bottom: 8px;">GET · text/markdown</div>
         <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand.md</code></h3>
         <p>Human-readable Markdown version of the full spec. Paste into docs, wikis, or briefs.</p>
       </a>
-      <a href="/brand/prompt-pack" class="kl-card kl-card--teal" style="min-height: 0;">
+      <a href="/brand/prompt-pack" class="kl-card kl-card--teal" style="min-height: 0; position: relative;">
+        <span class="kl-live" style="position: absolute; top: 12px; right: 12px;">Live</span>
         <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--teal); letter-spacing: 0.04em; margin-bottom: 8px;">GET · text/plain · LLM-ready</div>
         <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/brand/prompt-pack</code></h3>
         <p>Compact, prompt-injectable brand context. Include this in every AI call — Marketing HQ Copy Generator, Video Generator, Brief Generator — so outputs stay on-brand.</p>
       </a>
-      <a href="/assets/api/manifest.json" class="kl-card kl-card--gold" style="min-height: 0;">
+      <a href="/assets/api/manifest.json" class="kl-card kl-card--gold" style="min-height: 0; position: relative;">
+        <span class="kl-live" style="position: absolute; top: 12px; right: 12px;">Live</span>
         <div style="font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 8px;">GET · application/json</div>
         <h3 style="font-family: var(--font-body); font-size: 1.02rem; margin-bottom: 6px;"><code>/assets/api/manifest.json</code></h3>
         <p>Visual asset manifest — every uploaded reference image with metadata and absolute URLs. Feed it to image generators for style consistency.</p>
