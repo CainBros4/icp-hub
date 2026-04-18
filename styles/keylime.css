@@ -487,6 +487,8 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 1rem;
   font-family: var(--font-body);
+  background: blue;
+  color: white;
 }
 .kl-footer p {
   font-size: 0.78rem;
